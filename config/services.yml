@@ -1,0 +1,85 @@
+services:
+    marttiphpbb.calendarmonthview.main_listener:
+        class: marttiphpbb\calendarmonthview\event\main_listener
+        tags:
+            - { name: event.listener }
+
+    marttiphpbb.calendarmonthview.viewing_listener:
+        class: marttiphpbb\calendarmonthview\event\viewing_listener
+        arguments:
+            - '@controller.helper'
+            - '%core.php_ext%'
+            - '@language'
+            - '@user'
+        tags:
+            - { name: event.listener }
+
+    marttiphpbb.calendarmonthview.link_listener:
+        class: marttiphpbb\calendarmonthview\event\link_listener
+        arguments:
+            - '@controller.helper'
+        tags:
+            - { name: event.listener }
+
+    marttiphpbb.calendarmonthview.tag_listener:
+        class: marttiphpbb\calendarmonthview\event\tag_listener
+        arguments:
+            - '@controller.helper'
+            - '@marttiphpbb.calendarmonthview.store'
+        tags:
+            - { name: event.listener }
+
+    marttiphpbb.calendarmonthview.menu_listener:
+        class: marttiphpbb\calendarmonthview\event\menu_listener
+        arguments:
+            - '@controller.helper'
+            - '@marttiphpbb.calendarmonthview.user_today'
+            - '@auth'
+        tags:
+            - { name: event.listener }
+
+    marttiphpbb.calendarmonthview.store:
+        class: marttiphpbb\calendarmonthview\service\store
+        arguments:
+            - '@config_text'
+            - '@cache.driver'
+
+    marttiphpbb.calendarmonthview.user_today:
+        class: marttiphpbb\calendarmonthview\service\user_today
+        arguments:
+            - '@user'
+
+    marttiphpbb.calendarmonthview.user_time:
+        class: marttiphpbb\calendarmonthview\service\user_time
+        arguments:
+            - '@user'
+            - '@marttiphpbb.calendarmonthview.store'
+
+    marttiphpbb.calendarmonthview.controller:
+        class: marttiphpbb\calendarmonthview\controller\main
+        arguments:
+            - '@dispatcher'
+            - '@request'
+            - '%core.php_ext%'
+            - '@template'
+            - '@language'
+            - '@controller.helper'
+            - '%core.root_path%'
+            - '@marttiphpbb.calendarmonthview.pagination'
+            - '@marttiphpbb.calendarmonthview.store'
+            - '@marttiphpbb.calendarmonthview.user_today'
+            - '@marttiphpbb.calendarmonthview.user_time'
+
+    marttiphpbb.calendarmonthview.redirect_controller:
+        class: marttiphpbb\calendarmonthview\controller\redirect
+        arguments:
+            - '@marttiphpbb.calendarmonthview.user_today'
+            - '@controller.helper'
+
+    marttiphpbb.calendarmonthview.pagination:
+        class: marttiphpbb\calendarmonthview\service\pagination
+        arguments:
+            - '@config'
+            - '@controller.helper'
+            - '@template'
+            - '@language'

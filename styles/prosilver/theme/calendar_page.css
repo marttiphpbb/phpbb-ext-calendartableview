@@ -1,0 +1,223 @@
+div.month
+{
+	width: 100%;
+}
+
+div.month div.week-container
+{
+	position: relative;
+	width: 100%;
+}
+
+div.month div.weekdays
+{
+	position:absolute;
+	display:flex;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+div.month div.weekdays div.day
+{
+	flex: 1;
+	background: #eee;
+	margin: .15em;
+	border-radius: .5em;
+}
+div.month div.weekdays div.day.this-month
+{
+	color: rgb(12, 56, 133);
+	background: rgb(202, 220, 235);
+}
+
+div.month div.weekdays div.day.today.this-month
+{
+	border: 2px solid rgb(12, 56, 133);
+}
+
+div.month div.weekdays div.day div.dayhead
+{
+	padding: .4em .8em;
+}
+
+div.month div.weekdays div.day div.dayhead div.monthday
+{
+	font-size: 1.8em;
+	float: left;
+}
+
+div.month div.weekdays div.day div.dayhead div.weekday
+{
+	font-size: 1.2em;
+	float: left;
+	padding: .1em .2em;
+}
+
+div.month div.weekdays div.day div.dayhead div.moon
+{
+	font-size: 1.2em;
+	float: right;
+	padding: .1em .2em;
+	color: #444;
+	margin: -.5em;
+}
+
+div.month div.weekdays div.day div.dayhead div.moon span
+{
+	z-index: 1;
+}
+
+div.month div.weekdays div.day div.dayhead div.isoweek
+{
+	font-style: italic;
+	font-size: 0.9em;
+	float: right;
+	clear: right;
+	padding: .1em .2em;
+}
+
+@media only screen and (max-width: 500px), only screen and (max-device-width: 500px)
+{
+	div.moon > span, div.isoweek, div.weekdays div.day div.weekday
+	{
+		display: none;
+	}
+}
+
+div.month div.weekdays div.day
+{
+	color: #dbd8e9;
+}
+
+div.month div.weekdays div.day.sat,
+div.month div.weekdays div.day.sun
+{
+	background-color: #e8f5ff;
+}
+div.month div.weekdays div.day.this-month.sat,
+div.month div.weekdays div.day.this-month.sun
+{
+	background-color: #94c2e7;
+}
+
+div.month div.eventrows
+{
+	display:flex;
+	flex-direction: column;
+}
+
+div.month div.eventrows div.evrow-head
+{
+	height: 2.5em;
+}
+div.month div.eventrows div.evrow-foot
+{
+	height: .7em;
+}
+div.month div.eventrows div.evrow
+{
+	height: 2em;
+	padding: .15em 0;
+	display: flex;
+	justify-content: space-evenly;
+	z-index: 1;
+}
+
+div.month div.eventrows div.evrow div.f-con
+{
+	min-width: 0;
+}
+
+div.month div.eventrows div.evrow div.f-con div.ev
+{
+	margin: .15em;
+	background: rgb(238, 246, 255);
+	border: 1px solid rgb(123, 163, 200);
+	border-left-style: dashed;
+	border-right-style: dashed;
+	min-width: 0;
+}
+
+div.month div.eventrows div.evrow:nth-child(even) div.f-con div.ev{
+	background: rgb(220, 235, 255);
+}
+div.month div.eventrows div.evrow div.ev.ev-start div.ev-overlay{
+	border-top-left-radius: .7em;
+	border-bottom-left-radius: .7em;
+}
+div.month div.eventrows div.evrow div.ev.ev-end div.ev-overlay{
+	border-top-right-radius: .7em;
+	border-bottom-right-radius: .7em;
+}
+div.month div.eventrows div.evrow div.ev div.ev-overlay{
+	width: 100%;
+	height: 100%;
+}
+div.month div.eventrows div.evrow div.ev div.ev-overlay:hover,
+div.month div.eventrows div.evrow div.ev div.ev-overlay.hover
+{
+	background: rgba(255, 255, 255, 0.9);
+}
+
+div.month div.eventrows div.evrow div.ev a
+{
+	display:inline-block;
+	width: 100%;
+	height: 100%;
+	font-size: 1.5em;
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: left;
+	padding-left: .3em;
+	min-width: 0;
+}
+div.month div.eventrows div.evrow div.f-con div.ev.ev-start
+{
+	border-top-left-radius: .7em;
+	border-bottom-left-radius: .7em;
+	border-left-style: solid;
+}
+div.month div.eventrows div.evrow div.f-con div.ev.ev-end
+{
+	border-top-right-radius: .7em;
+	border-bottom-right-radius: .7em;
+	border-right-style: solid;
+}
+div.month div.eventrows div.evrow div.f-con div.ev.topic-hilit
+{
+	border-width: 2px;
+	border-color: rgb(61, 99, 148);
+}
+
+div.month div.eventrows div.evrow div.flex-1
+{
+	flex: 1;
+}
+div.month div.eventrows div.evrow div.flex-2
+{
+	flex: 2;
+}
+div.month div.eventrows div.evrow div.flex-3
+{
+	flex: 3;
+}
+div.month div.eventrows div.evrow div.flex-4
+{
+	flex: 4;
+}
+div.month div.eventrows div.evrow div.flex-5
+{
+	flex: 5;
+}
+div.month div.eventrows div.evrow div.flex-6
+{
+	flex: 6;
+}
+div.month div.eventrows div.evrow div.flex-7
+{
+	flex: 7;
+}

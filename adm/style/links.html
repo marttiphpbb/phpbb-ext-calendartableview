@@ -1,0 +1,19 @@
+{%- extends '@marttiphpbb_calendarmonthview/base.html' -%}
+
+{%- block heading -%}
+	{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_LINKS') -}}
+{%- endblock -%}
+
+{%- block form_content -%}
+	<fieldset>
+		{%- embed '@marttiphpbb_menuitems/dl.html' with {'name': 'links'} -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_LINKS') -}}
+			{%- endblock -%}
+			{%- block explain -%}
+				<br>
+				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_LINKS_EXPLAIN') -}}
+			{%- endblock -%}
+		{%- endembed -%}
+	</fieldset>
+{%- endblock form_content -%}

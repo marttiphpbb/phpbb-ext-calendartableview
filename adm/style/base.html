@@ -1,0 +1,15 @@
+{%- include 'overall_header.html' -%}
+
+<h1>{%- block heading -%}{%- endblock -%}</h1>
+
+<form id="acp_board" method="post" action="{{- U_ACTION -}}">
+	{%- block form_content -%}{%- endblock -%}
+
+	<fieldset class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{{- lang('SUBMIT') -}}" >&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{{- lang('RESET') -}}">
+	</fieldset>
+	{{- S_FORM_TOKEN -}}
+</form>
+
+{%- include 'overall_footer.html' -%}

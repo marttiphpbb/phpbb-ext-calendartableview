@@ -1,0 +1,18 @@
+<dl>
+    <dt>
+        <label for="{{- block('name') -}}">
+            {%- block label -%}{%- endblock -%}
+        </label>
+        {%- block explain -%}{%- endblock -%}
+    </dt>
+    <dd>
+        <label>
+            <input type="radio" class="radio" name="{%- block name -%}{%- endblock -%}" id="{{- block('name') -}}" value="1"{%- if checked %} checked="checked"{%- endif -%}>
+            &nbsp;{%- block one -%}{{ lang('YES') -}}{%- endblock -%}
+        </label>&nbsp;
+        <label>
+            <input type="radio" class="radio" name="{{- block('name') -}}" value="0"{%- if not checked %} checked="checked"{%- endif -%}>
+            &nbsp;{%- block zero -%}{{ lang('NO') -}}{%- endblock -%}
+        </label>
+    </dd>
+</dl>
