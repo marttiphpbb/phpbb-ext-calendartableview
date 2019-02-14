@@ -1,6 +1,6 @@
 # phpBB Extension - marttiphpbb Calendar Month View
 
-[Topic on phpbb.com](https://www.phpbb.com/community/viewtopic.php?f=456&t=2487146)
+[Topic on phpbb.com](https://www.phpbb.com/community/viewtopic.php?f=456&t=)
 
 ## Description
 
