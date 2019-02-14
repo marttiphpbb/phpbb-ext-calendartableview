@@ -1,17 +1,17 @@
 <?php
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\calendarmonthview\event;
+namespace marttiphpbb\calendartableview\event;
 
 use phpbb\controller\helper;
 use phpbb\language\language;
 use phpbb\user;
 use phpbb\event\data as event;
-use marttiphpbb\calendarmonthview\util\cnst;
+use marttiphpbb\calendartableview\util\cnst;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class viewing_listener implements EventSubscriberInterface
@@ -49,7 +49,7 @@ class viewing_listener implements EventSubscriberInterface
 			$time_offset = $now->getOffset();
 			$now = phpbb_gmgetdate($now->getTimestamp() + $time_offset);
 
-			$link = $this->helper->route('marttiphpbb_calendarmonthview_page_controller', [
+			$link = $this->helper->route('marttiphpbb_calendartableview_page_controller', [
 				'year'	=> $now['year'],
 				'month'	=> $now['mon'],
 			]);

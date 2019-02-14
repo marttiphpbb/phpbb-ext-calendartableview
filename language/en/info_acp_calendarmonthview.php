@@ -1,7 +1,7 @@
 <?php
 
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
@@ -18,10 +18,10 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, [
 
-	'ACP_MARTTIPHPBB_CALENDARMONTHVIEW'
-	=> 'Calendar Month View',
-	'ACP_MARTTIPHPBB_CALENDARMONTHVIEW_LINKS'
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW'
+	=> 'Calendar Table View',
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_LINKS'
 	=> 'Links',
-	'ACP_MARTTIPHPBB_CALENDARMONTHVIEW_PAGE_RENDERING'
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_PAGE_RENDERING'
 	=> 'Page rendering',
 ]);

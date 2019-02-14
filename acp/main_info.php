@@ -1,30 +1,30 @@
 <?php
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\calendarmonthview\acp;
+namespace marttiphpbb\calendartableview\acp;
 
-use marttiphpbb\calendarmonthview\util\cnst;
+use marttiphpbb\calendartableview\util\cnst;
 
 class main_info
 {
 	function module()
 	{
 		return [
-			'filename'	=> '\marttiphpbb\calendarmonthview\acp\main_module',
+			'filename'	=> '\marttiphpbb\calendartableview\acp\main_module',
 			'title'		=> cnst::L_ACP,
 			'modes'		=> [
 				'links'	=> [
 					'title' => cnst::L_ACP . '_LINKS',
-					'auth' => 'ext_marttiphpbb/calendarmonthview && acl_a_board',
+					'auth' => 'ext_marttiphpbb/calendartableview && acl_a_board',
 					'cat' => [cnst::L_ACP],
 				],
 				'page_rendering'	=> [
 					'title' => cnst::L_ACP . '_PAGE_RENDERING',
-					'auth' => 'ext_marttiphpbb/calendarmonthview && acl_a_board',
+					'auth' => 'ext_marttiphpbb/calendartableview && acl_a_board',
 					'cat' => [cnst::L_ACP],
 				],
 			],

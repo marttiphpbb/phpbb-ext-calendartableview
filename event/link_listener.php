@@ -1,11 +1,11 @@
 <?php
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\calendarmonthview\event;
+namespace marttiphpbb\calendartableview\event;
 
 use phpbb\controller\helper;
 use phpbb\event\data as event;
@@ -41,7 +41,7 @@ class link_listener implements EventSubscriberInterface
 			'month'	=> $event['month'],
 		];
 
-		$link = $this->helper->route('marttiphpbb_calendarmonthview_page_controller', $params);
+		$link = $this->helper->route('marttiphpbb_calendartableview_page_controller', $params);
 
 		$event['link'] = $link;
 	}

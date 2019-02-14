@@ -1,15 +1,15 @@
 <?php
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\calendarmonthview\service;
+namespace marttiphpbb\calendartableview\service;
 
 use phpbb\config\db_text as config_text;
 use phpbb\cache\driver\driver_interface as cache;
-use marttiphpbb\calendarmonthview\util\cnst;
+use marttiphpbb\calendartableview\util\cnst;
 
 class store
 {

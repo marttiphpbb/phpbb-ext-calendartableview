@@ -1,14 +1,14 @@
 <?php
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\calendarmonthview\event;
+namespace marttiphpbb\calendartableview\event;
 
 use phpbb\event\data as event;
-use marttiphpbb\calendarmonthview\util\cnst;
+use marttiphpbb\calendartableview\util\cnst;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class main_listener implements EventSubscriberInterface

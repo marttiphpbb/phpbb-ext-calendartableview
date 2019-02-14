@@ -1,10 +1,10 @@
 {%- include 'overall_header.html' -%}
 
 <p>{{- CURRENT_TIME -}}</p>
-<h2>{{- lang('MARTTIPHPBB_CALENDARMONTHVIEW_MONTH_YEAR', MONTH_NAME, YEAR) -}}</h2>
+<h2>{{- lang('MARTTIPHPBB_CALENDARTABLEVIEW_MONTH_YEAR', MONTH_NAME, YEAR) -}}</h2>
 
-<div class="calendarmonthview">
-	{%- include '@marttiphpbb_calendarmonthview/include/pagination.html' -%}
+<div class="calendartableview">
+	{%- include '@marttiphpbb_calendartableview/include/pagination.html' -%}
 	<div class="month">
 	{%- for w in weeks -%}
 		<div class="week-container">
@@ -54,16 +54,16 @@
 		</div>
 	{%- endfor -%}
 	</div>
-	{%- include '@marttiphpbb_calendarmonthview/include/pagination.html' -%}
+	{%- include '@marttiphpbb_calendartableview/include/pagination.html' -%}
 </div>
 
 {%- include 'jumpbox.html' -%}
 {%- include 'overall_footer.html' -%}
 {%- if LOAD_STYLESHEET -%}
-	{%- INCLUDECSS '@marttiphpbb_calendarmonthview/calendar_page.css' -%}
+	{%- INCLUDECSS '@marttiphpbb_calendartableview/calendar_page.css' -%}
 {%- endif -%}
 {%- if EXTRA_STYLESHEET -%}
 	{%- INCLUDECSS EXTRA_STYLESHEET -%}
 {%- endif -%}
 
-{%- INCLUDEJS '@marttiphpbb_calendarmonthview/js/calendar_page.js' -%}
+{%- INCLUDEJS '@marttiphpbb_calendartableview/js/calendar_page.js' -%}

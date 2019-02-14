@@ -1,13 +1,13 @@
 <?php
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\calendarmonthview\acp;
+namespace marttiphpbb\calendartableview\acp;
 
-use marttiphpbb\calendarmonthview\util\cnst;
+use marttiphpbb\calendartableview\util\cnst;
 
 class main_module
 {
@@ -21,7 +21,7 @@ class main_module
 		$config = $phpbb_container->get('config');
 		$request = $phpbb_container->get('request');
 		$ext_manager = $phpbb_container->get('ext.manager');
-		$store = $phpbb_container->get('marttiphpbb.calendarmonthview.store');
+		$store = $phpbb_container->get('marttiphpbb.calendartableview.store');
 		$phpbb_root_path = $phpbb_container->getParameter('core.root_path');
 
 		$language = $phpbb_container->get('language');

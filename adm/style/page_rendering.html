@@ -1,23 +1,23 @@
-{%- extends '@marttiphpbb_calendarmonthview/base.html' -%}
+{%- extends '@marttiphpbb_calendartableview/base.html' -%}
 
 {%- block heading -%}
-	{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_PAGE_RENDERING') -}}
+	{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_PAGE_RENDERING') -}}
 {%- endblock -%}
 
 {%- block form_content -%}
 	<fieldset>
-		{%- embed '@marttiphpbb_calendarmonthview/include/radio.html' with {'checked': SHOW_TODAY} only -%}
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_TODAY} only -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_TODAY') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TODAY') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				show_today
 			{%- endblock -%}
 		{%- endembed -%}
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/radio.html' with {'checked': FIRST_WEEKDAY} only -%}
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': FIRST_WEEKDAY} only -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_FIRST_WEEKDAY') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_FIRST_WEEKDAY') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				first_weekday
@@ -30,31 +30,31 @@
 			{%- endblock -%}
 		{%- endembed -%}
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/radio.html' with {'checked': SHOW_ISOWEEK} only -%}
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_ISOWEEK} only -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_ISOWEEK') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_ISOWEEK') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				show_isoweek
 			{%- endblock -%}
 		{%- endembed -%}
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/radio.html' with {'checked': SHOW_MOON_PHASE} only -%}
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_MOON_PHASE} only -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_MOON_PHASE') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MOON_PHASE') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				show_moon_phase
 			{%- endblock -%}
 		{%- endembed -%}
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/radio.html' with {'checked': TOPIC_HILIT} only -%}
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': TOPIC_HILIT} only -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_TOPIC_HILIT') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TOPIC_HILIT') -}}
 			{%- endblock -%}
 			{%- block explain -%}
 				<br>
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_TOPIC_HILIT_EXPLAIN') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TOPIC_HILIT_EXPLAIN') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				topic_hilit
@@ -64,32 +64,32 @@
 
 	<fieldset>
 		<legend>
-			{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_TIME_FORMAT') -}}
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TIME_FORMAT') -}}
 		</legend>
 		<p>
-			{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_TIME_FORMAT_EXPLAIN') -}}
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TIME_FORMAT_EXPLAIN') -}}
 		</p>
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/radio.html' with {'checked': DERIVE_USER_TIME_FORMAT} only -%}
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': DERIVE_USER_TIME_FORMAT} only -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_DERIVE_USER_TIME_FORMAT') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_DERIVE_USER_TIME_FORMAT') -}}
 			{%- endblock -%}
 			{%- block explain -%}
 				<br>
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_DERIVE_USER_TIME_FORMAT_EXPLAIN') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_DERIVE_USER_TIME_FORMAT_EXPLAIN') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				derive_user_time_format
 			{%- endblock -%}
 		{%- endembed -%}
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/text.html' -%}
+		{%- embed '@marttiphpbb_calendartableview/include/text.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_DEFAULT_TIME_FORMAT') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_DEFAULT_TIME_FORMAT') -}}
 			{%- endblock -%}
 			{%- block explain -%}
 				<br>
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_DEFAULT_TIME_FORMAT_EXPLAIN', '<a href="http://php.net/manual/en/function.date.php">', '</a>') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_DEFAULT_TIME_FORMAT_EXPLAIN', '<a href="http://php.net/manual/en/function.date.php">', '</a>') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				default_time_format
@@ -102,12 +102,12 @@
 
 	<fieldset>
 		<legend>
-			{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_EVENT_ROWS') -}}
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_EVENT_ROWS') -}}
 		</legend>
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/number.html' -%}
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_MIN_ROWS') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MIN_ROWS') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				min_rows
@@ -118,9 +118,9 @@
 			{%- block attr %} min="1"{%- endblock -%}
 		{%- endembed -%}
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/number.html' -%}
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_MAX_ROWS') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MAX_ROWS') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				max_rows
@@ -134,12 +134,12 @@
 
 	<fieldset>
 		<legend>
-			{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_PAGINATION') -}}
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_PAGINATION') -}}
 		</legend>
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/number.html' -%}
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_PAGINATION_NEIGHBOURS') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_PAGINATION_NEIGHBOURS') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				pag_neighbours
@@ -150,9 +150,9 @@
 			{%- block attr %} min="-1" max="9"{%- endblock -%}
 		{%- endembed -%}
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/radio.html' with {'checked': PAG_SHOW_PREV_NEXT} only -%}
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': PAG_SHOW_PREV_NEXT} only -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_PAGINATION_SHOW_PREV_NEXT') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_PAGINATION_SHOW_PREV_NEXT') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				pag_show_prev_next
@@ -162,29 +162,29 @@
 
 	<fieldset>
 		<legend>
-			{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_STYLESHEET') -}}
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_STYLESHEET') -}}
 		</legend>
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/radio.html' with {'checked': LOAD_STYLESHEET} only -%}
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': LOAD_STYLESHEET} only -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_LOAD_STYLESHEET') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_LOAD_STYLESHEET') -}}
 			{%- endblock -%}
 			{%- block explain -%}
 				<br>
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_LOAD_STYLESHEET_EXPLAIN') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_LOAD_STYLESHEET_EXPLAIN') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				load_stylesheet
 			{%- endblock -%}
 		{%- endembed -%}
 
-		{%- embed '@marttiphpbb_calendarmonthview/include/text.html' -%}
+		{%- embed '@marttiphpbb_calendartableview/include/text.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_EXTRA_STYLESHEET') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_EXTRA_STYLESHEET') -}}
 			{%- endblock -%}
 			{%- block explain -%}
 				<br>
-				{{- lang('ACP_MARTTIPHPBB_CALENDARMONTHVIEW_EXTRA_STYLESHEET_EXPLAIN') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_EXTRA_STYLESHEET_EXPLAIN') -}}
 			{%- endblock -%}
 			{%- block name -%}
 				extra_stylesheet

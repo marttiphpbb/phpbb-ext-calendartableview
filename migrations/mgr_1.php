@@ -1,13 +1,13 @@
 <?php
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\calendarmonthview\migrations;
+namespace marttiphpbb\calendartableview\migrations;
 
-use marttiphpbb\calendarmonthview\util\cnst;
+use marttiphpbb\calendartableview\util\cnst;
 
 class mgr_1 extends \phpbb\db\migration\migration
 {
@@ -30,7 +30,7 @@ class mgr_1 extends \phpbb\db\migration\migration
 				'acp',
 				cnst::L_ACP,
 				[
-					'module_basename'	=> '\marttiphpbb\calendarmonthview\acp\main_module',
+					'module_basename'	=> '\marttiphpbb\calendartableview\acp\main_module',
 					'modes'				=> [
 						'links',
 						'page_rendering',

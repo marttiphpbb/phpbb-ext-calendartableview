@@ -1,19 +1,19 @@
 <?php
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\calendarmonthview\util;
+namespace marttiphpbb\calendartableview\util;
 
 class cnst
 {
-	const FOLDER = 'marttiphpbb/calendarmonthview';
-	const ID = 'marttiphpbb_calendarmonthview';
+	const FOLDER = 'marttiphpbb/calendartableview';
+	const ID = 'marttiphpbb_calendartableview';
 	const PREFIX = self::ID . '_';
 	const CACHE_ID = '_' . self::ID;
-	const L = 'MARTTIPHPBB_CALENDARMONTHVIEW';
+	const L = 'MARTTIPHPBB_CALENDARTABLEVIEW';
 	const L_ACP = 'ACP_' . self::L;
 	const L_MCP = 'MCP_' . self::L;
 	const TPL = '@' . self::ID . '/';

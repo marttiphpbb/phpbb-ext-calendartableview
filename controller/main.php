@@ -1,28 +1,28 @@
 <?php
 
 /**
-* phpBB Extension - marttiphpbb calendarmonthview
+* phpBB Extension - marttiphpbb calendartableview
 * @copyright (c) 2019 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\calendarmonthview\controller;
+namespace marttiphpbb\calendartableview\controller;
 
 use phpbb\event\dispatcher;
 use phpbb\request\request;
 use phpbb\template\twig\twig as template;
 use phpbb\language\language;
 use phpbb\controller\helper;
-use marttiphpbb\calendarmonthview\render\row_container;
-use marttiphpbb\calendarmonthview\value\topic;
-use marttiphpbb\calendarmonthview\value\dayspan;
-use marttiphpbb\calendarmonthview\value\calendar_event;
-use marttiphpbb\calendarmonthview\service\store;
-use marttiphpbb\calendarmonthview\service\user_today;
-use marttiphpbb\calendarmonthview\service\user_time;
-use marttiphpbb\calendarmonthview\service\pagination;
-use marttiphpbb\calendarmonthview\util\cnst;
-use marttiphpbb\calendarmonthview\util\moon_phase;
+use marttiphpbb\calendartableview\render\row_container;
+use marttiphpbb\calendartableview\value\topic;
+use marttiphpbb\calendartableview\value\dayspan;
+use marttiphpbb\calendartableview\value\calendar_event;
+use marttiphpbb\calendartableview\service\store;
+use marttiphpbb\calendartableview\service\user_today;
+use marttiphpbb\calendartableview\service\user_time;
+use marttiphpbb\calendartableview\service\pagination;
+use marttiphpbb\calendartableview\util\cnst;
+use marttiphpbb\calendartableview\util\moon_phase;
 use Symfony\Component\HttpFoundation\Response;
 
 class main
@@ -253,7 +253,7 @@ class main
 
 		make_jumpbox(append_sid($this->root_path . 'viewforum.' . $this->php_ext));
 
-		$title = $this->language->lang('MARTTIPHPBB_CALENDARMONTHVIEW_CALENDAR');
+		$title = $this->language->lang('MARTTIPHPBB_CALENDARTABLEVIEW_CALENDAR');
 		return $this->helper->render('month.html', $title);
 	}
 }

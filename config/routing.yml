@@ -1,20 +1,20 @@
-marttiphpbb_calendarmonthview_page_controller:
+marttiphpbb_calendartableview_page_controller:
     pattern: /calendar/{year}/{month}
-    defaults: { _controller: marttiphpbb.calendarmonthview.controller:page }
+    defaults: { _controller: marttiphpbb.calendartableview.controller:page }
     requirements:
         _method: GET
         year: ^(19|20)[0-9]{2}$
         month: ^[1-9]|1[012]$
 
-marttiphpbb_calendarmonthview_redirect_to_year_controller:
+marttiphpbb_calendartableview_redirect_to_year_controller:
     pattern: /calendar/{year}
-    defaults: { _controller: marttiphpbb.calendarmonthview.redirect_controller:to_year }
+    defaults: { _controller: marttiphpbb.calendartableview.redirect_controller:to_year }
     requirements:
         _method: GET
         year: ^(19|20)[0-9]{2}$
 
-marttiphpbb_calendarmonthview_redirect_to_now_controller:
+marttiphpbb_calendartableview_redirect_to_now_controller:
     pattern: /calendar
-    defaults: { _controller: marttiphpbb.calendarmonthview.redirect_controller:to_now }
+    defaults: { _controller: marttiphpbb.calendartableview.redirect_controller:to_now }
     requirements:
         _method: GET
