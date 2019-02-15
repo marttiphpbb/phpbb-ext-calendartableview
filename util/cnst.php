@@ -25,10 +25,28 @@ class cnst
 		2	=> 'fa-circle-o',
 		3	=> 'fa-adjust',
 	];
+
 	const MOON_LANG = [
 		0	=> 'NEW_MOON',
 		1	=> 'FIRST_QUARTER_MOON',
 		2	=> 'FULL_MOON',
 		3	=> 'THIRD_QUARTER_MOON',
+	];
+
+	const DEFAULT_SETTINGS = [
+		'num_tables'				=> 4,
+		'num_days_one_table'		=> 28,
+		'min_rows'					=> 5,
+		'max_rows'					=> 30,
+		'show_today'				=> true,
+		'show_isoweek'				=> false,
+		'show_moon_phase'			=> false,
+		'topic_hilit'				=> false,
+		'pag_neighbours'			=> 2,
+		'pag_show_prev_next'		=> true,
+		'load_stylesheet'			=> true,
+		'extra_stylesheet'			=> '',
+		'derive_user_time_format'	=> true,
+		'default_time_format'		=> 'H:i',
 	];
 }

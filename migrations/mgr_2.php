@@ -20,24 +20,8 @@ class mgr_2 extends \phpbb\db\migration\migration
 
 	public function update_data()
 	{
-		$data = [
-			'min_rows'					=> 5,
-			'max_rows'					=> 30,
-			'first_weekday'				=> 0,
-			'show_today'				=> true,
-			'show_isoweek'				=> false,
-			'show_moon_phase'			=> false,
-			'topic_hilit'				=> false,
-			'pag_neighbours'			=> 2,
-			'pag_show_prev_next'		=> true,
-			'load_stylesheet'			=> true,
-			'extra_stylesheet'			=> '',
-			'derive_user_time_format'	=> true,
-			'default_time_format'		=> 'H:i',
-		];
-
 		return [
-			['config_text.add', [cnst::ID, serialize($data)]],
+			['config_text.add', [cnst::ID, serialize(cnst::DEFAULT_SETTINGS)]],
 		];
 	}
 }

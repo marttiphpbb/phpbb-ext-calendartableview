@@ -35,10 +35,6 @@ class moon_phase
 		$start_jd -= .5;
 		$end_jd -= .5;
 
-		/**
-		 * (julian time = (unix / 86400) + 2440587.5)
-		 */
-
 		$synodic_month_length = 29.53058868;
 		$deg = pi() / 180;
 		$max_moon_cycles = 100;
