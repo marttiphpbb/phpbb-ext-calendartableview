@@ -38,6 +38,7 @@ class cnst
 		'num_days_one_table'		=> 14,
 		'num_days_offset_menu'		=> 0,
 		'num_days_offset_tag'		=> 7,
+		'num_days_offset_link'		=> 0,
 		'min_rows'					=> 5,
 		'max_rows'					=> 30,
 		'show_today'				=> true,

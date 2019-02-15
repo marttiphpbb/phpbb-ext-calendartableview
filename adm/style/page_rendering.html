@@ -58,6 +58,19 @@
 			{%- block attr %} min="0" max="30"{%- endblock -%}
 		{%- endembed -%}
 
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_LINK') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				num_days_offset_link
+			{%- endblock -%}
+			{%- block value -%}
+				{{- NUM_DAYS_OFFSET_LINK -}}
+			{%- endblock -%}
+			{%- block attr %} min="0" max="30"{%- endblock -%}
+		{%- endembed -%}
+
 		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_TODAY} only -%}
 			{%- block label -%}
 				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TODAY') -}}

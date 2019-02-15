@@ -207,6 +207,16 @@ class store
 		return $this->get_int('num_days_offset_tag');
 	}
 
+	public function set_num_days_offset_link(int $num_days_offset_link):void
+	{
+		$this->set_int('num_days_offset_link', $num_days_offset_link);
+	}
+
+	public function get_num_days_offset_link():int
+	{
+		return $this->get_int('num_days_offset_link');
+	}
+
 	public function set_min_rows(int $min_rows):void
 	{
 		$this->set_int('min_rows', $min_rows);

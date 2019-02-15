@@ -78,6 +78,7 @@ class main_module
 					$store->set_num_days_one_table($request->variable('num_days_one_table', 0));
 					$store->set_num_days_offset_menu($request->variable('num_days_offset_menu', 0));
 					$store->set_num_days_offset_tag($request->variable('num_days_offset_tag', 0));
+					$store->set_num_days_offset_link($request->variable('num_days_offset_link', 0));
 					$store->set_show_today($request->variable('show_today', 0) ? true : false);
 					$store->set_show_isoweek($request->variable('show_isoweek', 0) ? true : false);
 					$store->set_show_moon_phase($request->variable('show_moon_phase', 0) ? true : false);
@@ -97,7 +98,8 @@ class main_module
 					'NUM_TABLES'				=> $store->get_num_tables(),
 					'NUM_DAYS_ONE_TABLE'		=> $store->get_num_days_one_table(),
 					'NUM_DAYS_OFFSET_MENU'		=> $store->get_num_days_offset_menu(),
-					'NUM_DAYS_OFFSET_TAY'		=> $store->get_num_days_offset_tag(),
+					'NUM_DAYS_OFFSET_TAG'		=> $store->get_num_days_offset_tag(),
+					'NUM_DAYS_OFFSET_LINK'		=> $store->get_num_days_offset_link(),
 					'SHOW_TODAY'				=> $store->get_show_today(),
 					'SHOW_ISOWEEK'				=> $store->get_show_isoweek(),
 					'SHOW_MOON_PHASE'			=> $store->get_show_moon_phase(),

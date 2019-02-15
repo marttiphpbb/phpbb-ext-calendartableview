@@ -41,6 +41,8 @@ $lang = array_merge($lang, [
 	=> 'Days offset from today for menu links',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_TAG'
 	=> 'Days offset from event for tag links',
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_LINK'
+	=> 'Days offset for inline view links',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_ISOWEEK'
 	=> 'Display the week number (ISO 1806)',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MOON_PHASE'

@@ -28,6 +28,13 @@ class user_today
 		return phpbb_gmgetdate($now->getTimestamp() + $time_offset);
 	}
 
+	public function get_date_with_day_offset(int $day_offset):array
+	{
+		$now = $this->user->create_datetime();
+		$time_offset = $now->getOffset();
+		return phpbb_gmgetdate($now->getTimestamp() + $time_offset + ($day_offset * 86400));
+	}
+
 	public function get_jd():int
 	{
 		$now = $this->get_date();

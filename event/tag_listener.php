@@ -38,10 +38,27 @@ class tag_listener implements EventSubscriberInterface
 			return;
 		}
 
-		$params = [
-			'year'	=> $event['year'],
-			'month'	=> $event['month'],
-		];
+		$num_days_offset_tag = $this->store->get_num_days_offset_tag();
+
+		if ($num_days_offset_tag)
+		{
+			$start_jd = $event['start_jd'] - $num_days_offset_tag;
+			$start = cal_from_jd($start_jd, CAL_GREGORIAN);
+
+			$params = [
+				'year'	=> $start['year'],
+				'month'	=> $start['month'],
+				'day'	=> $start['day'],
+			];
+		}
+		else
+		{
+			$params = [
+				'year'	=> $event['year'],
+				'month'	=> $event['month'],
+				'day'	=> $event['day'],
+			];
+		}
 
 		if ($this->store->get_topic_hilit())
 		{

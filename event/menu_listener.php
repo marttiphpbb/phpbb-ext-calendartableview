@@ -11,6 +11,7 @@ use phpbb\controller\helper;
 use phpbb\event\data as event;
 use phpbb\auth\auth;
 use marttiphpbb\calendartableview\service\user_today;
+use marttiphpbb\calendartableview\service\store;
 use marttiphpbb\calendartableview\util\cnst;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -19,16 +20,19 @@ class menu_listener implements EventSubscriberInterface
 	protected $helper;
 	protected $user_today;
 	protected $auth;
+	protected $store;
 
 	public function __construct(
 		helper $helper,
 		user_today $user_today,
-		auth $auth
+		auth $auth,
+		store $store
 	)
 	{
 		$this->helper = $helper;
 		$this->user_today = $user_today;
 		$this->auth = $auth;
+		$this->store = $store;
 	}
 
 	static public function getSubscribedEvents():array
@@ -47,11 +51,13 @@ class menu_listener implements EventSubscriberInterface
 			return;
 		}
 
-		$now = $this->user_today->get_date();
+		$num_days_offset_menu = $this->store->get_num_days_offset_menu();
+		$start = $this->user_today->get_date_with_day_offset(-$num_days_offset_menu);
 
 		$link = $this->helper->route('marttiphpbb_calendartableview_page_controller', [
-			'year'	=> $now['year'],
-			'month'	=> $now['mon'],
+			'year'	=> $start['year'],
+			'month'	=> $start['mon'],
+			'day'	=> $start['mday'],
 		]);
 
 		$items[cnst::FOLDER]['links'] = [

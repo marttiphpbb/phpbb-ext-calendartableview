@@ -1,20 +1,8 @@
 marttiphpbb_calendartableview_page_controller:
-    pattern: /calendar/{year}/{month}
+    pattern: /calendar/{year}/{month}/{day}
     defaults: { _controller: marttiphpbb.calendartableview.controller:page }
     requirements:
         _method: GET
         year: ^(19|20)[0-9]{2}$
         month: ^[1-9]|1[012]$
-
-marttiphpbb_calendartableview_redirect_to_year_controller:
-    pattern: /calendar/{year}
-    defaults: { _controller: marttiphpbb.calendartableview.redirect_controller:to_year }
-    requirements:
-        _method: GET
-        year: ^(19|20)[0-9]{2}$
-
-marttiphpbb_calendartableview_redirect_to_now_controller:
-    pattern: /calendar
-    defaults: { _controller: marttiphpbb.calendartableview.redirect_controller:to_now }
-    requirements:
-        _method: GET
+        day: ^[1-9]|[12][012]|3[01]$

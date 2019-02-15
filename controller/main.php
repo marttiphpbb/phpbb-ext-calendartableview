@@ -67,27 +67,18 @@ class main
 		$this->user_time = $user_time;
 	}
 
-	public function page(int $year, int $month):Response
+	public function page(int $year, int $month, int $day):Response
 	{
 		$this->language->add_lang('calendar_page', cnst::FOLDER);
 
+		$num_tables = $this->store->get_num_tables();
+		$num_days_one_table = $this->store->get_num_days_one_table();
+		$num_days = $num_tables * $num_days_one_table;
+
 		$today_jd = $this->user_today->get_jd();
 
-		$month_start_jd = cal_to_jd(CAL_GREGORIAN, $month, 1, $year);
-		$month_days_num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-		$month_end_jd = $month_start_jd + $month_days_num;
-		$month_start_weekday = jddayofweek($month_start_jd);
-
-		$first_weekday = $this->store->get_first_weekday();
-		$days_prefill = $month_start_weekday - $first_weekday;
-		$days_prefill += $days_prefill < 0 ? 7 : 0;
-
-		$days_postfill = 6 - (($month_days_num + $days_prefill) % 7);
-		$days_postfill = $days_postfill == 6 ? -1 : $days_postfill;
-
-		$start_jd = $month_start_jd - $days_prefill;
-		$end_jd = $month_end_jd + $days_postfill;
-		$days_num = $end_jd - $start_jd;
+		$start_jd = cal_to_jd(CAL_GREGORIAN, $month, $day, $year);
+		$end_jd = $start_jd + $num_days - 1;
 
 		if ($this->store->get_show_moon_phase())
 		{
@@ -244,16 +235,11 @@ class main
 			$col++;
 		}
 
-		$this->pagination->render(
-			$year,
-			$month,
-			$this->store->get_pag_show_prev_next(),
-			$this->store->get_pag_neighbours()
-		);
+		$this->pagination->render($start_jd, $num_days_one_table);
 
 		make_jumpbox(append_sid($this->root_path . 'viewforum.' . $this->php_ext));
 
 		$title = $this->language->lang('MARTTIPHPBB_CALENDARTABLEVIEW_CALENDAR');
-		return $this->helper->render('month.html', $title);
+		return $this->helper->render('calendar.html', $title);
 	}
 }
