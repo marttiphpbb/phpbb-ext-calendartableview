@@ -167,14 +167,44 @@ class store
 		return $this->get_boolean('topic_hilit');
 	}
 
-	public function set_first_weekday(int $first_weekday):void
+	public function set_num_tables(int $num_tables):void
 	{
-		$this->set_int('first_weekday', $first_weekday);
+		$this->set_int('num_tables', $num_tables);
 	}
 
-	public function get_first_weekday():int
+	public function get_num_tables():int
 	{
-		return $this->get_int('first_weekday');
+		return $this->get_int('num_tables');
+	}
+
+	public function set_num_days_one_table(int $num_days_one_table):void
+	{
+		$this->set_int('num_days_one_table', $num_days_one_table);
+	}
+
+	public function get_num_days_one_table():int
+	{
+		return $this->get_int('num_days_one_table');
+	}
+
+	public function set_num_days_offset_menu(int $num_days_offset_menu):void
+	{
+		$this->set_int('num_days_offset_menu', $num_days_offset_menu);
+	}
+
+	public function get_num_days_offset_menu():int
+	{
+		return $this->get_int('num_days_offset_menu');
+	}
+
+	public function set_num_days_offset_tag(int $num_days_offset_tag):void
+	{
+		$this->set_int('num_days_offset_tag', $num_days_offset_tag);
+	}
+
+	public function get_num_days_offset_tag():int
+	{
+		return $this->get_int('num_days_offset_tag');
 	}
 
 	public function set_min_rows(int $min_rows):void
@@ -195,26 +225,6 @@ class store
 	public function get_max_rows():int
 	{
 		return $this->get_int('max_rows');
-	}
-
-	public function set_pag_neighbours(int $pag_neighbours):void
-	{
-		$this->set_int('pag_neighbours', $pag_neighbours);
-	}
-
-	public function get_pag_neighbours():int
-	{
-		return $this->get_int('pag_neighbours');
-	}
-
-	public function set_pag_show_prev_next(bool $pag_show_prev_next):void
-	{
-		$this->set_boolean('pag_show_prev_next', $pag_show_prev_next);
-	}
-
-	public function get_pag_show_prev_next():bool
-	{
-		return $this->get_boolean('pag_show_prev_next');
 	}
 
 	public function set_load_stylesheet(bool $load_stylesheet):void

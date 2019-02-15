@@ -33,6 +33,14 @@ $lang = array_merge($lang, [
 // page_rendering
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_PAGE'
 	=> 'Calendar page',
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_TABLES'
+	=> 'Number of tables',
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_ONE_TABLE'
+	=> 'Number of days for each table',
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_MENU'
+	=> 'Days offset from today for menu links',
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_TAG'
+	=> 'Days offset from event for tag links',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_ISOWEEK'
 	=> 'Display the week number (ISO 1806)',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MOON_PHASE'
@@ -43,8 +51,6 @@ $lang = array_merge($lang, [
 	=> 'when linked from a calendar topic tag',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TODAY'
 	=> 'Mark today´s date',
-	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_FIRST_WEEKDAY'
-	=> 'First day of the week',
 
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TIME_FORMAT'
 	=> 'Time format',
@@ -66,12 +72,6 @@ $lang = array_merge($lang, [
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MAX_ROWS'
 	=> 'Maximum event rows',
 
-	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_PAGINATION'
-	=> 'Pagination',
-	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_PAGINATION_NEIGHBOURS'
-	=> 'Number of neighbour months',
-	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_PAGINATION_SHOW_PREV_NEXT'
-	=> 'Show previous/next month links',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_STYLESHEET'
 	=> 'Stylesheet',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_LOAD_STYLESHEET'

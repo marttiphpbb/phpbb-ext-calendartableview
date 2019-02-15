@@ -35,15 +35,15 @@ class cnst
 
 	const DEFAULT_SETTINGS = [
 		'num_tables'				=> 4,
-		'num_days_one_table'		=> 28,
+		'num_days_one_table'		=> 14,
+		'num_days_offset_menu'		=> 0,
+		'num_days_offset_tag'		=> 7,
 		'min_rows'					=> 5,
 		'max_rows'					=> 30,
 		'show_today'				=> true,
 		'show_isoweek'				=> false,
 		'show_moon_phase'			=> false,
 		'topic_hilit'				=> false,
-		'pag_neighbours'			=> 2,
-		'pag_show_prev_next'		=> true,
 		'load_stylesheet'			=> true,
 		'extra_stylesheet'			=> '',
 		'derive_user_time_format'	=> true,
