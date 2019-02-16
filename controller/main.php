@@ -122,7 +122,7 @@ class main
 		for ($jd = $start_jd; $jd <= $end_jd; $jd++)
 		{
 			$first_day = !$col;
-			$weekcol = $col % 7;
+			$table_col = $col % $num_days_one_table;
 			$day = cal_from_jd($jd, CAL_GREGORIAN);
 
 			if ($day['dayname'] === 'Monday' || $first_day)
@@ -155,13 +155,13 @@ class main
 				}
 			}
 
-			if (!$weekcol)
+			if (!$table_col)
 			{
-				$this->template->assign_block_vars('weeks', []);
+				$this->template->assign_block_vars('tables', []);
 
 				foreach($rows as $row)
 				{
-					$this->template->assign_block_vars('weeks.eventrows', []);
+					$this->template->assign_block_vars('tables.eventrows', []);
 
 					$week_end_jd = $jd + 6;
 
@@ -213,7 +213,7 @@ class main
 				$moon_icon = false;
 			}
 
-			$this->template->assign_block_vars('weeks.weekdays', [
+			$this->template->assign_block_vars('tables.weekdays', [
 				'JD'				=> $jd,
 				'WEEKDAY'			=> $day['dow'],
 				'WEEKDAY_NAME'		=> $this->language->lang(['datetime', $day['dayname']]),
@@ -229,13 +229,13 @@ class main
 				'MOON_TITLE'		=> $moon_title,
 				'MOON_ICON'			=> $moon_icon,
 				'COL'				=> $col,
-				'WEEKCOL'			=> $weekcol,
+				'TABLE_COL'			=> $table_col,
 			]);
 
 			$col++;
 		}
 
-		$this->pagination->render($start_jd, $num_days_one_table);
+//		$this->pagination->render($start_jd, $num_days_one_table);
 
 		make_jumpbox(append_sid($this->root_path . 'viewforum.' . $this->php_ext));
 

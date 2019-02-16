@@ -72,12 +72,6 @@ services:
             - '@marttiphpbb.calendartableview.user_today'
             - '@marttiphpbb.calendartableview.user_time'
 
-    marttiphpbb.calendartableview.redirect_controller:
-        class: marttiphpbb\calendartableview\controller\redirect
-        arguments:
-            - '@marttiphpbb.calendartableview.user_today'
-            - '@controller.helper'
-
     marttiphpbb.calendartableview.pagination:
         class: marttiphpbb\calendartableview\service\pagination
         arguments:
