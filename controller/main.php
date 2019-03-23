@@ -57,7 +57,6 @@ class main
 		$this->request = $request;
 		$this->php_ext = $php_ext;
 		$this->template = $template;
-		$this->twig_environment = $twig_environment;
 		$this->language = $language;
 		$this->helper = $helper;
 		$this->root_path = $root_path;
@@ -110,14 +109,58 @@ class main
 		foreach($events as $e)
 		{
 			$topic = new topic($e['topic_id'], $e['forum_id'], $e['topic_title']);
-			$calendar_event = new calendar_event($e['start_jd'], $e['end_jd'], $topic, $dayspan);
+			$calendar_event = new calendar_event($e['start_jd'], $e['end_jd'], $topic);
 			$row_container->add_calendar_event($calendar_event);
 		}
 
 		$col = 0;
 		$year_begin_jd = cal_to_jd(CAL_GREGORIAN, 1, 1, $year);
 		$total_dayspan = new dayspan($start_jd, $end_jd);
-		$rows = $row_container->get_rows();
+//		$rows = $row_container->get_rows();
+		$start_row = 0;
+		$end_row = $row_container->get_row_count() - 1;
+
+		$current_block_ary = [[
+			'dayspan' 		=> $total_dayspan,
+			'start_row' 	=> $start_row,
+			'end_row'		=> $end_row,
+		]];
+
+		$row_block_ary = [];
+
+		for ($row_index = 0; $row_index < $end_row; $row_index++)
+		{
+			$row_block_ary[$row_index] = [];
+			$row = $row_container->get_row($row_index);
+			$segments = $row->get_segments($total_dayspan);
+
+			foreach ($segments as $segment)
+			{
+				if ($segment instanceof calendar_event)
+				{
+					$row_block_ary[$row_index][] = [
+						'segment'	=> $segment,
+						'row_start'	=> $row_index,
+						'row_end'	=> $row_index,
+					];
+				}
+				else
+				{
+					foreach ($current_block_ary as $block)
+					{
+						$new_dayspan = $segment->create_from_overlap($block['dayspan']);
+						$dayspan = $block['dayspan'];
+					}
+				}
+			}
+		}
+
+		for($table_index = 0; $table_index < $num_tables; $table_index++)
+		{
+			$table_start_jd = $start_jd + $num_days_one_table * $table_index;
+			$table_dayspan = new dayspan($table_start_jd, $table_start_jd + $num_days_one_table - 1);
+
+		}
 
 		for ($jd = $start_jd; $jd <= $end_jd; $jd++)
 		{
@@ -150,7 +193,7 @@ class main
 						'SHOW_MOON_PHASE'	=> $this->store->get_show_moon_phase(),
 						'LOAD_STYLESHEET'	=> $this->store->get_load_stylesheet(),
 						'EXTRA_STYLESHEET'	=> $this->store->get_extra_stylesheet(),
-						'EVENT_ROW_COUNT'	=> count($rows),
+						'EVENT_ROW_COUNT'	=> $row_container->get_row_count(),
 					]);
 				}
 			}

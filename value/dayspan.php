@@ -100,7 +100,7 @@ class dayspan
 
 	public function get_duration():int
 	{
-		return $this->end_jd - $this->start_jd + 1;
+		return ($this->end_jd - $this->start_jd + 1);
 	}
 
 	public function compare_start_with(dayspan $dayspan):int
@@ -141,6 +141,19 @@ class dayspan
 	public function create_with_end_jd(int $end_jd):dayspan
 	{
 		return new dayspan($this->start_jd, $end_jd);
+	}
+
+	public function create_from_overlap(dayspan $dayspan):?dayspan
+	{
+		$start_jd = max($this->start_jd, $dayspan->get_start_jd());
+		$end_jd = min($this->end_jd, $dayspan->get_end_jd());
+
+		if ($start_jd <= $end_jd)
+		{
+			return new dayspan($start_jd, $end_jd);
+		}
+
+		return null;
 	}
 
 	public function get_overlap_day_count(dayspan $dayspan):int
