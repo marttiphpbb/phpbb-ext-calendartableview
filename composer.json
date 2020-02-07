@@ -1,12 +1,12 @@
 {
 	"name": "marttiphpbb/calendartableview",
 	"type": "phpbb-extension",
-	"description": "Calendar Table View Extension for phpBB 3.2",
+	"description": "Calendar Table View Extension for phpBB 3.3",
 	"homepage": "https://github.com/marttiphpbb/phpbb-ext-calendartableview",
 	"version": "0.1.0",
 	"time": "2019-02-17",
 	"keywords": ["phpbb", "extension", "calendar", "view", "table"],
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-only",
 	"authors": [{
 		"name": "martti",
 		"email": "info@martti.be",
@@ -19,7 +19,7 @@
 	"extra": {
 		"display-name": "Calendar Table View",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.2.5"
+			"phpbb/phpbb": ">=3.3.0"
 		},
 		"version-check": {
 			"host": "marttiphpbb.github.io",

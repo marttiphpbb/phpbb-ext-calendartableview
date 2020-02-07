@@ -1,7 +1,7 @@
 <?php
 /**
 * @package phpBB Extension - marttiphpbb calendartableview
-* @copyright (c) 2019 marttiphpbb <info@martti.be>
+* @copyright (c) 2019 - 2020 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 * Based on:
 * Calculations of moon's phase and distance are based on the

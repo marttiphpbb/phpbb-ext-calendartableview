@@ -1,7 +1,7 @@
 <?php
 /**
 * phpBB Extension - marttiphpbb calendartableview
-* @copyright (c) 2019 marttiphpbb <info@martti.be>
+* @copyright (c) 2019 - 2020 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
@@ -13,16 +13,14 @@ class main_module
 {
 	var $u_action;
 
-	function main($id, $mode)
+	function main($id, $mode):void
 	{
 		global $phpbb_container;
 
 		$template = $phpbb_container->get('template');
-		$config = $phpbb_container->get('config');
 		$request = $phpbb_container->get('request');
 		$ext_manager = $phpbb_container->get('ext.manager');
 		$store = $phpbb_container->get('marttiphpbb.calendartableview.store');
-		$phpbb_root_path = $phpbb_container->getParameter('core.root_path');
 
 		$language = $phpbb_container->get('language');
 		$language->add_lang('acp', cnst::FOLDER);

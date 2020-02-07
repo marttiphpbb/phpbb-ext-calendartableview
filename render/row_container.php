@@ -2,7 +2,7 @@
 
 /**
 * phpBB Extension - marttiphpbb calendartableview
-* @copyright (c) 2019 marttiphpbb <info@martti.be>
+* @copyright (c) 2019 - 2020 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
@@ -54,13 +54,13 @@ class row_container
 		}
 	}
 
-	private function ekey(int $row_index, int $jd):string
+	private function block_key(int $row_index, int $jd):string
 	{
 		$row_index = max(self::MIN_DAY, $row_index);
 		return (string) $row_index . '_' . (string) $jd;
 	}
 
-	private function rkey(int $jd):string
+	private function jd_key(int $jd):string
 	{
 		return '_' . (string) $jd;
 	}
@@ -116,10 +116,10 @@ class row_container
 		$end_row = $row_count - 1;
 		$row_def_ary = [];
 
-		$ekey = $this->ekey(0, 0);
+		$block_key = $this->block_key(0, 0);
 		$this->ev_loc_insert(self::MIN_DAY);
-		$this->end_ary[$ekey] = $end_row;
-		$this->end_refs[self::MIN_DAY] = $ekey;
+		$this->end_ary[$block_key] = $end_row;
+		$this->end_refs[self::MIN_DAY] = $block_key;
 
 		for ($row_index = 0; $row_index < $row_count; $row_index++)
 		{
@@ -132,49 +132,50 @@ class row_container
 
 				if ($prev_jd !== $start_jd)
 				{
-					$prev_ekey = $this->end_refs[$prev_jd];
-					$prev_end_row = $this->end_ary[$prev_ekey];
+					$prev_block_key = $this->end_refs[$prev_jd];
+					$prev_end_row = $this->end_ary[$prev_block_key];
 
 					if ($prev_end_row !== $row_index - 1)
 					{
-						[$prev_row] = explode('_', $prev_ekey);
-						$ekey = $this->ekey($prev_row, $start_jd);
-						$this->end_ary[$ekey] = $row_index - 1;
+						[$prev_row] = explode('_', $prev_block_key);
+						$block_key = $this->block_key($prev_row, $start_jd);
+						$this->end_ary[$block_key] = $row_index - 1;
 					}
 				}
 
-				$ekey = $this->ekey($row_index, $start_jd);
-				$this->end_ary[$ekey] = $row_index;
-				$this->event_ref_ary[$ekey] = $event;
+				$block_key = $this->block_key($row_index, $start_jd);
+				$this->end_ary[$block_key] = $row_index;
+				$this->event_ref_ary[$block_key] = $event;
 
 				if ($end_row !== $row_index)
 				{
 					$next_row_index = $row_index + 1;
-					$ekey = $this->ekey((int) $next_row_index, $start_jd);
-					$this->end_ary[$ekey] = $end_row;
-					$this->end_refs[$start_jd] = $ekey;
+					$block_key = $this->block_key((int) $next_row_index, $start_jd);
+					$this->end_ary[$block_key] = $end_row;
+					$this->end_refs[$start_jd] = $block_key;
 				}
 
 				$next_jd = $event->get_first_jd_after();
 				$from_to_before_ary = $this->get_from_to_before($start_jd, $next_jd);
 
-				$rkey = $this->rkey($event->get_start_jd());
+				$jd_key = $this->jd_key($event->get_start_jd());
 
-				if (isset($row_def_ary[$rkey]))
+				if (isset($row_def_ary[$jd_key]))
 				{
-					$ekey = $row_def_ary[$rkey];
-					if ($this->end_ary[$ekey] === $row_index - 1)
+					$block_key = $row_def_ary[$jd_key];
+
+					if ($this->end_ary[$block_key] === $row_index - 1)
 					{
 
 					}
 				}
 
-				$ekey = $this->ekey($row_index, $event->get_start_jd());
-				$row_def_ary[$rkey] = $ekey;
-				$this->end_ary[$ekey] = $row_index;
-				$this->event_ref_ary[$ekey] = $event;
-				$ekey = $this->ekey($row_index, $event->get_first_jd_after());
-				$this->end_ary[$ekey] = $end_row;
+				$block_key = $this->block_key($row_index, $event->get_start_jd());
+				$row_def_ary[$jd_key] = $block_key;
+				$this->end_ary[$block_key] = $row_index;
+				$this->event_ref_ary[$block_key] = $event;
+				$block_key = $this->block_key($row_index, $event->get_first_jd_after());
+				$this->end_ary[$block_key] = $end_row;
 
 				if ($row_index)
 				{

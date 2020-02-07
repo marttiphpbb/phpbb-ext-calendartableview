@@ -1,7 +1,7 @@
 <?php
 /**
 * phpBB Extension - marttiphpbb calendartableview
-* @copyright (c) 2019 marttiphpbb <info@martti.be>
+* @copyright (c) 2019 - 2020 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
@@ -11,14 +11,14 @@ use marttiphpbb\calendartableview\util\cnst;
 
 class mgr_1 extends \phpbb\db\migration\migration
 {
-	static public function depends_on()
+	static public function depends_on():array
 	{
 		return [
-			'\phpbb\db\migration\data\v32x\v325',
+			'\phpbb\db\migration\data\v33x\v330',
 		];
 	}
 
-	public function update_data()
+	public function update_data():array
 	{
 		return [
 			['module.add', [
