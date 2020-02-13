@@ -52,10 +52,22 @@ class main_module
 
 					$menuitems_acp->process_form(cnst::FOLDER, 'links');
 
+					$store->transaction_start();
+					$store->set_num_days_offset_menu($request->variable('num_days_offset_menu', 0));
+					$store->set_num_days_offset_tag($request->variable('num_days_offset_tag', 0));
+					$store->set_num_days_offset_link($request->variable('num_days_offset_link', 0));
+					$store->set_show_today();
+
 					trigger_error($language->lang(cnst::L_ACP . '_SETTINGS_SAVED') . adm_back_link($this->u_action));
 				}
 
 				$menuitems_acp->assign_to_template(cnst::FOLDER);
+
+				$template->assign_vars([
+					'NUM_DAYS_OFFSET_MENU'		=> $store->get_num_days_offset_menu(),
+					'NUM_DAYS_OFFSET_TAG'		=> $store->get_num_days_offset_tag(),
+					'NUM_DAYS_OFFSET_LINK'		=> $store->get_num_days_offset_link(),
+				]);
 
 			break;
 
@@ -74,12 +86,12 @@ class main_module
 					$store->transaction_start();
 					$store->set_num_tables($request->variable('num_tables', 0));
 					$store->set_num_days_one_table($request->variable('num_days_one_table', 0));
-					$store->set_num_days_offset_menu($request->variable('num_days_offset_menu', 0));
-					$store->set_num_days_offset_tag($request->variable('num_days_offset_tag', 0));
-					$store->set_num_days_offset_link($request->variable('num_days_offset_link', 0));
 					$store->set_show_today($request->variable('show_today', 0) ? true : false);
+
+/*
 					$store->set_show_isoweek($request->variable('show_isoweek', 0) ? true : false);
 					$store->set_show_moon_phase($request->variable('show_moon_phase', 0) ? true : false);
+*/
 					$store->set_topic_hilit($request->variable('topic_hilit', 0) ? true : false);
 					$store->set_derive_user_time_format($request->variable('derive_user_time_format', 0) ? true : false);
 					$store->set_default_time_format($request->variable('default_time_format', ''));
@@ -99,8 +111,10 @@ class main_module
 					'NUM_DAYS_OFFSET_TAG'		=> $store->get_num_days_offset_tag(),
 					'NUM_DAYS_OFFSET_LINK'		=> $store->get_num_days_offset_link(),
 					'SHOW_TODAY'				=> $store->get_show_today(),
+/*
 					'SHOW_ISOWEEK'				=> $store->get_show_isoweek(),
 					'SHOW_MOON_PHASE'			=> $store->get_show_moon_phase(),
+*/
 					'TOPIC_HILIT'				=> $store->get_topic_hilit(),
 					'DERIVE_USER_TIME_FORMAT'	=> $store->get_derive_user_time_format(),
 					'DEFAULT_TIME_FORMAT'		=> $store->get_default_time_format(),

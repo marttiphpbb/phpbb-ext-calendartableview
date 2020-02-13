@@ -1,5 +1,5 @@
 marttiphpbb_calendartableview_page_controller:
-    pattern: /calendar/{year}/{month}/{day}
+    path: /calendar/{year}/{month}/{day}
     defaults: { _controller: marttiphpbb.calendartableview.controller:page }
     requirements:
         _method: GET

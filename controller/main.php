@@ -70,9 +70,22 @@ class main
 	{
 		$this->language->add_lang('calendar_page', cnst::FOLDER);
 
+		$row_ary = [];
+		$col_ary = [];
+		$topic_ary = [];
+
+		$month_top_en = $this->store->get_month_top_en();
+		$month_bottom_en = $this->store->get_month_bottom_en();
+
+		$min_rows = $this->store->get_min_rows();
+		$mex_rows = $this->store->get_max_rows();
+
+		$row_count = $min_rows;
+
 		$num_tables = $this->store->get_num_tables();
 		$num_days_one_table = $this->store->get_num_days_one_table();
 		$num_days = $num_tables * $num_days_one_table;
+		$end_col = $num_days - 1;
 
 		$today_jd = $this->user_today->get_jd();
 
@@ -106,66 +119,154 @@ class main
 
 		$row_container = new row_container($this->store->get_min_rows(), $this->store->get_max_rows());
 
+		error_log(json_encode($events));
+
 		foreach($events as $e)
 		{
-			$topic = new topic($e['topic_id'], $e['forum_id'], $e['topic_title']);
-			$calendar_event = new calendar_event($e['start_jd'], $e['end_jd'], $topic);
-			$row_container->add_calendar_event($calendar_event);
-		}
-
-		$col = 0;
-		$year_begin_jd = cal_to_jd(CAL_GREGORIAN, 1, 1, $year);
-		$total_dayspan = new dayspan($start_jd, $end_jd);
-//		$rows = $row_container->get_rows();
-		$start_row = 0;
-		$end_row = $row_container->get_row_count() - 1;
-
-		$current_block_ary = [[
-			'dayspan' 		=> $total_dayspan,
-			'start_row' 	=> $start_row,
-			'end_row'		=> $end_row,
-		]];
-
-		$row_block_ary = [];
-
-		for ($row_index = 0; $row_index < $end_row; $row_index++)
-		{
-			$row_block_ary[$row_index] = [];
-			$row = $row_container->get_row($row_index);
-			$segments = $row->get_segments($total_dayspan);
-
-			foreach ($segments as $segment)
+			if ($e['end_jd'] < $start_jd)
 			{
-				if ($segment instanceof calendar_event)
+				continue;
+			}
+
+			if ($e['start_jd'] > $end_jd)
+			{
+				continue;
+			}
+
+			$topic_ary[$e['topic_id']] = $e;
+
+			$e_start_col = max($start_jd - $e['start_jd'], 0);
+			$e_end_col = min($end_jd - $e['end_jd'], $end_col);
+
+			for ($row_index = 0; $row_index < $max_rows; $row_index++)
+			{
+				if (!isset($row_ary[$row_index]))
 				{
-					$row_block_ary[$row_index][] = [
-						'segment'	=> $segment,
-						'row_start'	=> $row_index,
-						'row_end'	=> $row_index,
-					];
+					$row_ary[$row_index] = [];
 				}
-				else
+
+				$overlaps = false;
+				$ev_index = 0;
+
+				foreach ($row_ary[$row_index] as $ev_index => $ev)
 				{
-					foreach ($current_block_ary as $block)
+					if ($e_start_col <= $ev['end']
+						&& $e_end_col >= $ev['start'])
 					{
-						$new_dayspan = $segment->create_from_overlap($block['dayspan']);
-						$dayspan = $block['dayspan'];
+						$overlaps = true;
+						break;
 					}
+
+					if ($e_end_col < $ev['start'])
+					{
+						break;
+					}
+				}
+
+				if (!$overlaps)
+				{
+					array_splice($row_ary[$row_index], $ev_index, 0, [[
+						'start'		=> $e_col_start,
+						'end'		=> $e_col_end,
+					]]);
+
+					$col_ary[$e_col_start][$row_index] = [
+						'start'		=> $e_col_start,
+						'end'		=> $e_col_end,
+						'topic'		=> $e['topic_id'],
+					];
+
+					$col_ary[$e_col_end + 1][$row_index] = [
+						'free'		=> true,
+					];
+
+					$row_count = max($row_count, $row_index + 1);
+
+					break;
 				}
 			}
 		}
 
-		for($table_index = 0; $table_index < $num_tables; $table_index++)
+		$year_begin_jd = cal_to_jd(CAL_GREGORIAN, 1, 1, $year);
+
+		for ($table = 0; $table < $num_tables; $table)
 		{
-			$table_start_jd = $start_jd + $num_days_one_table * $table_index;
-			$table_dayspan = new dayspan($table_start_jd, $table_start_jd + $num_days_one_table - 1);
+			$this->template->assign_block_vars('tables', []);
+
+			$table_start = $num_days_one_table * $table;
+			$table_next = $num_days_one_table + $table_start;
+			$table_start_jd = $start_jd + $table_start;
+
+			$new_table = true;
+
+			for ($col = $table_start; $col < $table_next; $col++)
+			{
+				$jd = $start_jd + $col;
+				$day = cal_from_jd($jd, CAL_GREGORIAN);
+
+				if ($day['day'] === 1 || $new_table)
+				{
+					$month_day_count = cal_days_in_month(CAL_GREGORIAN, $day['month'], $day['year']);
+					$span = min($month_day_count - $day['day'] + 1, $table_next - $col);
+
+					$table_month_tpl = [
+						'MONTH'				=> $day['month'],
+						'MONTH_NAME'		=> $this->language->lang(['datetime', $day['monthname']]),
+						'MONTH_ABBREV'		=> $this->language->lang(['datetime', $month_abbrev]),
+						'MONTH_CLASS'		=> strtolower($day['abbrevmonth']),
+						'YEAR'				=> $day['year'],
+						'SPAN'				=> $span,
+					];
+
+					$this->template->assign_block_vars('tables.months', $table_month_tpl);
+
+					if ($month_top_en)
+					{
+						$this->template->assign_block_vars('tables.rows.', $table_month_tpl);
+					}
+
+
+					$new_table = false;
+				}
+
+				if ($new_table)
+				{
+					$new_table = false;
+				}
+
+
+
+				$this->template->assing_block_vars('tables.days', [
+					'COL'				=> $col,
+					'JD'				=> $jd,
+					'WEEKDAY'			=> $day['dow'],
+					'WEEKDAY_NAME'		=> $this->language->lang(['datetime', $day['dayname']]),
+					'WEEKDAY_ABBREV'	=> $this->language->lang(['datetime', $day['abbrevdayname']]),
+					'WEEKDAY_CLASS'		=> strtolower($day['abbrevdayname']),
+					'MONTHDAY'			=> $day['day'],
+					'MONTH'				=> $day['month'],
+					'MONTH_NAME'		=> $month_name,
+					'MONTH_ABBREV'		=> $month_abbrev,
+					'YEAR'				=> $day['year'],
+					'YEARDAY'			=> $year_begin_jd - $jd + 1,
+					'ISOWEEK'			=> $isoweek,
+					'MOON_TITLE'		=> $moon_title,
+					'MOON_ICON'			=> $moon_icon,
+					'COL'				=> $col,
+					'TABLE_COL'			=> $table_col,
+				])
+
+			}
+
 
 		}
 
-		for ($jd = $start_jd; $jd <= $end_jd; $jd++)
+		for ($col = 0; $col <= $num_days; $col++)
 		{
+/*
 			$first_day = !$col;
 			$table_col = $col % $num_days_one_table;
+*/
 			$day = cal_from_jd($jd, CAL_GREGORIAN);
 
 			if ($day['dayname'] === 'Monday' || $first_day)
@@ -173,7 +274,7 @@ class main
 				$isoweek = gmdate('W', jdtounix($jd));
 			}
 
-			if ($day['day'] === 1 || $first_day)
+			if ($table_first_day || $day['month'] !== $month)
 			{
 				$month_abbrev = $day['abbrevmonth'] === 'May' ? 'May_short' : $day['abbrevmonth'];
 				$month_abbrev = $this->language->lang(['datetime', $month_abbrev]);

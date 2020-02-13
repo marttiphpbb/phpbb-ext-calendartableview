@@ -9,6 +9,6 @@ namespace marttiphpbb\calendartableview\value;
 
 use marttiphpbb\calendartableview\value\span;
 
-class dayspan extends span
+class rowspan extends span
 {
 }

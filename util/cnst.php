@@ -42,12 +42,46 @@ class cnst
 		'min_rows'					=> 5,
 		'max_rows'					=> 30,
 		'show_today'				=> true,
-		'show_isoweek'				=> false,
-		'show_moon_phase'			=> false,
+		'header_en'					=> true,
+		'header'				=> [
+			['month'], ['weekday'], ['monthday'], ['isoweek', 'moonphase'],
+		],
+		'repeat_header_en'		=> false,
+		'repeat_header_rows'	=> 15,
+		'repeat_header'			=> [
+			['monthday'],
+		],
+		'footer_en'					=> true,
+		'footer'					=> [
+			['monthday'], ['month'],
+		],
 		'topic_hilit'				=> false,
 		'load_stylesheet'			=> true,
 		'extra_stylesheet'			=> '',
 		'derive_user_time_format'	=> true,
 		'default_time_format'		=> 'H:i',
+	];
+
+	const header_blocks = [
+		'month'		=> [
+			'allow_override'	=> false,
+			'num'				=> 1,
+		],
+		'monthday'	=> [
+			'allow_override'	=> true,
+			'num'				=> 1,
+		],
+		'weekday'	=> [
+
+		],
+		'moonphase'	=> [
+
+		],
+		'isoweek'	=> [
+
+		],
+		'blank'		=> [
+			'num'		=> 5,
+		],
 	];
 }

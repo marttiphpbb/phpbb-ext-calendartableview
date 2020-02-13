@@ -7,25 +7,24 @@
 
 namespace marttiphpbb\calendartableview\value;
 
-use marttiphpbb\calendartableview\value\topic;
-use marttiphpbb\calendartableview\value\span;
+use marttiphpbb\calendartableview\value\dayspan;
 
-class calendar_event extends span
+class blockspan extends dayspan
 {
-	protected $topic;
+	protected $rowspan;
 
 	public function __construct(
 		int $start_jd,
 		int $end_jd,
-		topic $topic
+		rowspan $rowspan
 	)
 	{
 		parent::__construct($start_jd, $end_jd);
-		$this->topic = $topic;
+		$this->rowspan = $rowspan;
 	}
 
-	public function get_topic():topic
+	public function get_rowspan():rowspan
 	{
-		return $this->topic;
+		return $this->rowspan;
 	}
 }

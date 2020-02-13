@@ -6,6 +6,7 @@
 
 {%- block form_content -%}
 	<fieldset>
+		<legend>Menu links</legend>
 		{%- embed '@marttiphpbb_menuitems/dl.html' with {'name': 'links'} -%}
 			{%- block label -%}
 				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_LINKS') -}}
@@ -14,6 +15,49 @@
 				<br>
 				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_LINKS_EXPLAIN') -}}
 			{%- endblock -%}
+		{%- endembed -%}
+	</fieldset>
+
+	<fieldset>
+		<legend>Days offset</legend>
+
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_MENU') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				num_days_offset_menu
+			{%- endblock -%}
+			{%- block value -%}
+				{{- NUM_DAYS_OFFSET_MENU -}}
+			{%- endblock -%}
+			{%- block attr %} min="0" max="30"{%- endblock -%}
+		{%- endembed -%}
+
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_TAG') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				num_days_offset_tag
+			{%- endblock -%}
+			{%- block value -%}
+				{{- NUM_DAYS_OFFSET_TAG -}}
+			{%- endblock -%}
+			{%- block attr %} min="0" max="30"{%- endblock -%}
+		{%- endembed -%}
+
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_LINK') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				num_days_offset_link
+			{%- endblock -%}
+			{%- block value -%}
+				{{- NUM_DAYS_OFFSET_LINK -}}
+			{%- endblock -%}
+			{%- block attr %} min="0" max="30"{%- endblock -%}
 		{%- endembed -%}
 	</fieldset>
 {%- endblock form_content -%}

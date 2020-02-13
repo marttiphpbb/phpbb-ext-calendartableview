@@ -9,17 +9,33 @@
 namespace marttiphpbb\calendartableview\render;
 
 use marttiphpbb\calendartableview\value\calendar_event;
-use marttiphpbb\calendartableview\render\calendar_event_row;
+use marttiphpbb\calendartableview\render\table_row;
 
 class row_container
 {
 	const MIN_DAY = 1000000;
-	protected $rows = [];
+	protected $table_rows = [];
 	protected $end_ary = [];
 	protected $event_ref_ary = [];
 	protected $end_refs = [];
 	protected $event_locs = [];
 	protected $event_locs_en = [];
+
+	protected $build_ary = [
+		'0_0'	=> [
+			'jd'	=> 0,
+			'row'	=> 0,
+		],
+	];
+
+	/**
+	 * key: jd_row
+	 * jd int
+	 * row int
+	 * topic topic
+	 * end_jd int
+	 * end_row int
+	 */
 
 	public function __construct(int $min_rows, int $max_rows)
 	{
@@ -31,14 +47,14 @@ class row_container
 		$this->max_rows = $max_rows;
 	}
 
-	protected function get_or_create_row(int $row_index):calendar_event_row
+	protected function get_or_create_row(int $row_index):table_row
 	{
-		if (!$this->rows[$row_index])
+		if (!isset($this->table_rows[$row_index]))
 		{
-			$this->rows[$row_index] = new calendar_event_row();
+			$this->table_rows[$row_index] = new table_row();
 		}
 
-		return $this->rows[$row_index];
+		return $this->table_rows[$row_index];
 	}
 
 	public function add_calendar_event(calendar_event $calendar_event):void
@@ -49,6 +65,17 @@ class row_container
 
 			if ($row->insert_calendar_event($calendar_event))
 			{
+				$jd = $calendar_event->get_start();
+				$end_jd = $calendar_event->get_end();
+
+				$this->build_ary[$jd . '_' . $row_index] = [
+					'end_jd'	=> $end_jd,
+					'topic'		=> $calendar_event->get_topic(),
+				];
+
+
+
+
 				return;
 			}
 		}
@@ -123,7 +150,7 @@ class row_container
 
 		for ($row_index = 0; $row_index < $row_count; $row_index++)
 		{
-			$events = $this->rows[$row_index]->get_events();
+			$events = $this->table_rows[$row_index]->get_events();
 
 			foreach ($events as $event_index => $event)
 			{
@@ -190,16 +217,16 @@ class row_container
 
 	public function get_row_count():int
 	{
-		return count($this->rows);
+		return count($this->table_rows);
 	}
 
 	public function get_rows():array
 	{
-		return $this->rows;
+		return $this->table_rows;
 	}
 
-	public function get_row(int $row_index):calendar_event_row
+	public function get_row(int $row_index):table_row
 	{
-		return $this->rows[$row_index];
+		return $this->table_rows[$row_index];
 	}
 }

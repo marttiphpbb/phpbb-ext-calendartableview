@@ -10,7 +10,7 @@ namespace marttiphpbb\calendartableview\render;
 
 use marttiphpbb\calendartableview\value\calendar_event;
 
-class calendar_event_row
+class table_row
 {
 	protected $events = [];
 
@@ -34,7 +34,8 @@ class calendar_event_row
 			}
 		}
 
-		array_splice($this->events, $index, 0, $calendar_event);
+		array_splice($this->events, $index, 0, [$calendar_event]);
+
 		return true;
 	}
 

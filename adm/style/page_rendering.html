@@ -6,6 +6,7 @@
 
 {%- block form_content -%}
 	<fieldset>
+		<legend>Day span tables</legend>
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
 				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_TABLES') -}}
@@ -32,45 +33,43 @@
 			{%- block attr %} min="7" max="28"{%- endblock -%}
 		{%- endembed -%}
 
+	</fieldset>
+
+	<fieldset>
+		<legend>
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_EVENT_ROWS') -}}
+		</legend>
+
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_MENU') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MIN_ROWS') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				num_days_offset_menu
+				min_rows
 			{%- endblock -%}
 			{%- block value -%}
-				{{- NUM_DAYS_OFFSET_MENU -}}
+				{{- MIN_ROWS -}}
 			{%- endblock -%}
-			{%- block attr %} min="0" max="30"{%- endblock -%}
+			{%- block attr %} min="1"{%- endblock -%}
 		{%- endembed -%}
 
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_TAG') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MAX_ROWS') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				num_days_offset_tag
+				max_rows
 			{%- endblock -%}
 			{%- block value -%}
-				{{- NUM_DAYS_OFFSET_TAG -}}
+				{{- MAX_ROWS -}}
 			{%- endblock -%}
-			{%- block attr %} min="0" max="30"{%- endblock -%}
+			{%- block attr %} min="1"{%- endblock -%}
 		{%- endembed -%}
+	</fieldset>
 
-		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
-			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_OFFSET_LINK') -}}
-			{%- endblock -%}
-			{%- block name -%}
-				num_days_offset_link
-			{%- endblock -%}
-			{%- block value -%}
-				{{- NUM_DAYS_OFFSET_LINK -}}
-			{%- endblock -%}
-			{%- block attr %} min="0" max="30"{%- endblock -%}
-		{%- endembed -%}
 
+	<fieldset>
+		<legend>Hilight</legend>
 		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_TODAY} only -%}
 			{%- block label -%}
 				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TODAY') -}}
@@ -79,6 +78,22 @@
 				show_today
 			{%- endblock -%}
 		{%- endembed -%}
+
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': TOPIC_HILIT} only -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TOPIC_HILIT') -}}
+			{%- endblock -%}
+			{%- block explain -%}
+				<br>
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TOPIC_HILIT_EXPLAIN') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				topic_hilit
+			{%- endblock -%}
+		{%- endembed -%}
+	</fieldset>
+
+		{#
 
 		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_ISOWEEK} only -%}
 			{%- block label -%}
@@ -98,18 +113,22 @@
 			{%- endblock -%}
 		{%- endembed -%}
 
-		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': TOPIC_HILIT} only -%}
-			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TOPIC_HILIT') -}}
-			{%- endblock -%}
-			{%- block explain -%}
-				<br>
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TOPIC_HILIT_EXPLAIN') -}}
-			{%- endblock -%}
-			{%- block name -%}
-				topic_hilit
-			{%- endblock -%}
-		{%- endembed -%}
+		#}
+
+
+	<fieldset>
+
+
+	</fieldset>
+
+	<fieldset>
+
+
+	</fieldset>
+
+	<fieldset>
+
+
 	</fieldset>
 
 	<fieldset>
@@ -147,38 +166,6 @@
 			{%- block value -%}
 				{{- DEFAULT_TIME_FORMAT -}}
 			{%- endblock -%}
-		{%- endembed -%}
-	</fieldset>
-
-	<fieldset>
-		<legend>
-			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_EVENT_ROWS') -}}
-		</legend>
-
-		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
-			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MIN_ROWS') -}}
-			{%- endblock -%}
-			{%- block name -%}
-				min_rows
-			{%- endblock -%}
-			{%- block value -%}
-				{{- MIN_ROWS -}}
-			{%- endblock -%}
-			{%- block attr %} min="1"{%- endblock -%}
-		{%- endembed -%}
-
-		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
-			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MAX_ROWS') -}}
-			{%- endblock -%}
-			{%- block name -%}
-				max_rows
-			{%- endblock -%}
-			{%- block value -%}
-				{{- MAX_ROWS -}}
-			{%- endblock -%}
-			{%- block attr %} min="1"{%- endblock -%}
 		{%- endembed -%}
 	</fieldset>
 

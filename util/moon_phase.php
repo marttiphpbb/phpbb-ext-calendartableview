@@ -15,8 +15,6 @@
 
 namespace marttiphpbb\calendartableview\util;
 
-use marttiphpbb\calendartableview\util\cnst;
-
 class moon_phase
 {
 	/**
