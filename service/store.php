@@ -137,44 +137,24 @@ class store
 		return $this->get_boolean('show_today');
 	}
 
-	public function set_top_header_en(bool $top_header_en):void
+	public function set_header_en(bool $header_en):void
 	{
-		$this->set_boolean('top_header_en', $top_header_en);
+		$this->set_boolean('header_en', $header_en);
 	}
 
-	public function get_top_header_en():bool
+	public function get_header_en():bool
 	{
-		return $this->get_boolean('top_header_en');
+		return $this->get_boolean('header_en');
 	}
 
-	public function set_top_header(array $top_header):void
+	public function set_header(array $header):void
 	{
-		$this->set_array('top_header', $top_header);
+		$this->set_array('header', $header);
 	}
 
-	public function get_top_header():array
+	public function get_header():array
 	{
-		return $this->get_array('top_header');
-	}
-
-	public function set_bottom_header_en(bool $bottom_header_en):void
-	{
-		$this->set_boolean('bottom_header_en', $bottom_header_en);
-	}
-
-	public function get_bottom_header_en():bool
-	{
-		return $this->get_boolean('bottom_header_en');
-	}
-
-	public function set_bottom_header(array $bottom_header):void
-	{
-		$this->set_array('bottom_header', $bottom_header);
-	}
-
-	public function get_bottom_header():array
-	{
-		return $this->get_array('bottom_header');
+		return $this->get_array('header');
 	}
 
 	public function set_repeat_header_en(bool $repeat_header_en):void
@@ -205,6 +185,26 @@ class store
 	public function get_repeat_header():array
 	{
 		return $this->get_array('repeat_header');
+	}
+
+	public function set_footer_en(bool $footer_en):void
+	{
+		$this->set_boolean('footer_en', $footer_en);
+	}
+
+	public function get_footer_en():bool
+	{
+		return $this->get_boolean('footer_en');
+	}
+
+	public function set_footer(array $footer):void
+	{
+		$this->set_array('footer', $footer);
+	}
+
+	public function get_footer():array
+	{
+		return $this->get_array('footer');
 	}
 
 	public function set_topic_hilit(bool $topic_hilit):void

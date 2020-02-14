@@ -1,0 +1,27 @@
+div.info-container {
+  display: flex;
+}
+div.info-box {
+  flex: 1;
+  cursor: pointer;
+}
+.info-active {
+    background-color: rgb(224, 255, 233);
+    color: green;
+}
+.info-inactive {
+    background-color: rgb(255, 224, 224);
+    color: red;
+}
+.info-inactive span.list-previous,
+.info-active ul li:first-child span.list-previous {
+  display: none;
+}
+
+
+.cursor-move {
+  cursor: move;
+}
+.cursor-no-drop {
+  cursor: no-drop;
+}

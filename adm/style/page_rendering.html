@@ -5,6 +5,7 @@
 {%- endblock -%}
 
 {%- block form_content -%}
+
 	<fieldset>
 		<legend>Day span tables</legend>
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
@@ -117,16 +118,72 @@
 
 
 	<fieldset>
+		<legend>Table header</legend>
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': HEADER_EN} only -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_HEADER_EN') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				header_en
+			{%- endblock -%}
+		{%- endembed -%}
+
+		<div class="info-container">
+			<div class="info-box info-active">
+				<h5>Used (and order)</h5>
+				<ul id="list-active">
+					<li>dfqsdsq_1</li>
+					<li>dfqsdsq_2</li>
+					<li>dfqsdsq_3</li>
+					<li>dfqsdsq_4</li>
+					<li>dfqsdsq_5</li>
+					<li>dfqsdsq_6</li>
+					<li>dfqsdsq_7</li>
+					<li>dfqsdsq_8</li>
+				</ul>
+			</div>
+			<div class="info-box info-inactive">
+			<ul id="list-inactive">
+				<h5>Not used</h5>
+				<li>eeee_1</li>
+				<li>eeee_2<span class="list-previous"><br><label><input type="checkbox"> merge into previous row</label></span></li>
+				<li>eeee_3</li>
+				<li>eeee_4</li>
+				<li>eeee_5</li>
+				<li>eeee_6</li>
+				<li>eeee_7</li>
+			</ul>
+			</div>
+		</div>
+
+	</fieldset>
+
+	<fieldset>
+		<legend>Repeated header</legend>
+
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': REPEAT_HEADER_EN} only -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEAT_HEADER_EN') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				repeat_header_en
+			{%- endblock -%}
+		{%- endembed -%}
 
 
 	</fieldset>
 
 	<fieldset>
+		<legend>Table footer</legend>
 
-
-	</fieldset>
-
-	<fieldset>
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': FOOTER_EN} only -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_FOOTER_EN') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				footer_en
+			{%- endblock -%}
+		{%- endembed -%}
 
 
 	</fieldset>
@@ -203,4 +260,9 @@
 			{%- endblock -%}
 		{%- endembed -%}
 	</fieldset>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.1/Sortable.min.js" integrity="sha256-9D6DlNlpDfh0C8buQ6NXxrOdLo/wqFUwEB1s70obwfE=" crossorigin="anonymous"></script>
+
+	{%- INCLUDEJS '@marttiphpbb_calendartableview/js/sort_blocks.js' -%}
+
 {%- endblock form_content -%}
