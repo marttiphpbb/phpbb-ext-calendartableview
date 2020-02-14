@@ -68,7 +68,6 @@
 		{%- endembed -%}
 	</fieldset>
 
-
 	<fieldset>
 		<legend>Hilight</legend>
 		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_TODAY} only -%}
@@ -94,31 +93,9 @@
 		{%- endembed -%}
 	</fieldset>
 
-		{#
-
-		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_ISOWEEK} only -%}
-			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_ISOWEEK') -}}
-			{%- endblock -%}
-			{%- block name -%}
-				show_isoweek
-			{%- endblock -%}
-		{%- endembed -%}
-
-		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_MOON_PHASE} only -%}
-			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MOON_PHASE') -}}
-			{%- endblock -%}
-			{%- block name -%}
-				show_moon_phase
-			{%- endblock -%}
-		{%- endembed -%}
-
-		#}
-
-
 	<fieldset>
-		<legend>Table header</legend>
+		<legend>{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_HEADER') -}}</legend>
+
 		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': HEADER_EN} only -%}
 			{%- block label -%}
 				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_HEADER_EN') -}}
@@ -128,49 +105,81 @@
 			{%- endblock -%}
 		{%- endembed -%}
 
-		<div class="info-container">
-			<div class="info-box info-active">
-				<h5>Used (and order)</h5>
-				<ul id="list-active">
-					<li>dfqsdsq_1</li>
-					<li>dfqsdsq_2</li>
-					<li>dfqsdsq_3</li>
-					<li>dfqsdsq_4</li>
-					<li>dfqsdsq_5</li>
-					<li>dfqsdsq_6</li>
-					<li>dfqsdsq_7</li>
-					<li>dfqsdsq_8</li>
-				</ul>
-			</div>
-			<div class="info-box info-inactive">
-			<ul id="list-inactive">
-				<h5>Not used</h5>
-				<li>eeee_1</li>
-				<li>eeee_2<span class="list-previous"><br><label><input type="checkbox"> merge into previous row</label></span></li>
-				<li>eeee_3</li>
-				<li>eeee_4</li>
-				<li>eeee_5</li>
-				<li>eeee_6</li>
-				<li>eeee_7</li>
-			</ul>
-			</div>
-		</div>
+		{%- embed '@marttiphpbb_calendartableview/include/sort_select.html' -%}
+			{%- block name -%}
+				header_rows
+			{%- endblock -%}
+			{%- block used -%}
+				{%- for l in header -%}
+					{%- embed '@marttiphpbb_calendartableview/include/li_sort_select.html' -%}
+					{%- endembed -%}
+				{%- endfor -%}
+			{%- endblock -%}
+			{%- block not_used -%}
+				{%- for l in header_not_used -%}
+					{%- embed '@marttiphpbb_calendartableview/include/li_sort_select.html' -%}
+					{%- endembed -%}
+				{%- endfor -%}
+			{%- endblock -%}
+		{%- endembed -%}
 
 	</fieldset>
 
 	<fieldset>
 		<legend>Repeated header</legend>
 
-		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': REPEAT_HEADER_EN} only -%}
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': REPEATED_HEADER_EN} only -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEAT_HEADER_EN') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_EN') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				repeat_header_en
+				repeated_header_en
 			{%- endblock -%}
 		{%- endembed -%}
 
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_NUM_ROWS') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				repeated_header_num_rows
+			{%- endblock -%}
+			{%- block value -%}
+				{{- REPEATED_HEADER_NUM_ROWS -}}
+			{%- endblock -%}
+			{%- block attr %} min="5"{%- endblock -%}
+		{%- endembed -%}
 
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_OMIT_ROWS') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				repeated_header_omit_rows
+			{%- endblock -%}
+			{%- block value -%}
+				{{- REPEATED_HEADER_OMIT_ROWS -}}
+			{%- endblock -%}
+			{%- block attr %} min="5"{%- endblock -%}
+		{%- endembed -%}
+
+		{%- embed '@marttiphpbb_calendartableview/include/sort_select.html' -%}
+			{%- block name -%}
+				repeated_header_rows
+			{%- endblock -%}
+			{%- block used -%}
+				{%- for l in repeated_header -%}
+					{%- embed '@marttiphpbb_calendartableview/include/li_sort_select.html' -%}
+					{%- endembed -%}
+				{%- endfor -%}
+			{%- endblock -%}
+			{%- block not_used -%}
+				{%- for l in repeated_header_not_used -%}
+					{%- embed '@marttiphpbb_calendartableview/include/li_sort_select.html' -%}
+					{%- endembed -%}
+				{%- endfor -%}
+			{%- endblock -%}
+		{%- endembed -%}
 	</fieldset>
 
 	<fieldset>
@@ -185,7 +194,23 @@
 			{%- endblock -%}
 		{%- endembed -%}
 
-
+		{%- embed '@marttiphpbb_calendartableview/include/sort_select.html' -%}
+			{%- block name -%}
+				footer_rows
+			{%- endblock -%}
+			{%- block used -%}
+				{%- for l in footer -%}
+					{%- embed '@marttiphpbb_calendartableview/include/li_sort_select.html' -%}
+					{%- endembed -%}
+				{%- endfor -%}
+			{%- endblock -%}
+			{%- block not_used -%}
+				{%- for l in footer_not_used -%}
+					{%- embed '@marttiphpbb_calendartableview/include/li_sort_select.html' -%}
+					{%- endembed -%}
+				{%- endfor -%}
+			{%- endblock -%}
+		{%- endembed -%}
 	</fieldset>
 
 	<fieldset>

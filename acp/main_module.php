@@ -83,21 +83,39 @@ class main_module
 						trigger_error('FORM_INVALID');
 					}
 
+					$header_rows = $request->variable('header_rows', '');
+					$header = explode(',', $header_rows);
+					$repeated_header_rows = $request->variable('repeated_header_rows', '');
+					$repeated_header = explode(',', $repeated_header_rows);
+					$footer_rows = $request->variable('footer_rows', '');
+					$footer = explode(',', $footer_rows);
+
 					$store->transaction_start();
+
 					$store->set_num_tables($request->variable('num_tables', 0));
 					$store->set_num_days_one_table($request->variable('num_days_one_table', 0));
 					$store->set_min_rows($request->variable('min_rows', 0));
 					$store->set_max_rows($request->variable('max_rows', 0));
+
 					$store->set_show_today($request->variable('show_today', 0) ? true : false);
 					$store->set_topic_hilit($request->variable('topic_hilit', 0) ? true : false);
 
 					$store->set_header_en($request->variable('header_en', 0) ? true : false);
-					$store->set_repeat_header_en($request->variable('repeat_header_en', 0) ? true : false);
+					$store->set_header($header);
+
+					$store->set_repeated_header_en($request->variable('repeated_header_en', 0) ? true : false);
+					$store->set_repeated_header_num_rows($request->variable('repeated_header_num_rows', 0));
+					$store->set_repeated_header_omit_rows($request->variable('repeated_header_omit_rows', 0));
+					$store->set_repeated_header($repeated_header);
+
 					$store->set_footer_en($request->variable('footer_en', 0) ? true : false);
+					$store->set_footer($footer);
+
 					$store->set_derive_user_time_format($request->variable('derive_user_time_format', 0) ? true : false);
 					$store->set_default_time_format($request->variable('default_time_format', ''));
 					$store->set_load_stylesheet($request->variable('load_stylesheet', 0) ? true : false);
 					$store->set_extra_stylesheet($request->variable('extra_stylesheet', ''));
+
 					$store->transaction_end();
 
 					trigger_error($language->lang(cnst::L_ACP . '_SETTINGS_SAVED') . adm_back_link($this->u_action));
@@ -111,13 +129,67 @@ class main_module
 					'SHOW_TODAY'				=> $store->get_show_today(),
 					'TOPIC_HILIT'				=> $store->get_topic_hilit(),
 					'HEADER_EN'					=> $store->get_header_en(),
-					'REPEAT_HEADER_EN'			=> $store->get_repeat_header_en(),
+					'REPEATED_HEADER_EN'		=> $store->get_repeated_header_en(),
+					'REPEATED_HEADER_NUM_ROWS'	=> $store->get_repeated_header_num_rows(),
+					'REPEATED_HEADER_OMIT_ROWS'	=> $store->get_repeated_header_omit_rows(),
 					'FOOTER_EN'					=> $store->get_footer_en(),
 					'DERIVE_USER_TIME_FORMAT'	=> $store->get_derive_user_time_format(),
 					'DEFAULT_TIME_FORMAT'		=> $store->get_default_time_format(),
 					'LOAD_STYLESHEET'			=> $store->get_load_stylesheet(),
 					'EXTRA_STYLESHEET'			=> $store->get_extra_stylesheet(),
 				]);
+
+				$stored_header_items = [
+					'header'			=> $store->get_header(),
+					'repeated_header' 	=> $store->get_repeated_header(),
+					'footer' 			=> $store->get_footer(),
+				];
+
+				foreach ($stored_header_items as $type => $ary)
+				{
+					$not_used = cnst::HEADER_ROWS;
+
+					foreach($ary as $val)
+					{
+						[$name, $merge] = explode('.', $val);
+
+						if (!isset($not_used[$name]))
+						{
+							continue;
+						}
+
+						$mergeable = isset($not_used[$name]['merge']);
+
+						if (isset($merge))
+						{
+							if (!$mergeable
+								|| $merge !== 'merge'
+							)
+							{
+								unset($merge);
+							}
+						}
+
+						unset($not_used[$name]);
+
+						$template->assign_block_vars($type, [
+							'NAME'			=> $name,
+							'MERGEABLE'		=> $mergeable,
+							'MERGE'			=> isset($merge),
+						]);
+					}
+
+					$type_not_used = $type . '_not_used';
+
+					foreach ($not_used as $name => $ary)
+					{
+						$template->assign_block_vars($type_not_used, [
+							'NAME'			=> $name,
+							'MERGEABLE'		=> isset($ary['merge']),
+							'MERGE'			=> false,
+						]);
+					}
+				}
 
 			break;
 		}

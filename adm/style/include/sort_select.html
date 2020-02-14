@@ -1,0 +1,27 @@
+<p>
+    {%- block eplain -%}
+    {{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_SORT_EXPLAIN') -}}
+    {%- endblock -%}
+</p>
+
+<div class="info-container">
+    <div class="info-box info-active">
+        <h5>
+            &nbsp;
+            {{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_SORT_USED') -}}
+        </h5>
+        <ul>
+            {%- block used -%}{%- endblock -%}
+        </ul>
+    </div>
+    <div class="info-box info-inactive">
+        <h5>
+            &nbsp;
+            {{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_SORT_NOT_USED') -}}
+        </h5>
+        <ul>
+            {%- block not_used -%}{%- endblock -%}
+        </ul>
+    </div>
+    <input name="{%- block name -%}{%- endblock -%}" type="hidden" value="">
+</div>

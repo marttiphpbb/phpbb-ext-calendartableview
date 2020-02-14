@@ -44,16 +44,24 @@ class cnst
 		'show_today'				=> true,
 		'header_en'					=> true,
 		'header'				=> [
-			['month'], ['weekday'], ['monthday'], ['isoweek', 'moonphase'],
+			'month',
+			'monthday',
+			'weekday',
+			'isoweek',
+			'moonphase.merge',
 		],
-		'repeat_header_en'		=> false,
-		'repeat_header_rows'	=> 15,
-		'repeat_header'			=> [
-			['monthday'],
+		'repeated_header_en'		=> false,
+		'repeated_header_num_rows'	=> 15,
+		'repeated_header_omit_rows'	=> 10,
+		'repeated_header'			=> [
+			'monthday',
+			'moonphase.merge',
 		],
 		'footer_en'					=> true,
 		'footer'					=> [
-			['monthday'], ['month'],
+			'monthday',
+			'moonphase.merge',
+			'month',
 		],
 		'topic_hilit'				=> false,
 		'load_stylesheet'			=> true,
@@ -62,26 +70,12 @@ class cnst
 		'default_time_format'		=> 'H:i',
 	];
 
-	const header_blocks = [
-		'month'		=> [
-			'allow_override'	=> false,
-			'num'				=> 1,
-		],
-		'monthday'	=> [
-			'allow_override'	=> true,
-			'num'				=> 1,
-		],
-		'weekday'	=> [
-
-		],
-		'moonphase'	=> [
-
-		],
-		'isoweek'	=> [
-
-		],
-		'blank'		=> [
-			'num'		=> 5,
-		],
+	const HEADER_ROWS = [
+		'month'		=> [],
+		'monthday'	=> [],
+		'weekday'	=> [],
+		'moonphase'	=> ['merge'	=> true],
+		'isoweek'	=> ['merge'	=> true],
+		'blank'		=> ['num' => 5],
 	];
 }

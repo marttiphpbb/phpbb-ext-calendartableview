@@ -157,34 +157,44 @@ class store
 		return $this->get_array('header');
 	}
 
-	public function set_repeat_header_en(bool $repeat_header_en):void
+	public function set_repeated_header_en(bool $repeated_header_en):void
 	{
-		$this->set_boolean('repeat_header_en', $repeat_header_en);
+		$this->set_boolean('repeated_header_en', $repeated_header_en);
 	}
 
-	public function get_repeat_header_en():bool
+	public function get_repeated_header_en():bool
 	{
-		return $this->get_boolean('repeat_header_en');
+		return $this->get_boolean('repeated_header_en');
 	}
 
-	public function set_repeat_header_num_rows(int $repeat_header_num_rows):void
+	public function set_repeated_header_num_rows(int $repeated_header_num_rows):void
 	{
-		$this->set_int('repeat_header_num_rows', $repeat_header_num_rows);
+		$this->set_int('repeated_header_num_rows', $repeated_header_num_rows);
 	}
 
-	public function get_repeat_header_num_rows():int
+	public function get_repeated_header_num_rows():int
 	{
-		return $this->get_int('repeat_header_num_rows');
+		return $this->get_int('repeated_header_num_rows');
 	}
 
-	public function set_repeat_header(array $repeat_header):void
+	public function set_repeated_header_omit_rows(int $repeated_header_num_rows):void
 	{
-		$this->set_array('repeat_header', $repeat_header);
+		$this->set_int('repeated_header_omit_rows', $repeated_header_num_rows);
 	}
 
-	public function get_repeat_header():array
+	public function get_repeated_header_omit_rows():int
 	{
-		return $this->get_array('repeat_header');
+		return $this->get_int('repeated_header_omit_rows');
+	}
+
+	public function set_repeated_header(array $repeated_header):void
+	{
+		$this->set_array('repeated_header', $repeated_header);
+	}
+
+	public function get_repeated_header():array
+	{
+		return $this->get_array('repeated_header');
 	}
 
 	public function set_footer_en(bool $footer_en):void
