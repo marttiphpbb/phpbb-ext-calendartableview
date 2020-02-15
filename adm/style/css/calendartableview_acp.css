@@ -14,14 +14,7 @@ div.info-box {
     color: red;
 }
 .info-inactive span.li-mergeable,
-.info-active ul li:first-child span.li-mergeable {
+.info-active ul li:first-child span.li-mergeable,
+.info-active ul li[data-blocks-merge] + li span.li-mergeable{
   display: none;
-}
-
-
-.cursor-move {
-  cursor: move;
-}
-.cursor-no-drop {
-  cursor: no-drop;
 }
