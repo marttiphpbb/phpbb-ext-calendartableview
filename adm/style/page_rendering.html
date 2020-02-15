@@ -7,7 +7,10 @@
 {%- block form_content -%}
 
 	<fieldset>
-		<legend>Day span tables</legend>
+		<legend>
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TABLES') -}}
+		</legend>
+
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
 				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_TABLES') -}}
@@ -69,7 +72,10 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>Hilight</legend>
+		<legend>
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_HILIT') -}}
+		</legend>
+
 		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': SHOW_TODAY} only -%}
 			{%- block label -%}
 				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TODAY') -}}
@@ -94,7 +100,9 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_HEADER') -}}</legend>
+		<legend>
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_HEADER') -}}
+		</legend>
 
 		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': HEADER_EN} only -%}
 			{%- block label -%}
@@ -126,7 +134,9 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>Repeated header</legend>
+		<legend>
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER') -}}
+		</legend>
 
 		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': REPEATED_HEADER_EN} only -%}
 			{%- block label -%}
@@ -210,6 +220,25 @@
 					{%- endembed -%}
 				{%- endfor -%}
 			{%- endblock -%}
+		{%- endembed -%}
+	</fieldset>
+
+	<fieldset>
+		<legend>
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_WEEKDAY') -}}
+		</legend>
+
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_WEEKDAY_MAX_CHARS') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				weekday_max_chars
+			{%- endblock -%}
+			{%- block value -%}
+				{{- WEEKDAY_MAX_CHARS -}}
+			{%- endblock -%}
+			{%- block attr %} min="1" max="20"{%- endblock -%}
 		{%- endembed -%}
 	</fieldset>
 

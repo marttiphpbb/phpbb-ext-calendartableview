@@ -73,9 +73,9 @@ class cnst
 	const HEADER_ROWS = [
 		'month'		=> [],
 		'monthday'	=> [],
-		'weekday'	=> [],
+		'weekday'	=> ['char' => 3],
 		'moonphase'	=> ['merge'	=> true],
 		'isoweek'	=> ['merge'	=> true],
-		'blank'		=> ['num' => 5],
+		'blank'		=> [],
 	];
 }

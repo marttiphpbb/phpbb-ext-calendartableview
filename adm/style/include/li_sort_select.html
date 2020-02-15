@@ -1,12 +1,8 @@
 <li data-block="{{- l.NAME -}}">
     {{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_' ~ (l.NAME|upper)) -}}
     {%- if l.MERGEABLE -%}
-        <span class="list-previous">
-            <br>
-            <label>&nbsp;&nbsp;
-                <input type="checkbox"{%- if l.MERGE %} checked{%- endif -%}>&nbsp;
-                {{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MERGE_PREVIOUS') -}}
-            </label>
+        <span class="li-mergeable">
+            {{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MERGE_PREVIOUS') -}}
         </span>
     {%- endif -%}
 </li>

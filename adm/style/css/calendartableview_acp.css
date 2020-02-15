@@ -13,8 +13,8 @@ div.info-box {
     background-color: rgb(255, 224, 224);
     color: red;
 }
-.info-inactive span.list-previous,
-.info-active ul li:first-child span.list-previous {
+.info-inactive span.li-mergeable,
+.info-active ul li:first-child span.li-mergeable {
   display: none;
 }
 
