@@ -48,21 +48,22 @@ class cnst
 			'monthday',
 			'weekday',
 			'isoweek',
-			'moonphase.merge',
+			'moonphase',
 		],
 		'repeated_header_en'		=> false,
 		'repeated_header_num_rows'	=> 15,
 		'repeated_header_omit_rows'	=> 10,
 		'repeated_header'			=> [
 			'monthday',
-			'moonphase.merge',
+			'moonphase',
 		],
 		'footer_en'					=> true,
 		'footer'					=> [
 			'monthday',
-			'moonphase.merge',
+			'moonphase',
 			'month',
 		],
+		'weekday_max_chars'			=> 3,
 		'topic_hilit'				=> false,
 		'load_stylesheet'			=> true,
 		'extra_stylesheet'			=> '',
@@ -71,11 +72,15 @@ class cnst
 	];
 
 	const HEADER_ROWS = [
-		'month'		=> [],
-		'monthday'	=> [],
-		'weekday'	=> ['char' => 3],
-		'moonphase'	=> ['merge'	=> true],
-		'isoweek'	=> ['merge'	=> true],
-		'blank'		=> [],
+		'month'		=> 'month',
+		'monthday'	=> 'monthday',
+		'weekday'	=> 'weekday',
+		'moonphase'	=> 'moonphase',
+		'isoweek'	=> 'isoweek',
+		'blank_1'	=> 'blank',
+		'blank_2'	=> 'blank',
+		'blank_3'	=> 'blank',
+		'blank_4'	=> 'blank',
+		'blank_5'	=> 'blank',
 	];
 }

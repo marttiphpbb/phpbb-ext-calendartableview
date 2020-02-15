@@ -111,6 +111,8 @@ class main_module
 					$store->set_footer_en($request->variable('footer_en', 0) ? true : false);
 					$store->set_footer($footer);
 
+					$store->set_weekday_max_chars($request->variable('weekday_max_chars', 0));
+
 					$store->set_derive_user_time_format($request->variable('derive_user_time_format', 0) ? true : false);
 					$store->set_default_time_format($request->variable('default_time_format', ''));
 					$store->set_load_stylesheet($request->variable('load_stylesheet', 0) ? true : false);
@@ -133,6 +135,7 @@ class main_module
 					'REPEATED_HEADER_NUM_ROWS'	=> $store->get_repeated_header_num_rows(),
 					'REPEATED_HEADER_OMIT_ROWS'	=> $store->get_repeated_header_omit_rows(),
 					'FOOTER_EN'					=> $store->get_footer_en(),
+					'WEEKDAY_MAX_CHARS'			=> $store->get_weekday_max_chars(),
 					'DERIVE_USER_TIME_FORMAT'	=> $store->get_derive_user_time_format(),
 					'DEFAULT_TIME_FORMAT'		=> $store->get_default_time_format(),
 					'LOAD_STYLESHEET'			=> $store->get_load_stylesheet(),

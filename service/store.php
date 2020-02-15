@@ -297,6 +297,16 @@ class store
 		return $this->get_int('max_rows');
 	}
 
+	public function set_weekday_max_rows(int $weekday_max_rows):void
+	{
+		$this->set_int('weekday_max_rows', $weekday_max_rows);
+	}
+
+	public function get_weekday_max_rows():int
+	{
+		return $this->get_int('weekday_max_rows');
+	}
+
 	public function set_load_stylesheet(bool $load_stylesheet):void
 	{
 		$this->set_boolean('load_stylesheet', $load_stylesheet);
