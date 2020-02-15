@@ -1,7 +1,8 @@
-<li data-block="{{- l.NAME -}}">
+<li data-id="{{- l.ID -}}"{%- if l.BLOCKS_MERGE %} data-blocks-merge="1"{%- endif %}>
     {{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_' ~ (l.NAME|upper)) -}}
-    {%- if l.MERGEABLE -%}
+    {%- if l.WILL_MERGE -%}
         <span class="li-mergeable">
+            <br>
             {{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MERGE_PREVIOUS') -}}
         </span>
     {%- endif -%}

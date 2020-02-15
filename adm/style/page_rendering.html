@@ -193,7 +193,9 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>Table footer</legend>
+		<legend>
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_FOOTER') -}}
+		</legend>
 
 		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': FOOTER_EN} only -%}
 			{%- block label -%}
@@ -317,6 +319,6 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.1/Sortable.min.js" integrity="sha256-9D6DlNlpDfh0C8buQ6NXxrOdLo/wqFUwEB1s70obwfE=" crossorigin="anonymous"></script>
 
-	{%- INCLUDEJS '@marttiphpbb_calendartableview/js/sort_blocks.js' -%}
+	{%- INCLUDEJS '@marttiphpbb_calendartableview/js/sort_select.js' -%}
 
 {%- endblock form_content -%}

@@ -150,46 +150,36 @@ class main_module
 
 				foreach ($stored_header_items as $type => $ary)
 				{
-					$not_used = cnst::HEADER_ROWS;
+					$not_used_ary = cnst::HEADER_ROWS;
 
-					foreach($ary as $val)
+					foreach($ary as $id)
 					{
-						[$name, $merge] = explode('.', $val);
-
-						if (!isset($not_used[$name]))
+						if (!isset($not_used_ary[$id]))
 						{
 							continue;
 						}
 
-						$mergeable = isset($not_used[$name]['merge']);
-
-						if (isset($merge))
-						{
-							if (!$mergeable
-								|| $merge !== 'merge'
-							)
-							{
-								unset($merge);
-							}
-						}
-
-						unset($not_used[$name]);
+						$item = $not_used_ary[$id];
 
 						$template->assign_block_vars($type, [
-							'NAME'			=> $name,
-							'MERGEABLE'		=> $mergeable,
-							'MERGE'			=> isset($merge),
+							'ID'			=> $id,
+							'NAME'			=> $item['name'],
+							'WILL_MERGE'	=> isset($item['will_merge']),
+							'BLOCKS_MERGE'	=> isset($item['blocks_merge']),
 						]);
+
+						unset($not_used_ary[$id]);
 					}
 
 					$type_not_used = $type . '_not_used';
 
-					foreach ($not_used as $name => $ary)
+					foreach ($not_used_ary as $id => $item)
 					{
 						$template->assign_block_vars($type_not_used, [
-							'NAME'			=> $name,
-							'MERGEABLE'		=> isset($ary['merge']),
-							'MERGE'			=> false,
+							'ID'			=> $id,
+							'NAME'			=> $item['name'],
+							'WILL_MERGE'	=> isset($item['will_merge']),
+							'BLOCKS_MERGE'	=> isset($item['blocks_merge']),
 						]);
 					}
 				}

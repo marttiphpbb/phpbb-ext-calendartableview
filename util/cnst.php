@@ -72,15 +72,38 @@ class cnst
 	];
 
 	const HEADER_ROWS = [
-		'month'		=> 'month',
-		'monthday'	=> 'monthday',
-		'weekday'	=> 'weekday',
-		'moonphase'	=> 'moonphase',
-		'isoweek'	=> 'isoweek',
-		'blank_1'	=> 'blank',
-		'blank_2'	=> 'blank',
-		'blank_3'	=> 'blank',
-		'blank_4'	=> 'blank',
-		'blank_5'	=> 'blank',
+		'month'		=> [
+			'name'			=> 'month',
+			'blocks_merge'	=> true,
+		],
+		'monthday'	=> [
+			'name'			=> 'monthday',
+		],
+		'weekday'	=> [
+			'name'			=> 'weekday',
+		],
+		'moonphase'	=> [
+			'name'			=> 'moonphase',
+			'will_merge'	=> true,
+		],
+		'isoweek'	=> [
+			'name'			=> 'isoweek',
+			'will_merge'	=> true,
+		],
+		'blank_1'	=> [
+			'name'			=> 'blank',
+		],
+		'blank_2'	=> [
+			'name'			=> 'blank',
+		],
+		'blank_3'	=> [
+			'name'			=> 'blank',
+		],
+		'blank_4'	=> [
+			'name'			=> 'blank',
+		],
+		'blank_5'	=> [
+			'name'			=> 'blank',
+		],
 	];
 }

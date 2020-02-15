@@ -71,7 +71,7 @@ $lang = array_merge($lang, [
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_SORT_NOT_USED'
 	=> 'Not used',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MERGE_PREVIOUS'
-	=> 'Will be merged in previous row*.',
+	=> 'Will be merged in previous row.',
 
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MONTH'
 	=> 'Month',

@@ -20,15 +20,9 @@
 
 				var p_string = '';
 
-				$list_active.find('li[data-block]').each(function(){
+				$list_active.find('li[data-id]').each(function(){
 					var $li = $(this);
-					p_string += $li.attr('data-block');
-
-					var $merge = $li.find('input[type="checkbox"]:visible');
-					if ($merge && $merge.prop('checked')){
-						p_string += '.merge';
-					}
-
+					p_string += $li.attr('data-id');
 					p_string += ',';
 				});
 

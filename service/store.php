@@ -297,14 +297,14 @@ class store
 		return $this->get_int('max_rows');
 	}
 
-	public function set_weekday_max_rows(int $weekday_max_rows):void
+	public function set_weekday_max_chars(int $weekday_max_chars):void
 	{
-		$this->set_int('weekday_max_rows', $weekday_max_rows);
+		$this->set_int('weekday_max_chars', $weekday_max_chars);
 	}
 
-	public function get_weekday_max_rows():int
+	public function get_weekday_max_chars():int
 	{
-		return $this->get_int('weekday_max_rows');
+		return $this->get_int('weekday_max_chars');
 	}
 
 	public function set_load_stylesheet(bool $load_stylesheet):void
