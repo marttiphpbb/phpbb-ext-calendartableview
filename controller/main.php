@@ -14,7 +14,6 @@ use phpbb\template\twig\twig as template;
 use phpbb\language\language;
 use phpbb\controller\helper;
 use marttiphpbb\calendartableview\render\row_container;
-use marttiphpbb\calendartableview\value\topic;
 use marttiphpbb\calendartableview\value\dayspan;
 use marttiphpbb\calendartableview\value\calendar_event;
 use marttiphpbb\calendartableview\service\store;
@@ -74,13 +73,20 @@ class main
 		$col_ary = [];
 		$topic_ary = [];
 
-		$month_top_en = $this->store->get_month_top_en();
-		$month_bottom_en = $this->store->get_month_bottom_en();
+		$header_en = $this->store->get_header_en();
+		$header = $this->store->get_header();
+		$repeated_header_en = $this->store->get_repeated_header_en();
+		$repeated_header = $this->store->get_repeated_header();
+		$repeated_header_num_rows = $this->store->get_repeated_header_num_rows();
+		$repeated_header_omit_rows = $this->store->get_repeated_header_omit_rows();
+		$footer_en = $this->store->get_footer_en();
+		$footer = $this->store->get_footer();
+		$weekday_max_chars = $this->store->get_weekday_max_chars();
 
 		$min_rows = $this->store->get_min_rows();
 		$mex_rows = $this->store->get_max_rows();
 
-		$row_count = $min_rows;
+		$ev_row_count = $min_rows;
 
 		$num_tables = $this->store->get_num_tables();
 		$num_days_one_table = $this->store->get_num_days_one_table();
@@ -92,16 +98,8 @@ class main
 		$start_jd = cal_to_jd(CAL_GREGORIAN, $month, $day, $year);
 		$end_jd = $start_jd + $num_days - 1;
 
-		if ($this->store->get_show_moon_phase())
-		{
-			$moon_phase = new moon_phase();
-			$moon_phases = $moon_phase->find($start_jd, $end_jd);
-			$mphase = reset($moon_phases);
-		}
-		else
-		{
-			$mphase = [];
-		}
+		$moon_phase_ary = moon_phase::find($start_jd, $end_jd);
+		$moon_phase = reset($moon_phase_ary);
 
 		$events = [];
 
@@ -116,8 +114,6 @@ class main
 		 */
 		$vars = ['start_jd', 'end_jd', 'events'];
 		extract($this->dispatcher->trigger_event('marttiphpbb.calendar.view', compact($vars)));
-
-		$row_container = new row_container($this->store->get_min_rows(), $this->store->get_max_rows());
 
 		error_log(json_encode($events));
 
@@ -180,206 +176,160 @@ class main
 						'free'		=> true,
 					];
 
-					$row_count = max($row_count, $row_index + 1);
+					$ev_row_count = max($ev_row_count, $row_index + 1);
 
 					break;
 				}
 			}
 		}
 
-		$year_begin_jd = cal_to_jd(CAL_GREGORIAN, 1, 1, $year);
+		if ($header_en)
+		{
+			$header_ary = [];
 
-		for ($table = 0; $table < $num_tables; $table)
+			while ($header_name = array_pop($header))
+			{
+				[$header_name] = explode('_', $header_name);
+
+
+
+			}
+
+			$header_ary = [];
+
+			foreach($header as $header_row)
+			{
+
+
+				array_splice($row_ary, 0, 0, [[
+					'start'		=> $e_col_start,
+					'end'		=> $e_col_end,
+				]]);
+
+			//	'headers' => ['moonphase', 'isoweek', 'blank'];
+
+			//	array_unshift($row_ary, )
+			}
+		}
+
+		$repeated_header_times = 0;
+
+		if ($repeated_header_en
+			&& $repeated_header_num_rows)
+		{
+			$repeated_header_ef_rows = $ev_row_count - $repeated_header_omit_rows;
+			$repeated_header_times = intdiv($repeated_header_ef_rows, $repeated_header_num_rows);
+		}
+
+		if ($repeated_header_times)
+		{
+
+		}
+
+		if ($footer_en)
+		{
+			foreach($footer as $footer_row)
+			{
+
+			}
+		}
+
+		for ($table = 0; $table < $num_tables; $table++)
 		{
 			$this->template->assign_block_vars('tables', []);
 
 			$table_start = $num_days_one_table * $table;
 			$table_next = $num_days_one_table + $table_start;
-			$table_start_jd = $start_jd + $table_start;
 
 			$new_table = true;
 
+			for ($row = 0; $row < $row_count; $row++)
+			{
+
+			}
+
 			for ($col = $table_start; $col < $table_next; $col++)
 			{
+				$max_table_span = $table_next - $col;
+
 				$jd = $start_jd + $col;
 				$day = cal_from_jd($jd, CAL_GREGORIAN);
+
+				if ($day['dayname'] === 'Monday' || $new_table)
+				{
+					$isoweek = gmdate('W', jdtounix($jd));
+				}
 
 				if ($day['day'] === 1 || $new_table)
 				{
 					$month_day_count = cal_days_in_month(CAL_GREGORIAN, $day['month'], $day['year']);
-					$span = min($month_day_count - $day['day'] + 1, $table_next - $col);
+					$month_span = min($month_day_count - $day['day'] + 1, $max_table_span);
 
-					$table_month_tpl = [
+					// colgroups ~ months
+					$month_tpl = [
 						'MONTH'				=> $day['month'],
 						'MONTH_NAME'		=> $this->language->lang(['datetime', $day['monthname']]),
 						'MONTH_ABBREV'		=> $this->language->lang(['datetime', $month_abbrev]),
 						'MONTH_CLASS'		=> strtolower($day['abbrevmonth']),
 						'YEAR'				=> $day['year'],
-						'SPAN'				=> $span,
+						'SPAN'				=> $month_span,
 					];
 
-					$this->template->assign_block_vars('tables.months', $table_month_tpl);
-
-					if ($month_top_en)
-					{
-						$this->template->assign_block_vars('tables.rows.', $table_month_tpl);
-					}
-
+					// colgroup
+					$this->template->assign_block_vars('tables.months', $month_tpl);
 
 					$new_table = false;
 				}
 
-				if ($new_table)
+				if (isset($moon_phase['jd'])
+					&& $moon_phase['jd'] === $jd)
 				{
-					$new_table = false;
+					$phase = $moon_phase['phase'];
+					$moon_time = $this->user_time->get($moon_phase['time']);
+					$moon_title = $this->language->lang(cnst::L . '_' . cnst::MOON_LANG[$phase], $moon_time);
+					$moon_icon = cnst::MOON_ICON[$phase];
+					$moon_phase = next($moon_phases);
+				}
+				else
+				{
+					$moon_title = false;
+					$moon_icon = false;
 				}
 
+				$weekday_name = $this->language->lang(['datetime', $day['dayname']]);
+				$weekday_abbrev = substr($weekday_name, 0, $weekday_max_chars);
 
-
-				$this->template->assing_block_vars('tables.days', [
+				// cols ~ days
+				$day_tpl = [
 					'COL'				=> $col,
 					'JD'				=> $jd,
 					'WEEKDAY'			=> $day['dow'],
-					'WEEKDAY_NAME'		=> $this->language->lang(['datetime', $day['dayname']]),
-					'WEEKDAY_ABBREV'	=> $this->language->lang(['datetime', $day['abbrevdayname']]),
+					'WEEKDAY_NAME'		=> $weekday_name,
+					'WEEKDAY_ABBREV'	=> $weekday_abbrev,
 					'WEEKDAY_CLASS'		=> strtolower($day['abbrevdayname']),
 					'MONTHDAY'			=> $day['day'],
-					'MONTH'				=> $day['month'],
-					'MONTH_NAME'		=> $month_name,
-					'MONTH_ABBREV'		=> $month_abbrev,
-					'YEAR'				=> $day['year'],
-					'YEARDAY'			=> $year_begin_jd - $jd + 1,
 					'ISOWEEK'			=> $isoweek,
 					'MOON_TITLE'		=> $moon_title,
 					'MOON_ICON'			=> $moon_icon,
-					'COL'				=> $col,
-					'TABLE_COL'			=> $table_col,
-				])
+				];
 
+				// cols
+				$this->template->assing_block_vars('tables.months.days', $day_tpl);
 			}
 
 
-		}
-
-		for ($col = 0; $col <= $num_days; $col++)
-		{
-/*
-			$first_day = !$col;
-			$table_col = $col % $num_days_one_table;
-*/
-			$day = cal_from_jd($jd, CAL_GREGORIAN);
-
-			if ($day['dayname'] === 'Monday' || $first_day)
-			{
-				$isoweek = gmdate('W', jdtounix($jd));
-			}
-
-			if ($table_first_day || $day['month'] !== $month)
-			{
-				$month_abbrev = $day['abbrevmonth'] === 'May' ? 'May_short' : $day['abbrevmonth'];
-				$month_abbrev = $this->language->lang(['datetime', $month_abbrev]);
-				$month_name = $this->language->lang(['datetime', $day['monthname']]);
-
-				if ($month === $day['month'])
-				{
-					$this->template->assign_vars([
-						'MONTH'				=> $month,
-						'MONTH_NAME'		=> $this->language->lang(['datetime', $day['monthname']]),
-						'MONTH_ABBREV'		=> $this->language->lang(['datetime', $month_abbrev]),
-						'YEAR'				=> $year,
-						'TODAY_JD'			=> $today_jd,
-						'TOPIC_HILIT'		=> $this->request->variable('t', 0),
-						'SHOW_ISOWEEK'		=> $this->store->get_show_isoweek(),
-						'SHOW_TODAY'		=> $this->store->get_show_today(),
-						'SHOW_MOON_PHASE'	=> $this->store->get_show_moon_phase(),
-						'LOAD_STYLESHEET'	=> $this->store->get_load_stylesheet(),
-						'EXTRA_STYLESHEET'	=> $this->store->get_extra_stylesheet(),
-						'EVENT_ROW_COUNT'	=> $row_container->get_row_count(),
-					]);
-				}
-			}
-
-			if (!$table_col)
-			{
-				$this->template->assign_block_vars('tables', []);
-
-				foreach($rows as $row)
-				{
-					$this->template->assign_block_vars('tables.eventrows', []);
-
-					$week_end_jd = $jd + 6;
-
-					$week_dayspan = new dayspan($jd, $week_end_jd);
-					$segments = $row->get_segments($week_dayspan);
-
-					foreach($segments as $segment)
-					{
-						if ($segment instanceof calendar_event)
-						{
-							$topic = $segment->get_topic();
-							$params = [
-								't'		=> $topic->get_topic_id(),
-								'f'		=> $topic->get_forum_id(),
-							];
-							$link = append_sid($this->root_path . 'viewtopic.' . $this->php_ext, $params);
-
-							$this->template->assign_block_vars('weeks.eventrows.eventsegments', [
-								'TOPIC_ID'			=> $topic->get_topic_id(),
-								'FORUM_ID'			=> $topic->get_forum_id(),
-								'TOPIC_TITLE'		=> $topic->get_topic_title(),
-								'TOPIC_LINK'		=> $link,
-								'FLEX'				=> $segment->get_overlap_day_count($week_dayspan),
-								'S_START'			=> $week_dayspan->contains_day($segment->get_start_jd()),
-								'S_END'				=> $week_dayspan->contains_day($segment->get_end_jd()),
-							]);
-						}
-						else if ($segment instanceof dayspan)
-						{
-							$this->template->assign_block_vars('weeks.eventrows.eventsegments', [
-								'FLEX'		=> $segment->get_overlap_day_count($week_dayspan),
-							]);
-						}
-					}
-				}
-			}
-
-			if (isset($mphase['jd']) && $mphase['jd'] === $jd)
-			{
-				$phase = $mphase['phase'];
-				$moon_time = $this->user_time->get($mphase['time']);
-				$moon_title = $this->language->lang(cnst::L . '_' . cnst::MOON_LANG[$phase], $moon_time);
-				$moon_icon = cnst::MOON_ICON[$phase];
-				$mphase = next($moon_phases);
-			}
-			else
-			{
-				$moon_title = false;
-				$moon_icon = false;
-			}
-
-			$this->template->assign_block_vars('tables.weekdays', [
-				'JD'				=> $jd,
-				'WEEKDAY'			=> $day['dow'],
-				'WEEKDAY_NAME'		=> $this->language->lang(['datetime', $day['dayname']]),
-				'WEEKDAY_ABBREV'	=> $this->language->lang(['datetime', $day['abbrevdayname']]),
-				'WEEKDAY_CLASS'		=> strtolower($day['abbrevdayname']),
-				'MONTHDAY'			=> $day['day'],
-				'MONTH'				=> $day['month'],
-				'MONTH_NAME'		=> $month_name,
-				'MONTH_ABBREV'		=> $month_abbrev,
-				'YEAR'				=> $day['year'],
-				'YEARDAY'			=> $year_begin_jd - $jd + 1,
-				'ISOWEEK'			=> $isoweek,
-				'MOON_TITLE'		=> $moon_title,
-				'MOON_ICON'			=> $moon_icon,
-				'COL'				=> $col,
-				'TABLE_COL'			=> $table_col,
-			]);
-
-			$col++;
 		}
 
 //		$this->pagination->render($start_jd, $num_days_one_table);
+
+		$this->template->assign_vars([
+			'TODAY_JD'			=> $today_jd,
+			'TOPIC_HILIT'		=> $this->request->variable('t', 0),
+			'SHOW_TODAY'		=> $this->store->get_show_today(),
+			'LOAD_STYLESHEET'	=> $this->store->get_load_stylesheet(),
+			'EXTRA_STYLESHEET'	=> $this->store->get_extra_stylesheet(),
+			'EVENT_ROW_COUNT'	=> $row_container->get_row_count(),
+		]);
 
 		make_jumpbox(append_sid($this->root_path . 'viewforum.' . $this->php_ext));
 
