@@ -106,4 +106,15 @@ class cnst
 			'name'			=> 'blank',
 		],
 	];
+
+	const INIT_HEADER_TPL = [
+		'S_MONTH'			=> false,
+		'S_MONTHDAY'		=> false,
+		'S_WEEKDAY'			=> false,
+		'S_BLANK'			=> false,
+		'S_ISOWEEK'			=> false,
+		'S_ISOWEEK_FIRST'	=> false,
+		'S_MOONPHASE'		=> false,
+		'S_MOONPHASE_FIRST'	=> false,
+	];
 }

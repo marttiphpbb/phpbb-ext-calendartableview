@@ -1,3 +1,15 @@
+div.calendartableview {
+	width: 100%;
+}
+div.calendartableview table {
+	width: 100%;
+}
+.isoweek span{
+	border: 1px solid rgb(85, 95, 128);
+	font-size: .7em;
+}
+
+
 div.month
 {
 	width: 100%;

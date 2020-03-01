@@ -1,0 +1,32 @@
+<tr class="{%- block tr_class -%}{%- endblock -%}">
+    {%- for m in t.months -%}
+        {%- for d in m.days -%}
+            {%- if h.S_MOONPHASE and d.MOON_ICON and not (h.S_ISOWEEK_FIRST and d.WEEKDAY == 1) -%}
+
+                <{% block cell_tag %}th{% endblock %} class="moon">
+                    <span class="fa-stack" title="{{- d.MOON_TITLE -}}">
+                        <i class="fa fa-circle fa-inverse fa-stack-1x"></i>
+                        <i class="fa {{ d.MOON_ICON }} fa-stack-1x"></i>
+                    </span>
+                </{{ block('cell_tag') }}>
+
+            {%- elseif h.S_ISOWEEK and d.WEEKDAY == 1 -%}
+
+                <{{ block('cell_tag') }} class="isoweek">
+                    <span>
+                        {{- d.ISOWEEK -}}
+                    </span>
+                </{{ block('cell_tag') }}>
+
+            {%- else -%}
+
+                <{{- block('cell_tag') -}}>
+                    {%- block cell -%}
+                        &nbsp;
+                    {%- endblock -%}
+                </{{- block('cell_tag') -}}>
+
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endfor -%}
+</tr>

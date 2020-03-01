@@ -1,67 +1,94 @@
 {%- include 'overall_header.html' -%}
 
-<p>{{- CURRENT_TIME -}}</p>
-<h2>{{- lang('MARTTIPHPBB_CALENDARTABLEVIEW_MONTH_YEAR', MONTH_NAME, YEAR) -}}</h2>
+<p>
+	{{- CURRENT_TIME -}}
+</p>
+
+<h2>
+	{{- lang('MARTTIPHPBB_CALENDARTABLEVIEW_CALENDAR') -}}
+</h2>
 
 <div class="calendartableview">
 	{%- include '@marttiphpbb_calendartableview/include/pagination.html' -%}
-	<div class="month">
-	{%- for w in weeks -%}
-		<div class="week-container">
-			<div class="weekdays">
-				{%- for d in w.weekdays -%}
-					<div class="day {{ d.WEEKDAY_CLASS }}{%- if SHOW_TODAY and d.JD == TODAY_JD %} today{%- endif -%}{%- if MONTH == d.MONTH %} this-month{%- endif -%}">
-						<div class="dayhead">
-							<div class="monthday">{{- d.MONTHDAY -}}</div>
-							{%- if MONTH == d.MONTH -%}
-								<div class="weekday">{{- d.WEEKDAY_ABBREV -}}</div>
-								{%- if SHOW_MOON_PHASE and d.MOON_ICON -%}
-									<div class="moon">
-										<span class="fa-stack" title="{{- d.MOON_TITLE -}}">
-											<i class="fa fa-circle fa-inverse fa-stack-1x"></i>
-											<i class="fa {{ d.MOON_ICON }} fa-stack-1x"></i>
-										</span>
-									</div>
-								{%- elseif d.WEEKDAY == 1 and SHOW_ISOWEEK -%}
-									<div class="isoweek">
-										{{- d.ISOWEEK -}}
-									</div>
-								{%- endif -%}
-							{%- endif -%}
-						</div>
-					</div>
-				{%- endfor -%}
-			</div>
-			<div class="eventrows">
-				<div class="evrow-head"></div>
-				{%- for er in w.eventrows -%}
-					<div class="evrow">
-					{%- for e in er.eventsegments -%}
-						<div class="f-con flex-{{- e.FLEX -}}">
-						{%- if e.TOPIC_ID -%}
-							<div class="ev forum-{{- e.FORUM_ID }}{%- if e.S_START %} ev-start{%- endif -%}{%- if e.S_END %} ev-end{%- endif -%}{%- if TOPIC_HILIT == e.TOPIC_ID %} topic-hilit{%- endif -%}" data-topic="{{- e.TOPIC_ID -}}" data-forum="{{- e.FORUM_ID -}}">
-								<div class="ev-overlay">
-									<a href="{{- e.TOPIC_LINK -}}" title="{{- e.TOPIC_TITLE -}}">{{- e.TOPIC_TITLE -}}</a>
-								</div>
-							</div>
-						{%- endif -%}
-						</div>
+	<div class="tables">
+	{%- for t in tables -%}
+		<table>
+			{%- for m in t.months -%}
+				<colgroup class="{{- m.MONTH_CLASS -}}">
+					{%- for day in m.days -%}
+						<col class="{{- day.WEEKDAY_CLASS -}}">
 					{%- endfor -%}
-					</div>
+				</colgroup>
+			{%- endfor -%}
+			{%- if t.header_rows -%}
+				<thead>
+					{%- for h in t.header_rows -%}
+
+						{%- embed '@marttiphpbb_calendartableview/include/header_row.html' -%}
+						{%- endembed -%}
+
+					{%- endfor -%}
+				</thead>
+			{%- endif -%}
+
+			{%- for eb in event_bodies -%}
+				<tbody>
+				{%- for r in eb.rows -%}
+					<tr>
+					{%- for c in r.cells -%}
+						{%- if c.ROWSPAN -%}
+							<td{%- if c.ROWSPAN > 1 %} rowspan="{{- c.ROWSPAN -}}"{%- endif -%}>
+								&nbsp;
+							</td>
+						{%- elseif c.TOPIC_ID -%}
+							<td class="calendar-event forum-{{ c.FORUM_ID -}}{% if TOPIC_HILIT == c.TOPIC_ID %} topic-hilit{%- endif -%}" data-topic="{{- c.TOPIC_ID -}}" data-forum="{{- c.FORUM_ID -}}"{%- if c.SPAN > 1 %} colspan="{{- c.SPAN -}}"{%- endif -%}>
+								<a href="{{- e.TOPIC_LINK -}}" title="{{- e.TOPIC_TITLE -}}">
+									{{- e.TOPIC_TITLE -}}
+								</a>
+							</td>
+						{%- endif -%}
+					{%- endfor -%}
+					</tr>
 				{%- endfor -%}
-				<div class="evrow-foot"></div>
-			</div>
-		</div>
+				</tbody>
+
+				{%- if t.repeated_header_rows and not loop.last -%}
+					<tbody class="repeated-header">
+						{%- for h in t.repeated_header_rows -%}
+							{%- embed '@marttiphpbb_calendartableview/include/header_row.html' -%}
+								{%- block cell_tag -%}
+									td
+								{% endblock -%}
+							{%- endembed -%}
+						{%- endfor -%}
+					</tbody>
+				{%- endif -%}
+
+			{%- endfor -%}
+
+			{%- if t.footer_rows -%}
+				<tfoot>
+					{%- for h in t.footer_rows -%}
+						{%- embed '@marttiphpbb_calendartableview/include/header_row.html' -%}
+						{%- endembed -%}
+					{%- endfor -%}
+				</tfoot>
+			{%- endif -%}
+
+		</table>
 	{%- endfor -%}
+
 	</div>
 	{%- include '@marttiphpbb_calendartableview/include/pagination.html' -%}
 </div>
 
 {%- include 'jumpbox.html' -%}
 {%- include 'overall_footer.html' -%}
+
 {%- if LOAD_STYLESHEET -%}
 	{%- INCLUDECSS '@marttiphpbb_calendartableview/calendar_page.css' -%}
 {%- endif -%}
+
 {%- if EXTRA_STYLESHEET -%}
 	{%- INCLUDECSS EXTRA_STYLESHEET -%}
 {%- endif -%}

@@ -1,0 +1,50 @@
+{%- if h.S_MONTH -%}
+    <tr class="month">
+        {%- for m in t.months -%}
+            <th{% if m.SPAN > 1 %} colspan="{{- m.SPAN -}}"{%- endif -%} class="{{- m.MONTH_CLASS -}}">
+
+                {%- if m.SPAN < 3 -%}
+                    &nbsp;
+                {%- elseif m.SPAN < 5 -%}
+                    {{- m.MONTH_NAME -}}
+                {%- else -%}
+                    {{- m.MONTH_NAME }} {{ m.YEAR -}}
+                {%- endif -%}
+
+            </th>
+        {%- endfor -%}
+    </tr>
+
+{%- elseif h.S_WEEKDAY -%}
+
+    {%- embed '@marttiphpbb_calendartableview/include/header_row_days.html' -%}
+        {%- block tr_class -%}
+            weekday
+        {%- endblock -%}
+        {%- block cell -%}
+            {{- d.WEEKDAY_ABBREV -}}
+        {%- endblock -%}
+
+    {%- endembed -%}
+
+{%- elseif h.S_MONTHDAY -%}
+
+    {%- embed '@marttiphpbb_calendartableview/include/header_row_days.html' -%}
+        {%- block tr_class -%}
+            monthday
+        {%- endblock -%}
+        {%- block cell -%}
+            {{- d.MONTHDAY -}}
+        {%- endblock -%}
+    {%- endembed -%}
+
+{%- else -%}
+
+    {%- embed '@marttiphpbb_calendartableview/include/header_row_days.html' -%}
+        {%- block tr_class -%}
+            blank
+        {%- endblock -%}
+
+    {%- endembed -%}
+
+{%- endif -%}

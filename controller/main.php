@@ -13,9 +13,6 @@ use phpbb\request\request;
 use phpbb\template\twig\twig as template;
 use phpbb\language\language;
 use phpbb\controller\helper;
-use marttiphpbb\calendartableview\render\row_container;
-use marttiphpbb\calendartableview\value\dayspan;
-use marttiphpbb\calendartableview\value\calendar_event;
 use marttiphpbb\calendartableview\service\store;
 use marttiphpbb\calendartableview\service\user_today;
 use marttiphpbb\calendartableview\service\user_time;
@@ -183,35 +180,8 @@ class main
 			}
 		}
 
-		if ($header_en)
-		{
-			$header_ary = [];
 
-			while ($header_name = array_pop($header))
-			{
-				[$header_name] = explode('_', $header_name);
-
-
-
-			}
-
-			$header_ary = [];
-
-			foreach($header as $header_row)
-			{
-
-
-				array_splice($row_ary, 0, 0, [[
-					'start'		=> $e_col_start,
-					'end'		=> $e_col_end,
-				]]);
-
-			//	'headers' => ['moonphase', 'isoweek', 'blank'];
-
-			//	array_unshift($row_ary, )
-			}
-		}
-
+/*
 		$repeated_header_times = 0;
 
 		if ($repeated_header_en
@@ -225,15 +195,7 @@ class main
 		{
 
 		}
-
-		if ($footer_en)
-		{
-			foreach($footer as $footer_row)
-			{
-
-			}
-		}
-
+*/
 		for ($table = 0; $table < $num_tables; $table++)
 		{
 			$this->template->assign_block_vars('tables', []);
@@ -243,10 +205,12 @@ class main
 
 			$new_table = true;
 
+/*
 			for ($row = 0; $row < $row_count; $row++)
 			{
 
 			}
+*/
 
 			for ($col = $table_start; $col < $table_next; $col++)
 			{
@@ -264,6 +228,8 @@ class main
 				{
 					$month_day_count = cal_days_in_month(CAL_GREGORIAN, $day['month'], $day['year']);
 					$month_span = min($month_day_count - $day['day'] + 1, $max_table_span);
+
+					$month_abbrev = $day['abbrevmonth'] === 'May' ? 'May_short' : $day['abbrevmonth'];
 
 					// colgroups ~ months
 					$month_tpl = [
@@ -288,7 +254,7 @@ class main
 					$moon_time = $this->user_time->get($moon_phase['time']);
 					$moon_title = $this->language->lang(cnst::L . '_' . cnst::MOON_LANG[$phase], $moon_time);
 					$moon_icon = cnst::MOON_ICON[$phase];
-					$moon_phase = next($moon_phases);
+					$moon_phase = next($moon_phase_ary);
 				}
 				else
 				{
@@ -314,10 +280,25 @@ class main
 				];
 
 				// cols
-				$this->template->assing_block_vars('tables.months.days', $day_tpl);
+				$this->template->assign_block_vars('tables.months.days', $day_tpl);
+
+				$day_tpl_ary[$col] = $day_tpl;
 			}
 
+			if ($header_en)
+			{
+				$this->assign_header_tpl($header, 'header_rows');
+			}
 
+			if ($repeated_header_en)
+			{
+				$this->assign_header_tpl($repeated_header, 'repeated_header_rows');
+			}
+
+			if ($footer_en)
+			{
+				$this->assign_header_tpl($footer, 'footer_rows');
+			}
 		}
 
 //		$this->pagination->render($start_jd, $num_days_one_table);
@@ -328,12 +309,95 @@ class main
 			'SHOW_TODAY'		=> $this->store->get_show_today(),
 			'LOAD_STYLESHEET'	=> $this->store->get_load_stylesheet(),
 			'EXTRA_STYLESHEET'	=> $this->store->get_extra_stylesheet(),
-			'EVENT_ROW_COUNT'	=> $row_container->get_row_count(),
 		]);
 
 		make_jumpbox(append_sid($this->root_path . 'viewforum.' . $this->php_ext));
 
 		$title = $this->language->lang('MARTTIPHPBB_CALENDARTABLEVIEW_CALENDAR');
 		return $this->helper->render('calendar.html', $title);
+	}
+
+	private function assign_header_tpl(array $header_ary, string $block_name)
+	{
+		$block_name = 'tables.' . $block_name;
+
+		foreach($header_ary as $header_id)
+		{
+			$header_name = cnst::HEADER_ROWS[$header_id]['name'];
+
+			if (isset($row_tpl)
+				&& !in_array($header_name, ['isoweek', 'moonphase']))
+			{
+				$this->template->assign_block_vars($block_name, $row_tpl);
+				unset($row_tpl);
+			}
+
+			if (!isset($row_tpl))
+			{
+				$row_tpl = cnst::INIT_HEADER_TPL;
+			}
+
+			if ($header_id === 'month')
+			{
+				$row_tpl['S_MONTH'] = true;
+
+				$this->template->assign_block_vars('tables.header_rows', $row_tpl);
+				unset($row_tpl);
+
+				continue;
+			}
+
+			if (in_array($header_id, ['isoweek', 'moonphase']))
+			{
+				if (!($row_tpl['S_BLANK']
+					|| $row_tpl['S_MONTHDAY']
+					|| $row_tpl['S_WEEKDAY']
+				))
+				{
+					$row_tpl['S_BLANK'] = true;
+				}
+
+				if ($header_id === 'isoweek')
+				{
+					$row_tpl['S_ISOWEEK'] = true;
+
+					if (!$row_tpl['S_MOONPHASE_FIRST'])
+					{
+						$row_tpl['S_ISOWEEK_FIRST'] = true;
+					}
+				}
+				else
+				{
+					$row_tpl['S_MOONPHASE'] = true;
+
+					if (!$row_tpl['S_ISOWEEK_FIRST'])
+					{
+						$row_tpl['S_MOONPHASE_FIRST'] = true;
+					}
+				}
+
+				continue;
+			}
+
+			if ($header_id === 'weekday')
+			{
+				$row_tpl['S_WEEKDAY'] = true;
+				continue;
+			}
+
+			if ($header_id === 'monthday')
+			{
+				$row_tpl['S_MONTHDAY'] = true;
+				continue;
+			}
+
+			$row_tpl['S_BLANK'] = true;
+		}
+
+		if (isset($row_tpl))
+		{
+			$this->template->assign_block_vars($block_name, $row_tpl);
+			unset($row_tpl);
+		}
 	}
 }
