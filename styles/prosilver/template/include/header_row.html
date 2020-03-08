@@ -1,7 +1,7 @@
 {%- if h.S_MONTH -%}
     <tr class="month">
         {%- for m in t.months -%}
-            <th{% if m.SPAN > 1 %} colspan="{{- m.SPAN -}}"{%- endif -%} class="{{- m.MONTH_CLASS -}}">
+            <{%- block cell_tag -%}th{%- endblock -%}{% if m.SPAN > 1 %} colspan="{{- m.SPAN -}}"{%- endif %} class="{{- m.MONTH_CLASS }} month-{%- if m.MONTH is even -%}even{%- else -%}odd{%- endif -%}">
 
                 {%- if m.SPAN < 3 -%}
                     &nbsp;
@@ -11,7 +11,7 @@
                     {{- m.MONTH_NAME }} {{ m.YEAR -}}
                 {%- endif -%}
 
-            </th>
+            </{{- block('cell_tag') -}}>
         {%- endfor -%}
     </tr>
 

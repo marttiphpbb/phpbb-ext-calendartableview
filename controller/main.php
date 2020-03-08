@@ -72,18 +72,21 @@ class main
 
 		$header_en = $this->store->get_header_en();
 		$header = $this->store->get_header();
+
 		$repeated_header_en = $this->store->get_repeated_header_en();
 		$repeated_header = $this->store->get_repeated_header();
 		$repeated_header_num_rows = $this->store->get_repeated_header_num_rows();
 		$repeated_header_omit_rows = $this->store->get_repeated_header_omit_rows();
+
 		$footer_en = $this->store->get_footer_en();
 		$footer = $this->store->get_footer();
+
 		$weekday_max_chars = $this->store->get_weekday_max_chars();
 
 		$min_rows = $this->store->get_min_rows();
 		$mex_rows = $this->store->get_max_rows();
 
-		$ev_row_count = $min_rows;
+		$event_row_count = $min_rows;
 
 		$num_tables = $this->store->get_num_tables();
 		$num_days_one_table = $this->store->get_num_days_one_table();
@@ -131,17 +134,17 @@ class main
 			$e_start_col = max($start_jd - $e['start_jd'], 0);
 			$e_end_col = min($end_jd - $e['end_jd'], $end_col);
 
-			for ($row_index = 0; $row_index < $max_rows; $row_index++)
+			for ($row = 0; $row < $max_rows; $row++)
 			{
-				if (!isset($row_ary[$row_index]))
+				if (!isset($row_ary[$row]))
 				{
-					$row_ary[$row_index] = [];
+					$row_ary[$row] = [];
 				}
 
 				$overlaps = false;
-				$ev_index = 0;
+				$event_index = 0;
 
-				foreach ($row_ary[$row_index] as $ev_index => $ev)
+				foreach ($row_ary[$row] as $event_index => $ev)
 				{
 					if ($e_start_col <= $ev['end']
 						&& $e_end_col >= $ev['start'])
@@ -158,44 +161,42 @@ class main
 
 				if (!$overlaps)
 				{
-					array_splice($row_ary[$row_index], $ev_index, 0, [[
+					array_splice($row_ary[$row], $event_index, 0, [[
 						'start'		=> $e_col_start,
 						'end'		=> $e_col_end,
 					]]);
 
-					$col_ary[$e_col_start][$row_index] = [
+					$col_ary[$e_col_start][$row] = [
 						'start'		=> $e_col_start,
 						'end'		=> $e_col_end,
 						'topic'		=> $e['topic_id'],
 					];
 
-					$col_ary[$e_col_end + 1][$row_index] = [
+					$col_ary[$e_col_end + 1][$row] = [
 						'free'		=> true,
 					];
 
-					$ev_row_count = max($ev_row_count, $row_index + 1);
+					$event_row_count = max($event_row_count, $row + 1);
 
 					break;
 				}
 			}
 		}
 
-
-/*
-		$repeated_header_times = 0;
-
-		if ($repeated_header_en
-			&& $repeated_header_num_rows)
+		if ($repeated_header_en)
 		{
-			$repeated_header_ef_rows = $ev_row_count - $repeated_header_omit_rows;
-			$repeated_header_times = intdiv($repeated_header_ef_rows, $repeated_header_num_rows);
+			$repeated_header_effective_rows = $event_row_count - $repeated_header_omit_rows;
+			$repeated_header_count = intdiv($repeated_header_effective_rows, $repeated_header_num_rows);
+			$event_body_num_rows = $repeated_header_count === 0 ? $event_row_count : $repeated_header_num_rows;
+		}
+		else
+		{
+			$repeated_header_count = 0;
+			$event_body_num_rows = $event_row_count;
 		}
 
-		if ($repeated_header_times)
-		{
+		$event_body_count = $repeated_header_count + 1;
 
-		}
-*/
 		for ($table = 0; $table < $num_tables; $table++)
 		{
 			$this->template->assign_block_vars('tables', []);
@@ -204,13 +205,6 @@ class main
 			$table_next = $num_days_one_table + $table_start;
 
 			$new_table = true;
-
-/*
-			for ($row = 0; $row < $row_count; $row++)
-			{
-
-			}
-*/
 
 			for ($col = $table_start; $col < $table_next; $col++)
 			{
@@ -298,6 +292,49 @@ class main
 			if ($footer_en)
 			{
 				$this->assign_header_tpl($footer, 'footer_rows');
+			}
+
+			$col_rowspan_cache = [
+				0 => $event_row_count, ///////////// wrong
+			];
+
+			$hold_body = false;
+
+			for ($row = 0; $row < $event_row_count; $row++)
+			{
+				if (($row % $event_body_num_rows) === 0
+					&& !$hold_body)
+				{
+					$this->template->assign_block_vars('tables.event_bodies', []);
+
+					$body++;
+					$not_last_event_body = $repeated_header_count < $repeated_header_times;
+
+
+
+					if ($table === 0)
+					{
+						$tblock_col_cache = '';
+					}
+				}
+
+				$this->template->assign_block_vars('tables.event_bodies.event_rows', []);
+
+
+
+				for ($col = $table_start; $col < $table_next; $col++)
+				{
+					$col_ary[$e_col_start][$row_index] = [
+						'start'		=> $e_col_start,
+						'end'		=> $e_col_end,
+						'topic'		=> $e['topic_id'],
+					];
+
+					$col_ary[$e_col_end + 1][$row_index] = [
+						'free'		=> true,
+					];
+
+				}
 			}
 		}
 

@@ -14,7 +14,7 @@
 	{%- for t in tables -%}
 		<table>
 			{%- for m in t.months -%}
-				<colgroup class="{{- m.MONTH_CLASS -}}">
+				<colgroup class="{{- m.MONTH_CLASS }} month-{%- if m.MONTH is even %}even{% else %}odd{% endif %}">
 					{%- for day in m.days -%}
 						<col class="{{- day.WEEKDAY_CLASS -}}">
 					{%- endfor -%}
@@ -33,17 +33,17 @@
 
 			{%- for eb in event_bodies -%}
 				<tbody>
-				{%- for r in eb.rows -%}
+				{%- for er in eb.event_rows -%}
 					<tr>
-					{%- for c in r.cells -%}
+					{%- for c in er.cells -%}
 						{%- if c.ROWSPAN -%}
 							<td{%- if c.ROWSPAN > 1 %} rowspan="{{- c.ROWSPAN -}}"{%- endif -%}>
 								&nbsp;
 							</td>
 						{%- elseif c.TOPIC_ID -%}
 							<td class="calendar-event forum-{{ c.FORUM_ID -}}{% if TOPIC_HILIT == c.TOPIC_ID %} topic-hilit{%- endif -%}" data-topic="{{- c.TOPIC_ID -}}" data-forum="{{- c.FORUM_ID -}}"{%- if c.SPAN > 1 %} colspan="{{- c.SPAN -}}"{%- endif -%}>
-								<a href="{{- e.TOPIC_LINK -}}" title="{{- e.TOPIC_TITLE -}}">
-									{{- e.TOPIC_TITLE -}}
+								<a href="{{- c.TOPIC_LINK -}}" title="{{- c.TOPIC_TITLE -}}">
+									{{- c.TOPIC_TITLE -}}
 								</a>
 							</td>
 						{%- endif -%}
@@ -76,6 +76,10 @@
 			{%- endif -%}
 
 		</table>
+
+		{%- if not loop.last -%}
+			<br>
+		{%- endif -%}
 	{%- endfor -%}
 
 	</div>
@@ -86,11 +90,11 @@
 {%- include 'overall_footer.html' -%}
 
 {%- if LOAD_STYLESHEET -%}
-	{%- INCLUDECSS '@marttiphpbb_calendartableview/calendar_page.css' -%}
+	{%- INCLUDECSS '@marttiphpbb_calendartableview/calendar.css' -%}
 {%- endif -%}
 
 {%- if EXTRA_STYLESHEET -%}
 	{%- INCLUDECSS EXTRA_STYLESHEET -%}
 {%- endif -%}
 
-{%- INCLUDEJS '@marttiphpbb_calendartableview/js/calendar_page.js' -%}
+{%- INCLUDEJS '@marttiphpbb_calendartableview/js/calendar.js' -%}
