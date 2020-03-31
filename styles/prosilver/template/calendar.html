@@ -15,9 +15,15 @@
 		<table>
 			{%- for m in t.months -%}
 				<colgroup class="{{- m.MONTH_CLASS }} month-{%- if m.MONTH is even %}even{% else %}odd{% endif %}">
-					{%- for day in m.days -%}
-						<col class="{{- day.WEEKDAY_CLASS -}}">
-					{%- endfor -%}
+					{%- if SHOW_TODAY -%}
+						{%- for day in m.days -%}
+							<col class="{{- day.WEEKDAY_CLASS -}}{%- if day.JD == TODAY_JD %} today{% endif -%}">
+						{%- endfor -%}
+					{%- else -%}
+						{%- for day in m.days -%}
+							<col class="{{- day.WEEKDAY_CLASS -}}">
+						{%- endfor -%}
+					{%- endif -%}
 				</colgroup>
 			{%- endfor -%}
 			{%- if t.header_rows -%}
@@ -31,7 +37,7 @@
 				</thead>
 			{%- endif -%}
 
-			{%- for tb in tbodies -%}
+			{%- for tb in t.tbodies -%}
 				<tbody>
 				{%- for r in tb.rows -%}
 					<tr>

@@ -1,14 +1,14 @@
 ;(function($, window, document) {
 	$('document').ready(function(){
-		var $ev = $('div.calendartableview div.month div.eventrows div.evrow div.ev');
+		var $ev = $('div.calendartableview tr td[data-topic]');
 		$ev.hover(function(){
 			var t = $(this).data('topic');
-			$ev.filter('[data-topic="' + t + '"]').find('div.ev-overlay').each(function(){
+			$ev.filter('[data-topic="' + t + '"]').each(function(){
 				$(this).addClass('hover');
 			});
 		}, function(){
 			t = $(this).data('topic');
-			$ev.filter('[data-topic="' + t + '"]').find('div.ev-overlay').each(function(){
+			$ev.filter('[data-topic="' + t + '"]').each(function(){
 				$(this).removeClass('hover');
 			});
 		});

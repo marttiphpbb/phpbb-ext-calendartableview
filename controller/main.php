@@ -291,7 +291,7 @@ class main
 					$tbody = $repeated_header_count;
 				}
 
-				$tbody_change_changed_ary[$tbody] = true;
+				$tbody_changed_ary[$tbody] = true;
 
 				$tbody_start_row = $tbody_row_count * $tbody;
 				$tbody_row = $row - $tbody_start_row;
@@ -299,7 +299,7 @@ class main
 				if (isset($col_row_ary['free']))
 				{
 					unset($tbody_row_taken_ary[$tbody][$tbody_row]);
-					break;
+					continue;
 				}
 
 				$tbody_row_taken_ary[$tbody][$tbody_row] = true;
@@ -331,26 +331,25 @@ class main
 					{
 						if ($rowspan)
 						{
-							if (!isset($tbody_ary[$tbody][$rowspan_tbody_start_row]))
-							{
-								$tbody_ary[$tbody][$rowspan_tbody_start_row] = [];
-							}
-
 							$tbody_ary[$tbody][$rowspan_tbody_start_row][$col] = [
 								'rowspan'	=> $rowspan,
 							];
 
 							$rowspan = 0;
-							$rowspan_tbody_start_row = $body_row + 1;
 						}
 
 						if (isset($tbody_start_event_ary[$tbody][$tbody_row]))
 						{
 							$tbody_ary[$tbody][$tbody_row][$col] = $tbody_start_event_ary[$tbody][$tbody_row];
+							$rowspan_tbody_start_row = $tbody_row + 1;
 						}
 
 						continue;
 					}
+
+					$tbody_ary[$tbody][$tbody_row][$col] = [
+						'clear'		=> true,
+					];
 
 					$rowspan++;
 				}
@@ -370,6 +369,8 @@ class main
 		}
 
 		error_log('$tbody_ary: ' . json_encode($tbody_ary));
+
+		$tbody_rowspan_cache = [];
 
 		for ($table = 0; $table < $num_tables; $table++)
 		{
@@ -468,48 +469,59 @@ class main
 				$this->assign_header_tpl($footer, 'footer_rows');
 			}
 
-			$tbody = 0;
-
 			for ($tbody = 0; $tbody < $tbody_count; $tbody++)
 			{
 				$this->template->assign_block_vars('tables.tbodies', []);
 
-				foreach ($tbody_ary[$tbody] as $row => $tbody_col_ary)
+				$is_last_tbody = $tbody === $repeated_header_count;
+				$tbody_limit_row = $is_last_tbody ? $last_tbody_row_count : $tbody_row_count;
+
+				if (!isset($tbody_rowspan_cache[$tbody]))
+				{
+					$tbody_rowspan_cache[$tbody] = [];
+				}
+
+				for ($tbody_row = 0; $tbody_row < $tbody_limit_row; $tbody_row++)
 				{
 					$this->template->assign_block_vars('tables.tbodies.rows', []);
 
-					unset($rowspan_cache);
-
 					for ($col = $table_start; $col < $table_next; $col++)
 					{
-						if (isset($tbody_col_ary[$col]))
+						if (isset($tbody_ary[$tbody][$tbody_row][$col]))
 						{
-							if (isset($tbody_col_ary[$col]['topic_id']))
+							if (isset($tbody_ary[$tbody][$tbody_row][$col]['topic_id']))
 							{
-								$topic = $topic_ary[$tbody_col_ary[$col]['topic_id']];
+								$topic = $topic_ary[$tbody_ary[$tbody][$tbody_row][$col]['topic_id']];
 
 								$this->template->assign_block_vars('tables.tbodies.rows.cells', [
-									'COLSPAN'		=> $tbody_col_ary[$col]['colspan'],
-									'TOPID_ID'		=> $topic['topic_id'],
+									'COLSPAN'		=> $tbody_ary[$tbody][$tbody_row][$col]['colspan'],
+									'TOPIC_ID'		=> $topic['topic_id'],
 									'FORUM_ID'		=> $topic['forum_id'],
 									'TOPIC_TITLE'	=> $topic['topic_title'],
 									'TOPIC_LINK'	=> $topic['link'],
 								]);
 
-								unset($rowspan_cache);
+								unset($tbody_rowspan_cache[$tbody][$tbody_row]);
 
 								continue;
 							}
 
-							$rowspan_cache = $tbody_col_ary[$col]['rowspan'];
+							if (isset($tbody_ary[$tbody][$tbody_row][$col]['clear']))
+							{
+								unset($tbody_rowspan_cache[$tbody][$tbody_row]);
+								continue;
+							}
+
+							$tbody_rowspan_cache[$tbody][$tbody_row] = $tbody_ary[$tbody][$tbody_row][$col]['rowspan'];
 						}
 
-						if (isset($rowspan_cache))
+						if (isset($tbody_rowspan_cache[$tbody][$tbody_row]))
 						{
 							$this->template->assign_block_vars('tables.tbodies.rows.cells', [
-								'ROWSPAN'	=> $rowspan_cache,
+								'ROWSPAN'	=> $tbody_rowspan_cache[$tbody][$tbody_row],
 							]);
 						}
+
 					}
 				}
 			}

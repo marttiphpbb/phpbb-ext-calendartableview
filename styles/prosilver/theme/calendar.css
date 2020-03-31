@@ -4,16 +4,17 @@ div.calendartableview {
 div.calendartableview table {
 	width: 100%;
 	table-layout: fixed;
-	border-collapse: separate;
-	border: 1px solid #444;
+	/* border-collapse: separate; */
+	border: 1px dotted rgb(148, 150, 177);
 	text-align: center;
 	border-spacing: 1px;
 }
+/*
 div.calendertableview table thead tr th,
 div.calendertableview table tbody tr td {
-	border: 1px solid #444;
 	padding: 1px;
 }
+*/
 
 div.calendartableview table colgroup.month-even,
 div.calendartableview table tr.month .month-even {
@@ -38,4 +39,28 @@ div.calendartableview table colgroup.month-odd col.sun {
 .isoweek span{
 	border: 1px solid rgb(85, 95, 128);
 	font-size: .7em;
+	background-color: antiquewhite;
+}
+div.calendartableview td,
+div.calendartableview th {
+	height: 1.7em;
+}
+div.calendartableview td.calendar-event {
+	background-color: rgb(222, 230, 236);
+	border: 1px solid rgb(175, 182, 200);
+}
+div.calendartableview tr:nth-child(odd) td.calendar-event {
+	background-color: rgb(169, 187, 200);
+}
+div.calendartableview tr td.calendar-event.hover {
+	background-color:#fff;
+}
+div.calendartableview tr td.topic-hilit {
+	border: 1px solid rgb(23, 28, 75);
+}
+div.calendartableview tr td a {
+	width: 100%;
+}
+div.calendartableview col.today {
+	border: 1px solid #444;
 }
