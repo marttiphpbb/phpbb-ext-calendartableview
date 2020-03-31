@@ -68,23 +68,39 @@ class main
 
 		$row_ary = [];
 		$col_ary = [];
+		$free_ary = [];
 		$topic_ary = [];
 
 		$header_en = $this->store->get_header_en();
 		$header = $this->store->get_header();
+
+		if (count($header) === 0)
+		{
+			$header_en = false;
+		}
 
 		$repeated_header_en = $this->store->get_repeated_header_en();
 		$repeated_header = $this->store->get_repeated_header();
 		$repeated_header_num_rows = $this->store->get_repeated_header_num_rows();
 		$repeated_header_omit_rows = $this->store->get_repeated_header_omit_rows();
 
+		if (count($repeated_header) === 0)
+		{
+			$repeated_header_en = false;
+		}
+
 		$footer_en = $this->store->get_footer_en();
 		$footer = $this->store->get_footer();
+
+		if (count($footer) === 0)
+		{
+			$footer_en = false;
+		}
 
 		$weekday_max_chars = $this->store->get_weekday_max_chars();
 
 		$min_rows = $this->store->get_min_rows();
-		$mex_rows = $this->store->get_max_rows();
+		$max_rows = $this->store->get_max_rows();
 
 		$event_row_count = $min_rows;
 
@@ -131,8 +147,13 @@ class main
 
 			$topic_ary[$e['topic_id']] = $e;
 
-			$e_start_col = max($start_jd - $e['start_jd'], 0);
-			$e_end_col = min($end_jd - $e['end_jd'], $end_col);
+			$topic_ary[$e['topic_id']]['link'] = append_sid($this->root_path . 'viewtopic.' . $this->php_ext, [
+				't'		=> $e['topic_id'],
+				'f'		=> $e['forum_id'],
+			]);
+
+			$start_col = (int) max($start_jd - $e['start_jd'], 0);
+			$end_col = (int) min($end_jd - $e['end_jd'], $end_col);
 
 			for ($row = 0; $row < $max_rows; $row++)
 			{
@@ -146,14 +167,14 @@ class main
 
 				foreach ($row_ary[$row] as $event_index => $ev)
 				{
-					if ($e_start_col <= $ev['end']
-						&& $e_end_col >= $ev['start'])
+					if ($start_col <= $ev['end_col']
+						&& $end_col >= $ev['start_col'])
 					{
 						$overlaps = true;
 						break;
 					}
 
-					if ($e_end_col < $ev['start'])
+					if ($end_col < $ev['start_col'])
 					{
 						break;
 					}
@@ -162,40 +183,193 @@ class main
 				if (!$overlaps)
 				{
 					array_splice($row_ary[$row], $event_index, 0, [[
-						'start'		=> $e_col_start,
-						'end'		=> $e_col_end,
+						'start_col'		=> $start_col,
+						'end_col'		=> $end_col,
 					]]);
 
-					$col_ary[$e_col_start][$row] = [
-						'start'		=> $e_col_start,
-						'end'		=> $e_col_end,
-						'topic'		=> $e['topic_id'],
-					];
+					$c_start = $start_col;
 
-					$col_ary[$e_col_end + 1][$row] = [
-						'free'		=> true,
-					];
+					$end_table = intdiv($end_col, $num_days_one_table);
 
-					$event_row_count = max($event_row_count, $row + 1);
+					do
+					{
+						$start_table = intdiv($c_start, $num_days_one_table);
+
+						if ($end_table > $start_table)
+						{
+							$c_end = ($start_table + 1) * $num_days_one_table - 1;
+						}
+						else
+						{
+							$c_end = $end_col;
+						}
+
+						if (!isset($col_ary[$c_start]))
+						{
+							$col_ary[$c_start] = [];
+						}
+
+						$col_ary[$c_start][$row] = [
+							'colspan'	=> $c_end - $c_start + 1,
+							'topic_id'	=> $e['topic_id'],
+						];
+
+						$c_start = $c_end + 1;
+
+					} while ($end_table > $start_table);
+
+					$next_col = $end_col + 1;
+
+					if (!isset($col_ary[$next_col]))
+					{
+						$col_ary[$next_col] = [];
+					}
+
+					if (!isset($col_ary[$next_col][$row]))
+					{
+						$col_ary[$next_col][$row] = [
+							'free'		=> true,
+						];
+					}
+
+					$event_row_count = (int) max($event_row_count, $row + 1);
 
 					break;
 				}
 			}
 		}
 
+		if (!isset($col_ary[0]))
+		{
+			$col_ary[0] = [];
+		}
+
+		for ($row = 0; $row < $event_row_count; $row++)
+		{
+			if (!isset($col_ary[0][$row]))
+			{
+				$col_ary[0][$row] = [
+					'free'		=> true,
+				];
+			}
+		}
+
+		ksort($col_ary);
+
+		error_log('$col_ary: ' . json_encode($col_ary));
+		error_log('$row_ary: ' . json_encode($row_ary));
+
 		if ($repeated_header_en)
 		{
 			$repeated_header_effective_rows = $event_row_count - $repeated_header_omit_rows;
 			$repeated_header_count = intdiv($repeated_header_effective_rows, $repeated_header_num_rows);
-			$event_body_num_rows = $repeated_header_count === 0 ? $event_row_count : $repeated_header_num_rows;
+			$tbody_row_count = $repeated_header_count === 0 ? $event_row_count : $repeated_header_num_rows;
 		}
 		else
 		{
 			$repeated_header_count = 0;
-			$event_body_num_rows = $event_row_count;
+			$tbody_row_count = $event_row_count;
 		}
 
-		$event_body_count = $repeated_header_count + 1;
+		$tbody_count = $repeated_header_count + 1;
+		$last_tbody_row_count = $event_row_count - ($repeated_header_count * $tbody_row_count);
+
+		$tbody_ary = [];
+		$tbody_row_taken_ary = [];
+
+		foreach ($col_ary as $col => $col_row)
+		{
+			$tbody_changed_ary = [];
+			$tbody_start_event_ary = [];
+
+			foreach ($col_row as $row => $col_row_ary)
+			{
+				$tbody = intdiv($row, $tbody_row_count);
+
+				if ($tbody > $repeated_header_count)
+				{
+					$tbody = $repeated_header_count;
+				}
+
+				$tbody_change_changed_ary[$tbody] = true;
+
+				$tbody_start_row = $tbody_row_count * $tbody;
+				$tbody_row = $row - $tbody_start_row;
+
+				if (isset($col_row_ary['free']))
+				{
+					unset($tbody_row_taken_ary[$tbody][$tbody_row]);
+					break;
+				}
+
+				$tbody_row_taken_ary[$tbody][$tbody_row] = true;
+
+				if (!isset($tbody_start_event_ary[$tbody]))
+				{
+					$tbody_start_event_ary[$tbody] = [];
+				}
+
+				$tbody_start_event_ary[$tbody][$tbody_row] = $col_row_ary;
+			}
+
+			foreach($tbody_changed_ary as $tbody => $bool)
+			{
+				if (!isset($tbody_ary[$tbody]))
+				{
+					$tbody_ary[$tbody] = [];
+				}
+
+				$is_last_tbody = $tbody === $repeated_header_count;
+				$tbody_limit_row = $is_last_tbody ? $last_tbody_row_count : $tbody_row_count;
+
+				$rowspan = 0;
+				$rowspan_tbody_start_row = 0;
+
+				for ($tbody_row = 0; $tbody_row < $tbody_limit_row; $tbody_row++)
+				{
+					if (isset($tbody_row_taken_ary[$tbody][$tbody_row]))
+					{
+						if ($rowspan)
+						{
+							if (!isset($tbody_ary[$tbody][$rowspan_tbody_start_row]))
+							{
+								$tbody_ary[$tbody][$rowspan_tbody_start_row] = [];
+							}
+
+							$tbody_ary[$tbody][$rowspan_tbody_start_row][$col] = [
+								'rowspan'	=> $rowspan,
+							];
+
+							$rowspan = 0;
+							$rowspan_tbody_start_row = $body_row + 1;
+						}
+
+						if (isset($tbody_start_event_ary[$tbody][$tbody_row]))
+						{
+							$tbody_ary[$tbody][$tbody_row][$col] = $tbody_start_event_ary[$tbody][$tbody_row];
+						}
+
+						continue;
+					}
+
+					$rowspan++;
+				}
+
+				if ($rowspan)
+				{
+					if (!isset($tbody_ary[$tbody][$rowspan_tbody_start_row]))
+					{
+						$tbody_ary[$tbody][$rowspan_tbody_start_row] = [];
+					}
+
+					$tbody_ary[$tbody][$rowspan_tbody_start_row][$col] = [
+						'rowspan'	=> $rowspan,
+					];
+				}
+			}
+		}
+
+		error_log('$tbody_ary: ' . json_encode($tbody_ary));
 
 		for ($table = 0; $table < $num_tables; $table++)
 		{
@@ -294,46 +468,49 @@ class main
 				$this->assign_header_tpl($footer, 'footer_rows');
 			}
 
-			$col_rowspan_cache = [
-				0 => $event_row_count, ///////////// wrong
-			];
+			$tbody = 0;
 
-			$hold_body = false;
-
-			for ($row = 0; $row < $event_row_count; $row++)
+			for ($tbody = 0; $tbody < $tbody_count; $tbody++)
 			{
-				if (($row % $event_body_num_rows) === 0
-					&& !$hold_body)
+				$this->template->assign_block_vars('tables.tbodies', []);
+
+				foreach ($tbody_ary[$tbody] as $row => $tbody_col_ary)
 				{
-					$this->template->assign_block_vars('tables.event_bodies', []);
+					$this->template->assign_block_vars('tables.tbodies.rows', []);
 
-					$body++;
-					$not_last_event_body = $repeated_header_count < $repeated_header_times;
+					unset($rowspan_cache);
 
-
-
-					if ($table === 0)
+					for ($col = $table_start; $col < $table_next; $col++)
 					{
-						$tblock_col_cache = '';
+						if (isset($tbody_col_ary[$col]))
+						{
+							if (isset($tbody_col_ary[$col]['topic_id']))
+							{
+								$topic = $topic_ary[$tbody_col_ary[$col]['topic_id']];
+
+								$this->template->assign_block_vars('tables.tbodies.rows.cells', [
+									'COLSPAN'		=> $tbody_col_ary[$col]['colspan'],
+									'TOPID_ID'		=> $topic['topic_id'],
+									'FORUM_ID'		=> $topic['forum_id'],
+									'TOPIC_TITLE'	=> $topic['topic_title'],
+									'TOPIC_LINK'	=> $topic['link'],
+								]);
+
+								unset($rowspan_cache);
+
+								continue;
+							}
+
+							$rowspan_cache = $tbody_col_ary[$col]['rowspan'];
+						}
+
+						if (isset($rowspan_cache))
+						{
+							$this->template->assign_block_vars('tables.tbodies.rows.cells', [
+								'ROWSPAN'	=> $rowspan_cache,
+							]);
+						}
 					}
-				}
-
-				$this->template->assign_block_vars('tables.event_bodies.event_rows', []);
-
-
-
-				for ($col = $table_start; $col < $table_next; $col++)
-				{
-					$col_ary[$e_col_start][$row_index] = [
-						'start'		=> $e_col_start,
-						'end'		=> $e_col_end,
-						'topic'		=> $e['topic_id'],
-					];
-
-					$col_ary[$e_col_end + 1][$row_index] = [
-						'free'		=> true,
-					];
-
 				}
 			}
 		}

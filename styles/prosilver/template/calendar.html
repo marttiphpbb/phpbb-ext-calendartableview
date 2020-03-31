@@ -31,17 +31,17 @@
 				</thead>
 			{%- endif -%}
 
-			{%- for eb in event_bodies -%}
+			{%- for tb in tbodies -%}
 				<tbody>
-				{%- for er in eb.event_rows -%}
+				{%- for r in tb.rows -%}
 					<tr>
-					{%- for c in er.cells -%}
+					{%- for c in r.cells -%}
 						{%- if c.ROWSPAN -%}
 							<td{%- if c.ROWSPAN > 1 %} rowspan="{{- c.ROWSPAN -}}"{%- endif -%}>
 								&nbsp;
 							</td>
 						{%- elseif c.TOPIC_ID -%}
-							<td class="calendar-event forum-{{ c.FORUM_ID -}}{% if TOPIC_HILIT == c.TOPIC_ID %} topic-hilit{%- endif -%}" data-topic="{{- c.TOPIC_ID -}}" data-forum="{{- c.FORUM_ID -}}"{%- if c.SPAN > 1 %} colspan="{{- c.SPAN -}}"{%- endif -%}>
+							<td class="calendar-event forum-{{ c.FORUM_ID -}}{% if TOPIC_HILIT == c.TOPIC_ID %} topic-hilit{%- endif -%}" data-topic="{{- c.TOPIC_ID -}}" data-forum="{{- c.FORUM_ID -}}"{%- if c.COLSPAN > 1 %} colspan="{{- c.COLSPAN -}}"{%- endif -%}>
 								<a href="{{- c.TOPIC_LINK -}}" title="{{- c.TOPIC_TITLE -}}">
 									{{- c.TOPIC_TITLE -}}
 								</a>
