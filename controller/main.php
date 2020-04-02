@@ -155,9 +155,6 @@ class main
 			$start_col = (int) max($e['start_jd'] - $start_jd, 0);
 			$end_col = (int) min($e['end_jd'] - $start_jd, $last_col);
 
-			error_log('$start_col: ' . $start_col);
-			error_log('$end_col: ' . $end_col);
-
 			for ($row = 0; $row < $max_rows; $row++)
 			{
 				if (!isset($row_ary[$row]))
@@ -257,10 +254,21 @@ class main
 			}
 		}
 
-		ksort($col_ary);
+		for ($table = 0; $table < $num_tables; $table++)
+		{
+			$last_table_col = ($table + 1) * $num_days_one_table - 1;
 
-		error_log('$col_ary: ' . json_encode($col_ary));
-		error_log('$row_ary: ' . json_encode($row_ary));
+			if (isset($col_ary[$last_table_col]))
+			{
+				continue;
+			}
+
+			$col_ary[$last_table_col][0] = [
+				'last_table_col'	=> true,
+			];
+		}
+
+		ksort($col_ary);
 
 		if ($repeated_header_en)
 		{
@@ -285,6 +293,8 @@ class main
 			$tbody_changed_ary = [];
 			$tbody_start_event_ary = [];
 
+			$is_last_table_col = (($col + 1) % $num_days_one_table) === 0;
+
 			foreach ($col_row as $row => $col_row_ary)
 			{
 				$tbody = intdiv($row, $tbody_row_count);
@@ -305,6 +315,11 @@ class main
 					continue;
 				}
 
+				if (isset($col_row_ary['last_table_col']))
+				{
+					continue;
+				}
+
 				$tbody_row_taken_ary[$tbody][$tbody_row] = true;
 
 				if (!isset($tbody_start_event_ary[$tbody]))
@@ -313,6 +328,35 @@ class main
 				}
 
 				$tbody_start_event_ary[$tbody][$tbody_row] = $col_row_ary;
+			}
+
+			if ($is_last_table_col)
+			{
+				for($tbody = 0; $tbody < $tbody_count; $tbody++)
+				{
+					$is_last_tbody = $repeated_header_count === $tbody;
+					$current_tbody_row_count = $is_last_tbody ? $last_tbody_row_count : $tbody_row_count;
+
+					for ($tbody_row = 0; $tbody_row < $current_tbody_row_count; $tbody_row++)
+					{
+						if (isset($tbody_start_event_ary[$tbody][$tbody_row]))
+						{
+							$tbody_ary[$tbody][$tbody_row][$col] = $tbody_start_event_ary[$tbody][$tbody_row];
+							continue;
+						}
+
+						if (isset($tbody_row_taken_ary[$tbody][$tbody_row]))
+						{
+							continue;
+						}
+
+						$tbody_ary[$tbody][$tbody_row][$col] = [
+							'rowspan'	=> 1,
+						];
+					}
+				}
+
+				continue;
 			}
 
 			foreach($tbody_changed_ary as $tbody => $bool)
@@ -525,7 +569,6 @@ class main
 								'ROWSPAN'	=> $tbody_rowspan_cache[$tbody][$tbody_row],
 							]);
 						}
-
 					}
 				}
 			}
