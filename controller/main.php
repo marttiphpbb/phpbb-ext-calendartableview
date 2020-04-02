@@ -107,7 +107,7 @@ class main
 		$num_tables = $this->store->get_num_tables();
 		$num_days_one_table = $this->store->get_num_days_one_table();
 		$num_days = $num_tables * $num_days_one_table;
-		$end_col = $num_days - 1;
+		$last_col = $num_days - 1;
 
 		$today_jd = $this->user_today->get_jd();
 
@@ -152,8 +152,11 @@ class main
 				'f'		=> $e['forum_id'],
 			]);
 
-			$start_col = (int) max($start_jd - $e['start_jd'], 0);
-			$end_col = (int) min($end_jd - $e['end_jd'], $end_col);
+			$start_col = (int) max($e['start_jd'] - $start_jd, 0);
+			$end_col = (int) min($e['end_jd'] - $start_jd, $last_col);
+
+			error_log('$start_col: ' . $start_col);
+			error_log('$end_col: ' . $end_col);
 
 			for ($row = 0; $row < $max_rows; $row++)
 			{
@@ -228,7 +231,7 @@ class main
 					if (!isset($col_ary[$next_col][$row]))
 					{
 						$col_ary[$next_col][$row] = [
-							'free'		=> true,
+							'clear'		=> true,
 						];
 					}
 
@@ -249,7 +252,7 @@ class main
 			if (!isset($col_ary[0][$row]))
 			{
 				$col_ary[0][$row] = [
-					'free'		=> true,
+					'clear'		=> true,
 				];
 			}
 		}
@@ -296,7 +299,7 @@ class main
 				$tbody_start_row = $tbody_row_count * $tbody;
 				$tbody_row = $row - $tbody_start_row;
 
-				if (isset($col_row_ary['free']))
+				if (isset($col_row_ary['clear']))
 				{
 					unset($tbody_row_taken_ary[$tbody][$tbody_row]);
 					continue;
@@ -341,8 +344,9 @@ class main
 						if (isset($tbody_start_event_ary[$tbody][$tbody_row]))
 						{
 							$tbody_ary[$tbody][$tbody_row][$col] = $tbody_start_event_ary[$tbody][$tbody_row];
-							$rowspan_tbody_start_row = $tbody_row + 1;
 						}
+
+						$rowspan_tbody_start_row = $tbody_row + 1;
 
 						continue;
 					}
