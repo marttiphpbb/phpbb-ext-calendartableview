@@ -31,21 +31,23 @@
 			$(this).find('td').each(function(){
 				var index = $(this).index();
 
-				if (index < index_start || index > index_end){
-					$(this).removeClass('select select-left select-right');
-					return;
-				}
-
-				$(this).addClass('select');
-
 				if (index === index_start){
-					$(this).addClass('select-left');
+					$(this).addClass('select select-left');
 					return;
 				}
 
 				if (index === index_end){
-					$(this).addClass('select-right');
+					$(this).addClass('select select-right');
+					return;
 				}
+
+				if (index < index_end && index > index_start){
+					$(this).addClass('select').removeClass('select-left select-right');
+
+					return;
+				}
+
+				$(this).removeClass('select select-left select-right');
 			});
 		});
 
