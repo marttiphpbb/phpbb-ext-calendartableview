@@ -1,20 +1,44 @@
 div.calendartableview {
 	width: 100%;
 }
-div.calendartableview table {
+div.calendartableview div.calendar-navigation{
+	position: relative;
+}
+div.calendartableview div.calendar-navigation table {
+	width: 100%;
+	border-collapse: separate;
+	text-align: center;
+	font-weight: bold;
+	table-layout: fixed;
+}
+div.calendartableview div.calendar-navigation table.calendar-navigation-overlay{
+	position: absolute;
+}
+table.calendar-navigation-overlay td {
+	border: 1px solid transparent;
+}
+table.calendar-navigation-overlay td a {
+	width: 100%;
+	height: 100%;
+}
+table.calendar-navigation-overlay td.select {
+	background-color: rgba(0, 0, 0, .1);
+	border-top-color: black;
+	border-bottom-color: black;
+}
+table.calendar-navigation-overlay td.select-left {
+	border-left-color: black;
+}
+table.calendar-navigation-overlay td.select-right {
+	border-right-color: black;
+}
+div.calendartableview div.tables table {
 	width: 100%;
 	table-layout: fixed;
-	/* border-collapse: separate; */
+	border-collapse: separate;
 	border: 1px dotted rgb(148, 150, 177);
 	text-align: center;
-	border-spacing: 1px;
 }
-/*
-div.calendertableview table thead tr th,
-div.calendertableview table tbody tr td {
-	padding: 1px;
-}
-*/
 
 div.calendartableview table colgroup.month-even,
 div.calendartableview table tr.month .month-even {
@@ -45,14 +69,14 @@ div.calendartableview td,
 div.calendartableview th {
 	height: 1.7em;
 }
-div.calendartableview td.calendar-event {
+div.calendartableview td.topic {
 	background-color: rgb(222, 230, 236);
 	border: 1px solid rgb(175, 182, 200);
 }
-div.calendartableview tr:nth-child(odd) td.calendar-event {
-	background-color: rgb(169, 187, 200);
+div.calendartableview tr:nth-child(odd) td.topic {
+	background-color: rgb(187, 202, 212);
 }
-div.calendartableview tr td.calendar-event.hover {
+div.calendartableview tr td.topic.hover {
 	background-color:#fff;
 }
 div.calendartableview tr td.topic-hilit {
@@ -61,6 +85,12 @@ div.calendartableview tr td.topic-hilit {
 div.calendartableview tr td a {
 	width: 100%;
 }
+div.calendartableview tr td.topic a {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
 div.calendartableview col.today {
 	border: 1px solid #444;
 }

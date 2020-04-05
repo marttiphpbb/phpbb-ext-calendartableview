@@ -9,7 +9,11 @@
 </h2>
 
 <div class="calendartableview">
-	{%- include '@marttiphpbb_calendartableview/include/pagination.html' -%}
+
+	{%- include '@marttiphpbb_calendartableview/include/navigation.html' -%}
+
+	<br>
+
 	<div class="tables">
 	{%- for t in tables -%}
 		<table>
@@ -47,7 +51,7 @@
 								&nbsp;
 							</td>
 						{%- elseif c.TOPIC_ID -%}
-							<td class="calendar-event forum-{{ c.FORUM_ID -}}{% if TOPIC_HILIT == c.TOPIC_ID %} topic-hilit{%- endif -%}" data-topic="{{- c.TOPIC_ID -}}" data-forum="{{- c.FORUM_ID -}}"{%- if c.COLSPAN > 1 %} colspan="{{- c.COLSPAN -}}"{%- endif -%}>
+							<td class="topic forum-{{ c.FORUM_ID -}}{% if TOPIC_HILIT == c.TOPIC_ID %} topic-hilit{%- endif -%}" data-topic="{{- c.TOPIC_ID -}}" data-forum="{{- c.FORUM_ID -}}"{%- if c.COLSPAN > 1 %} colspan="{{- c.COLSPAN -}}"{%- endif -%}>
 								<a href="{{- c.TOPIC_LINK -}}" title="{{- c.TOPIC_TITLE -}}">
 									{{- c.TOPIC_TITLE -}}
 								</a>
@@ -89,7 +93,11 @@
 	{%- endfor -%}
 
 	</div>
-	{%- include '@marttiphpbb_calendartableview/include/pagination.html' -%}
+
+	<br>
+
+	{%- include '@marttiphpbb_calendartableview/include/navigation.html' -%}
+
 </div>
 
 {%- include 'jumpbox.html' -%}

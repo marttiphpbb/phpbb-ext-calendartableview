@@ -131,8 +131,6 @@ class main
 		$vars = ['start_jd', 'end_jd', 'events'];
 		extract($this->dispatcher->trigger_event('marttiphpbb.calendar.view', compact($vars)));
 
-		error_log(json_encode($events));
-
 		foreach($events as $e)
 		{
 			if ($e['end_jd'] < $start_jd)
@@ -416,8 +414,6 @@ class main
 			}
 		}
 
-		error_log('$tbody_ary: ' . json_encode($tbody_ary));
-
 		$tbody_rowspan_cache = [];
 
 		for ($table = 0; $table < $num_tables; $table++)
@@ -434,27 +430,27 @@ class main
 				$max_table_span = $table_next - $col;
 
 				$jd = $start_jd + $col;
-				$day = cal_from_jd($jd, CAL_GREGORIAN);
+				$date_ary = cal_from_jd($jd, CAL_GREGORIAN);
 
-				if ($day['dayname'] === 'Monday' || $new_table)
+				if ($date_ary['dayname'] === 'Monday' || $new_table)
 				{
 					$isoweek = gmdate('W', jdtounix($jd));
 				}
 
-				if ($day['day'] === 1 || $new_table)
+				if ($date_ary['day'] === 1 || $new_table)
 				{
-					$month_day_count = cal_days_in_month(CAL_GREGORIAN, $day['month'], $day['year']);
-					$month_span = min($month_day_count - $day['day'] + 1, $max_table_span);
+					$month_day_count = cal_days_in_month(CAL_GREGORIAN, $date_ary['month'], $date_ary['year']);
+					$month_span = min($month_day_count - $date_ary['day'] + 1, $max_table_span);
 
-					$month_abbrev = $day['abbrevmonth'] === 'May' ? 'May_short' : $day['abbrevmonth'];
+					$month_abbrev = $date_ary['abbrevmonth'] === 'May' ? 'May_short' : $date_ary['abbrevmonth'];
 
 					// colgroups ~ months
 					$month_tpl = [
-						'MONTH'				=> $day['month'],
-						'MONTH_NAME'		=> $this->language->lang(['datetime', $day['monthname']]),
+						'MONTH'				=> $date_ary['month'],
+						'MONTH_NAME'		=> $this->language->lang(['datetime', $date_ary['monthname']]),
 						'MONTH_ABBREV'		=> $this->language->lang(['datetime', $month_abbrev]),
-						'MONTH_CLASS'		=> strtolower($day['abbrevmonth']),
-						'YEAR'				=> $day['year'],
+						'MONTH_CLASS'		=> strtolower($date_ary['abbrevmonth']),
+						'YEAR'				=> $date_ary['year'],
 						'SPAN'				=> $month_span,
 					];
 
@@ -479,18 +475,18 @@ class main
 					$moon_icon = false;
 				}
 
-				$weekday_name = $this->language->lang(['datetime', $day['dayname']]);
+				$weekday_name = $this->language->lang(['datetime', $date_ary['dayname']]);
 				$weekday_abbrev = substr($weekday_name, 0, $weekday_max_chars);
 
 				// cols ~ days
 				$day_tpl = [
 					'COL'				=> $col,
 					'JD'				=> $jd,
-					'WEEKDAY'			=> $day['dow'],
+					'WEEKDAY'			=> $date_ary['dow'],
 					'WEEKDAY_NAME'		=> $weekday_name,
 					'WEEKDAY_ABBREV'	=> $weekday_abbrev,
-					'WEEKDAY_CLASS'		=> strtolower($day['abbrevdayname']),
-					'MONTHDAY'			=> $day['day'],
+					'WEEKDAY_CLASS'		=> strtolower($date_ary['abbrevdayname']),
+					'MONTHDAY'			=> $date_ary['day'],
 					'ISOWEEK'			=> $isoweek,
 					'MOON_TITLE'		=> $moon_title,
 					'MOON_ICON'			=> $moon_icon,
@@ -574,8 +570,6 @@ class main
 			}
 		}
 
-//		$this->pagination->render($start_jd, $num_days_one_table);
-
 		$this->template->assign_vars([
 			'TODAY_JD'			=> $today_jd,
 			'TOPIC_HILIT'		=> $this->request->variable('t', 0),
@@ -583,6 +577,71 @@ class main
 			'LOAD_STYLESHEET'	=> $this->store->get_load_stylesheet(),
 			'EXTRA_STYLESHEET'	=> $this->store->get_extra_stylesheet(),
 		]);
+
+		$nav_size = $num_days_one_table;
+		$nav_months_pre = round(($nav_size - ($num_days / 30)) / 2);
+
+		$nav_month = $month - $nav_months_pre;
+		$nav_year = $year;
+
+		while ($nav_month < 1)
+		{
+			$nav_year--;
+			$nav_month += 12;
+		}
+
+		for ($n = 0; $n < $nav_size; $n++)
+		{
+			if ($nav_month > 12)
+			{
+				$nav_month = 1;
+				$nav_year++;
+			}
+
+			$this->template->assign_block_vars('nav_links', [
+				'LINK'	 => $this->helper->route('marttiphpbb_calendartableview_page_controller', [
+					'year'	=> $nav_year,
+					'month'	=> $nav_month,
+					'day'	=> 1,
+				]),
+			]);
+
+			$this->template->assign_block_vars('nav_links', [
+				'LINK'	 => $this->helper->route('marttiphpbb_calendartableview_page_controller', [
+					'year'	=> $nav_year,
+					'month'	=> $nav_month,
+					'day'	=> 7,
+				]),
+			]);
+
+			$this->template->assign_block_vars('nav_links', [
+				'LINK'	 => $this->helper->route('marttiphpbb_calendartableview_page_controller', [
+					'year'	=> $nav_year,
+					'month'	=> $nav_month,
+					'day'	=> 15,
+				]),
+			]);
+
+			$this->template->assign_block_vars('nav_links', [
+				'LINK'	 => $this->helper->route('marttiphpbb_calendartableview_page_controller', [
+					'year'	=> $nav_year,
+					'month'	=> $nav_month,
+					'day'	=> 23,
+				]),
+			]);
+
+			$month_str = cnst::MONTH_NAME[$nav_month];
+			$month_name = $this->language->lang(['datetime', $month_str]);
+
+			$this->template->assign_block_vars('nav_months', [
+				'MONTH'	 		=> $nav_month,
+				'MONTH_NAME'	=> $month_name,
+				'MONTH_ABBREV'	=> substr($month_name, 0, $weekday_max_chars),
+				'MONTH_CLASS'	=> cnst::MONTH_CLASS[$nav_month],
+			]);
+
+			$nav_month++;
+		}
 
 		make_jumpbox(append_sid($this->root_path . 'viewforum.' . $this->php_ext));
 
