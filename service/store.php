@@ -167,24 +167,24 @@ class store
 		return $this->get_boolean('repeated_header_en');
 	}
 
-	public function set_repeated_header_num_rows(int $repeated_header_num_rows):void
+	public function set_repeated_header_row_count(int $repeated_header_row_count):void
 	{
-		$this->set_int('repeated_header_num_rows', $repeated_header_num_rows);
+		$this->set_int('repeated_header_row_count', $repeated_header_row_count);
 	}
 
-	public function get_repeated_header_num_rows():int
+	public function get_repeated_header_row_count():int
 	{
-		return $this->get_int('repeated_header_num_rows');
+		return $this->get_int('repeated_header_row_count');
 	}
 
-	public function set_repeated_header_omit_rows(int $repeated_header_num_rows):void
+	public function set_repeated_header_omit_row_count(int $repeated_header_omit_row_count):void
 	{
-		$this->set_int('repeated_header_omit_rows', $repeated_header_num_rows);
+		$this->set_int('repeated_header_omit_row_count', $repeated_header_omit_row_count);
 	}
 
-	public function get_repeated_header_omit_rows():int
+	public function get_repeated_header_omit_row_count():int
 	{
-		return $this->get_int('repeated_header_omit_rows');
+		return $this->get_int('repeated_header_omit_row_count');
 	}
 
 	public function set_repeated_header(array $repeated_header):void
@@ -305,6 +305,36 @@ class store
 	public function get_weekday_max_char_count():int
 	{
 		return $this->get_int('weekday_max_char_count');
+	}
+
+	public function set_nav_en(bool $nav_en):void
+	{
+		$this->set_boolean('nav_en', $nav_en);
+	}
+
+	public function get_nav_en():bool
+	{
+		return $this->get_boolean('nav_en');
+	}
+
+	public function set_nav_month_count(int $nav_month_count):void
+	{
+		$this->set_int('nav_month_count', $nav_month_count);
+	}
+
+	public function get_nav_month_count():int
+	{
+		return $this->get_int('nav_month_count');
+	}
+
+	public function set_nav_month_max_char_count(int $nav_month_max_char_count):void
+	{
+		$this->set_int('nav_month_max_char_count', $nav_month_max_char_count);
+	}
+
+	public function get_nav_month_max_char_count():int
+	{
+		return $this->get_int('nav_month_max_char_count');
 	}
 
 	public function set_load_stylesheet(bool $load_stylesheet):void

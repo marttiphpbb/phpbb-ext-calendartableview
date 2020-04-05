@@ -1,0 +1,26 @@
+<div class="calendar-navigation">
+    <table class="calendar-navigation-overlay" data-select-count="{{- NAV_SELECT_COUNT -}}" data-select-start="{{- NAV_SELECT_START -}}">
+        <tbody>
+        <tr>
+        {%- for m in nav_links -%}
+            <td>
+                <a href="{{- m.LINK -}}">
+                    &nbsp;
+                </a>
+            </td>
+        {%- endfor -%}
+        </tr>
+        </tbody>
+    </table>
+    <table class="calendar-navigation-labels">
+        <tbody>
+        <tr class="month">
+        {%- for n in nav_months -%}
+            <td class="{{- n.MONTH_CLASS }} month-{%- if n.MONTH is odd -%}odd{%- else -%}even{%- endif -%}">
+                {{- n.MONTH_ABBREV -}}
+            </td>
+        {%- endfor -%}
+        </tr>
+        </tbody>
+    </table>
+</div>

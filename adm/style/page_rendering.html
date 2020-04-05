@@ -149,26 +149,26 @@
 
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_NUM_ROWS') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_ROW_COUNT') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				repeated_header_num_rows
+				repeated_header_row_count
 			{%- endblock -%}
 			{%- block value -%}
-				{{- REPEATED_HEADER_NUM_ROWS -}}
+				{{- REPEATED_HEADER_ROW_COUNT -}}
 			{%- endblock -%}
 			{%- block attr %} min="5"{%- endblock -%}
 		{%- endembed -%}
 
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_OMIT_ROWS') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_OMIT_ROW_COUNT') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				repeated_header_omit_rows
+				repeated_header_omit_row_count
 			{%- endblock -%}
 			{%- block value -%}
-				{{- REPEATED_HEADER_OMIT_ROWS -}}
+				{{- REPEATED_HEADER_OMIT_ROW_COUNT -}}
 			{%- endblock -%}
 			{%- block attr %} min="5"{%- endblock -%}
 		{%- endembed -%}
@@ -242,6 +242,48 @@
 			{%- endblock -%}
 			{%- block attr %} min="1" max="20"{%- endblock -%}
 		{%- endembed -%}
+	</fieldset>
+
+	<fieldset>
+		<legend>
+			{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NAV') -}}
+		</legend>
+
+		{%- embed '@marttiphpbb_calendartableview/include/radio.html' with {'checked': NAV_EN} only -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NAV_EN') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				nav_en
+			{%- endblock -%}
+		{%- endembed -%}
+
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NAV_MONTH_COUNT') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				nav_month_count
+			{%- endblock -%}
+			{%- block value -%}
+				{{- NAV_MONTH_COUNT -}}
+			{%- endblock -%}
+			{%- block attr %} min="10"{%- endblock -%}
+		{%- endembed -%}
+
+		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
+			{%- block label -%}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NAV_MONTH_MAX_CHAR_COUNT') -}}
+			{%- endblock -%}
+			{%- block name -%}
+				nav_month_max_char_count
+			{%- endblock -%}
+			{%- block value -%}
+				{{- NAV_MONTH_MAX_CHAR_COUNT -}}
+			{%- endblock -%}
+			{%- block attr %} min="1"{%- endblock -%}
+		{%- endembed -%}
+
 	</fieldset>
 
 	<fieldset>

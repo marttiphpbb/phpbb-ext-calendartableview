@@ -95,9 +95,9 @@ $lang = array_merge($lang, [
 	=> 'Table repeated header',
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_EN'
 	=> 'Table repeated header enabled',
-	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_NUM_ROWS'
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_ROW_COUNT'
 	=> 'Repeat after this number of rows',
-	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_OMIT_ROWS'
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_REPEATED_HEADER_OMIT_ROW_COUNT'
 	=> 'Omit the repeated header this number of rows before end',
 
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_FOOTER'
@@ -107,6 +107,15 @@ $lang = array_merge($lang, [
 
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_WEEKDAY_MAX_CHAR_COUNT'
 	=> 'Maximum characters for weekdays',
+
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NAV'
+	=> 'Navigation',
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NAV_EN'
+	=> 'Navigation enabled',
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NAV_MONTH_COUNT'
+	=> 'Number of months in the navigation',
+	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NAV_MONTH_MAX_CHAR_COUNT'
+	=> 'Maximum characters for month names in the navigation',
 
 	'ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TIME_FORMAT'
 	=> 'Time format',

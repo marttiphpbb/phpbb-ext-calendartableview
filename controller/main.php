@@ -81,8 +81,8 @@ class main
 
 		$repeated_header_en = $this->store->get_repeated_header_en();
 		$repeated_header = $this->store->get_repeated_header();
-		$repeated_header_num_rows = $this->store->get_repeated_header_num_rows();
-		$repeated_header_omit_rows = $this->store->get_repeated_header_omit_rows();
+		$repeated_header_row_count = $this->store->get_repeated_header_row_count();
+		$repeated_header_omit_row_count = $this->store->get_repeated_header_omit_row_count();
 
 		if (count($repeated_header) === 0)
 		{
@@ -270,9 +270,9 @@ class main
 
 		if ($repeated_header_en)
 		{
-			$repeated_header_effective_rows = $event_row_count - $repeated_header_omit_rows;
-			$repeated_header_count = intdiv($repeated_header_effective_rows, $repeated_header_num_rows);
-			$tbody_row_count = $repeated_header_count === 0 ? $event_row_count : $repeated_header_num_rows;
+			$repeated_header_effective_rows = $event_row_count - $repeated_header_omit_row_count;
+			$repeated_header_count = intdiv($repeated_header_effective_rows, $repeated_header_row_count);
+			$tbody_row_count = $repeated_header_count === 0 ? $event_row_count : $repeated_header_row_count;
 		}
 		else
 		{
@@ -570,19 +570,27 @@ class main
 			}
 		}
 
-		$nav_size = $table_day_count;
-		$nav_months_pre = round(($nav_size - ($day_count / 30)) / 2);
-
-		$nav_month = $month - $nav_months_pre;
-		$nav_year = $year;
-
-		while ($nav_month < 1)
+		if ($this->store->get_nav_en())
 		{
-			$nav_year--;
-			$nav_month += 12;
+			$nav_month_max_char_count = $this->store->get_nav_month_max_char_count();
+			$nav_month_count = $this->store->get_nav_month_count();
+			$nav_months_pre = round(($nav_month_count - ($day_count / 30)) / 2);
+
+			$nav_month = $month - $nav_months_pre;
+			$nav_year = $year;
+
+			while ($nav_month < 1)
+			{
+				$nav_year--;
+				$nav_month += 12;
+			}
+		}
+		else
+		{
+			$nav_month_count = 0;
 		}
 
-		for ($n = 0; $n < $nav_size; $n++)
+		for ($n = 0; $n < $nav_month_count; $n++)
 		{
 			if ($nav_month > 12)
 			{
@@ -628,7 +636,7 @@ class main
 			$this->template->assign_block_vars('nav_months', [
 				'MONTH'	 		=> $nav_month,
 				'MONTH_NAME'	=> $month_name,
-				'MONTH_ABBREV'	=> substr($month_name, 0, $weekday_max_char_count),
+				'MONTH_ABBREV'	=> substr($month_name, 0, $nav_month_max_char_count),
 				'MONTH_CLASS'	=> cnst::MONTH_CLASS[$nav_month],
 			]);
 

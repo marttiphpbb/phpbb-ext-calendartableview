@@ -104,14 +104,18 @@ class main_module
 					$store->set_header($header);
 
 					$store->set_repeated_header_en($request->variable('repeated_header_en', 0) ? true : false);
-					$store->set_repeated_header_num_rows($request->variable('repeated_header_num_rows', 0));
-					$store->set_repeated_header_omit_rows($request->variable('repeated_header_omit_rows', 0));
+					$store->set_repeated_header_row_count($request->variable('repeated_header_row_count', 0));
+					$store->set_repeated_header_omit_row_count($request->variable('repeated_header_omit_row_count', 0));
 					$store->set_repeated_header($repeated_header);
 
 					$store->set_footer_en($request->variable('footer_en', 0) ? true : false);
 					$store->set_footer($footer);
 
 					$store->set_weekday_max_char_count($request->variable('weekday_max_char_count', 0));
+
+					$store->set_nav_en($request->variable('nav_en', 0) ? true : false);
+					$store->set_nav_month_count($request->variable('nav_month_count', 0));
+					$store->set_nav_month_max_char_count($request->variable('nav_month_max_char_count', 0));
 
 					$store->set_derive_user_time_format($request->variable('derive_user_time_format', 0) ? true : false);
 					$store->set_default_time_format($request->variable('default_time_format', ''));
@@ -124,22 +128,25 @@ class main_module
 				}
 
 				$template->assign_vars([
-					'TABLE_COUNT'				=> $store->get_table_count(),
-					'TABLE_DAY_COUNT'			=> $store->get_table_day_count(),
-					'MIN_ROW_COUNT'				=> $store->get_min_row_count(),
-					'MAX_ROW_COUNT'				=> $store->get_max_row_count(),
-					'SHOW_TODAY'				=> $store->get_show_today(),
-					'TOPIC_HILIT'				=> $store->get_topic_hilit(),
-					'HEADER_EN'					=> $store->get_header_en(),
-					'REPEATED_HEADER_EN'		=> $store->get_repeated_header_en(),
-					'REPEATED_HEADER_NUM_ROWS'	=> $store->get_repeated_header_num_rows(),
-					'REPEATED_HEADER_OMIT_ROWS'	=> $store->get_repeated_header_omit_rows(),
-					'FOOTER_EN'					=> $store->get_footer_en(),
-					'WEEKDAY_MAX_CHAR_COUNT'	=> $store->get_weekday_max_char_count(),
-					'DERIVE_USER_TIME_FORMAT'	=> $store->get_derive_user_time_format(),
-					'DEFAULT_TIME_FORMAT'		=> $store->get_default_time_format(),
-					'LOAD_STYLESHEET'			=> $store->get_load_stylesheet(),
-					'EXTRA_STYLESHEET'			=> $store->get_extra_stylesheet(),
+					'TABLE_COUNT'						=> $store->get_table_count(),
+					'TABLE_DAY_COUNT'					=> $store->get_table_day_count(),
+					'MIN_ROW_COUNT'						=> $store->get_min_row_count(),
+					'MAX_ROW_COUNT'						=> $store->get_max_row_count(),
+					'SHOW_TODAY'						=> $store->get_show_today(),
+					'TOPIC_HILIT'						=> $store->get_topic_hilit(),
+					'HEADER_EN'							=> $store->get_header_en(),
+					'REPEATED_HEADER_EN'				=> $store->get_repeated_header_en(),
+					'REPEATED_HEADER_ROW_COUNT'			=> $store->get_repeated_header_row_count(),
+					'REPEATED_HEADER_OMIT_ROW_COUNT'	=> $store->get_repeated_header_omit_row_count(),
+					'FOOTER_EN'							=> $store->get_footer_en(),
+					'WEEKDAY_MAX_CHAR_COUNT'			=> $store->get_weekday_max_char_count(),
+					'NAV_EN'							=> $store->get_nav_en(),
+					'NAV_MONTH_COUNT'					=> $store->get_nav_month_count(),
+					'NAV_MONTH_MAX_CHAR_COUNT'			=> $store->get_nav_month_max_char_count(),
+					'DERIVE_USER_TIME_FORMAT'			=> $store->get_derive_user_time_format(),
+					'DEFAULT_TIME_FORMAT'				=> $store->get_default_time_format(),
+					'LOAD_STYLESHEET'					=> $store->get_load_stylesheet(),
+					'EXTRA_STYLESHEET'					=> $store->get_extra_stylesheet(),
 				]);
 
 				$stored_header_items = [
