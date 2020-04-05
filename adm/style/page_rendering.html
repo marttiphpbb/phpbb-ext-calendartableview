@@ -13,26 +13,26 @@
 
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_TABLES') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TABLE_COUNT') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				num_tables
+				table_count
 			{%- endblock -%}
 			{%- block value -%}
-				{{- NUM_TABLES -}}
+				{{- TABLE_COUNT -}}
 			{%- endblock -%}
 			{%- block attr %} min="1" max="10"{%- endblock -%}
 		{%- endembed -%}
 
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_NUM_DAYS_ONE_TABLE') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_TABLE_DAY_COUNT') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				num_days_one_table
+				table_day_count
 			{%- endblock -%}
 			{%- block value -%}
-				{{- NUM_DAYS_ONE_TABLE -}}
+				{{- TABLE_DAY_COUNT -}}
 			{%- endblock -%}
 			{%- block attr %} min="7" max="28"{%- endblock -%}
 		{%- endembed -%}
@@ -46,26 +46,26 @@
 
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MIN_ROWS') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MIN_ROW_COUNT') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				min_rows
+				min_row_count
 			{%- endblock -%}
 			{%- block value -%}
-				{{- MIN_ROWS -}}
+				{{- MIN_ROW_COUNT -}}
 			{%- endblock -%}
 			{%- block attr %} min="1"{%- endblock -%}
 		{%- endembed -%}
 
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MAX_ROWS') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_MAX_ROW_COUNT') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				max_rows
+				max_row_count
 			{%- endblock -%}
 			{%- block value -%}
-				{{- MAX_ROWS -}}
+				{{- MAX_ROW_COUNT -}}
 			{%- endblock -%}
 			{%- block attr %} min="1"{%- endblock -%}
 		{%- endembed -%}
@@ -232,13 +232,13 @@
 
 		{%- embed '@marttiphpbb_calendartableview/include/number.html' -%}
 			{%- block label -%}
-				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_WEEKDAY_MAX_CHARS') -}}
+				{{- lang('ACP_MARTTIPHPBB_CALENDARTABLEVIEW_WEEKDAY_MAX_CHAR_COUNT') -}}
 			{%- endblock -%}
 			{%- block name -%}
-				weekday_max_chars
+				weekday_max_char_count
 			{%- endblock -%}
 			{%- block value -%}
-				{{- WEEKDAY_MAX_CHARS -}}
+				{{- WEEKDAY_MAX_CHAR_COUNT -}}
 			{%- endblock -%}
 			{%- block attr %} min="1" max="20"{%- endblock -%}
 		{%- endembed -%}

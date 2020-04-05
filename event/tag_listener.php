@@ -38,11 +38,11 @@ class tag_listener implements EventSubscriberInterface
 			return;
 		}
 
-		$num_days_offset_tag = $this->store->get_num_days_offset_tag();
+		$days_offset_tag = $this->store->get_days_offset_tag();
 
-		if ($num_days_offset_tag)
+		if ($days_offset_tag)
 		{
-			$start_jd = $event['start_jd'] - $num_days_offset_tag;
+			$start_jd = $event['start_jd'] - $days_offset_tag;
 			$start = cal_from_jd($start_jd, CAL_GREGORIAN);
 
 			$params = [

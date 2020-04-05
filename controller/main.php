@@ -97,22 +97,22 @@ class main
 			$footer_en = false;
 		}
 
-		$weekday_max_chars = $this->store->get_weekday_max_chars();
+		$weekday_max_char_count = $this->store->get_weekday_max_char_count();
 
-		$min_rows = $this->store->get_min_rows();
-		$max_rows = $this->store->get_max_rows();
+		$min_row_count = $this->store->get_min_row_count();
+		$max_row_count = $this->store->get_max_row_count();
 
-		$event_row_count = $min_rows;
+		$event_row_count = $min_row_count;
 
-		$num_tables = $this->store->get_num_tables();
-		$num_days_one_table = $this->store->get_num_days_one_table();
-		$num_days = $num_tables * $num_days_one_table;
-		$last_col = $num_days - 1;
+		$table_count = $this->store->get_table_count();
+		$table_day_count = $this->store->get_table_day_count();
+		$day_count = $table_count * $table_day_count;
+		$last_col = $day_count - 1;
 
 		$today_jd = $this->user_today->get_jd();
 
 		$start_jd = cal_to_jd(CAL_GREGORIAN, $month, $day, $year);
-		$end_jd = $start_jd + $num_days - 1;
+		$end_jd = $start_jd + $day_count - 1;
 
 		$moon_phase_ary = moon_phase::find($start_jd, $end_jd);
 		$moon_phase = reset($moon_phase_ary);
@@ -153,7 +153,7 @@ class main
 			$start_col = (int) max($e['start_jd'] - $start_jd, 0);
 			$end_col = (int) min($e['end_jd'] - $start_jd, $last_col);
 
-			for ($row = 0; $row < $max_rows; $row++)
+			for ($row = 0; $row < $max_row_count; $row++)
 			{
 				if (!isset($row_ary[$row]))
 				{
@@ -187,15 +187,15 @@ class main
 
 					$c_start = $start_col;
 
-					$end_table = intdiv($end_col, $num_days_one_table);
+					$end_table = intdiv($end_col, $table_day_count);
 
 					do
 					{
-						$start_table = intdiv($c_start, $num_days_one_table);
+						$start_table = intdiv($c_start, $table_day_count);
 
 						if ($end_table > $start_table)
 						{
-							$c_end = ($start_table + 1) * $num_days_one_table - 1;
+							$c_end = ($start_table + 1) * $table_day_count - 1;
 						}
 						else
 						{
@@ -252,9 +252,9 @@ class main
 			}
 		}
 
-		for ($table = 0; $table < $num_tables; $table++)
+		for ($table = 0; $table < $table_count; $table++)
 		{
-			$last_table_col = ($table + 1) * $num_days_one_table - 1;
+			$last_table_col = ($table + 1) * $table_day_count - 1;
 
 			if (isset($col_ary[$last_table_col]))
 			{
@@ -291,7 +291,7 @@ class main
 			$tbody_changed_ary = [];
 			$tbody_start_event_ary = [];
 
-			$is_last_table_col = (($col + 1) % $num_days_one_table) === 0;
+			$is_last_table_col = (($col + 1) % $table_day_count) === 0;
 
 			foreach ($col_row as $row => $col_row_ary)
 			{
@@ -416,12 +416,12 @@ class main
 
 		$tbody_rowspan_cache = [];
 
-		for ($table = 0; $table < $num_tables; $table++)
+		for ($table = 0; $table < $table_count; $table++)
 		{
 			$this->template->assign_block_vars('tables', []);
 
-			$table_start = $num_days_one_table * $table;
-			$table_next = $num_days_one_table + $table_start;
+			$table_start = $table_day_count * $table;
+			$table_next = $table_day_count + $table_start;
 
 			$new_table = true;
 
@@ -476,7 +476,7 @@ class main
 				}
 
 				$weekday_name = $this->language->lang(['datetime', $date_ary['dayname']]);
-				$weekday_abbrev = substr($weekday_name, 0, $weekday_max_chars);
+				$weekday_abbrev = substr($weekday_name, 0, $weekday_max_char_count);
 
 				// cols ~ days
 				$day_tpl = [
@@ -570,16 +570,8 @@ class main
 			}
 		}
 
-		$this->template->assign_vars([
-			'TODAY_JD'			=> $today_jd,
-			'TOPIC_HILIT'		=> $this->request->variable('t', 0),
-			'SHOW_TODAY'		=> $this->store->get_show_today(),
-			'LOAD_STYLESHEET'	=> $this->store->get_load_stylesheet(),
-			'EXTRA_STYLESHEET'	=> $this->store->get_extra_stylesheet(),
-		]);
-
-		$nav_size = $num_days_one_table;
-		$nav_months_pre = round(($nav_size - ($num_days / 30)) / 2);
+		$nav_size = $table_day_count;
+		$nav_months_pre = round(($nav_size - ($day_count / 30)) / 2);
 
 		$nav_month = $month - $nav_months_pre;
 		$nav_year = $year;
@@ -636,12 +628,25 @@ class main
 			$this->template->assign_block_vars('nav_months', [
 				'MONTH'	 		=> $nav_month,
 				'MONTH_NAME'	=> $month_name,
-				'MONTH_ABBREV'	=> substr($month_name, 0, $weekday_max_chars),
+				'MONTH_ABBREV'	=> substr($month_name, 0, $weekday_max_char_count),
 				'MONTH_CLASS'	=> cnst::MONTH_CLASS[$nav_month],
 			]);
 
 			$nav_month++;
 		}
+
+		$nav_select_start = 50;
+		$nav_select_count = 16;
+
+		$this->template->assign_vars([
+			'TODAY_JD'			=> $today_jd,
+			'TOPIC_HILIT'		=> $this->request->variable('t', 0),
+			'SHOW_TODAY'		=> $this->store->get_show_today(),
+			'LOAD_STYLESHEET'	=> $this->store->get_load_stylesheet(),
+			'EXTRA_STYLESHEET'	=> $this->store->get_extra_stylesheet(),
+			'NAV_SELECT_START'	=> $nav_select_start,
+			'NAV_SELECT_COUNT'	=> $nav_select_count,
+		]);
 
 		make_jumpbox(append_sid($this->root_path . 'viewforum.' . $this->php_ext));
 

@@ -53,9 +53,9 @@ class main_module
 					$menuitems_acp->process_form(cnst::FOLDER, 'links');
 
 					$store->transaction_start();
-					$store->set_num_days_offset_menu($request->variable('num_days_offset_menu', 0));
-					$store->set_num_days_offset_tag($request->variable('num_days_offset_tag', 0));
-					$store->set_num_days_offset_link($request->variable('num_days_offset_link', 0));
+					$store->set_days_offset_menu($request->variable('days_offset_menu', 0));
+					$store->set_days_offset_tag($request->variable('days_offset_tag', 0));
+					$store->set_days_offset_link($request->variable('days_offset_link', 0));
 					$store->set_show_today();
 
 					trigger_error($language->lang(cnst::L_ACP . '_SETTINGS_SAVED') . adm_back_link($this->u_action));
@@ -64,9 +64,9 @@ class main_module
 				$menuitems_acp->assign_to_template(cnst::FOLDER);
 
 				$template->assign_vars([
-					'NUM_DAYS_OFFSET_MENU'		=> $store->get_num_days_offset_menu(),
-					'NUM_DAYS_OFFSET_TAG'		=> $store->get_num_days_offset_tag(),
-					'NUM_DAYS_OFFSET_LINK'		=> $store->get_num_days_offset_link(),
+					'DAYS_OFFSET_MENU'		=> $store->get_days_offset_menu(),
+					'DAYS_OFFSET_TAG'		=> $store->get_days_offset_tag(),
+					'DAYS_OFFSET_LINK'		=> $store->get_days_offset_link(),
 				]);
 
 			break;
@@ -92,10 +92,10 @@ class main_module
 
 					$store->transaction_start();
 
-					$store->set_num_tables($request->variable('num_tables', 0));
-					$store->set_num_days_one_table($request->variable('num_days_one_table', 0));
-					$store->set_min_rows($request->variable('min_rows', 0));
-					$store->set_max_rows($request->variable('max_rows', 0));
+					$store->set_table_count($request->variable('table_count', 0));
+					$store->set_table_day_count($request->variable('table_day_count', 0));
+					$store->set_min_row_count($request->variable('min_row_count', 0));
+					$store->set_max_row_count($request->variable('max_row_count', 0));
 
 					$store->set_show_today($request->variable('show_today', 0) ? true : false);
 					$store->set_topic_hilit($request->variable('topic_hilit', 0) ? true : false);
@@ -111,7 +111,7 @@ class main_module
 					$store->set_footer_en($request->variable('footer_en', 0) ? true : false);
 					$store->set_footer($footer);
 
-					$store->set_weekday_max_chars($request->variable('weekday_max_chars', 0));
+					$store->set_weekday_max_char_count($request->variable('weekday_max_char_count', 0));
 
 					$store->set_derive_user_time_format($request->variable('derive_user_time_format', 0) ? true : false);
 					$store->set_default_time_format($request->variable('default_time_format', ''));
@@ -124,10 +124,10 @@ class main_module
 				}
 
 				$template->assign_vars([
-					'NUM_TABLES'				=> $store->get_num_tables(),
-					'NUM_DAYS_ONE_TABLE'		=> $store->get_num_days_one_table(),
-					'MIN_ROWS'					=> $store->get_min_rows(),
-					'MAX_ROWS'					=> $store->get_max_rows(),
+					'TABLE_COUNT'				=> $store->get_table_count(),
+					'TABLE_DAY_COUNT'			=> $store->get_table_day_count(),
+					'MIN_ROW_COUNT'				=> $store->get_min_row_count(),
+					'MAX_ROW_COUNT'				=> $store->get_max_row_count(),
 					'SHOW_TODAY'				=> $store->get_show_today(),
 					'TOPIC_HILIT'				=> $store->get_topic_hilit(),
 					'HEADER_EN'					=> $store->get_header_en(),
@@ -135,7 +135,7 @@ class main_module
 					'REPEATED_HEADER_NUM_ROWS'	=> $store->get_repeated_header_num_rows(),
 					'REPEATED_HEADER_OMIT_ROWS'	=> $store->get_repeated_header_omit_rows(),
 					'FOOTER_EN'					=> $store->get_footer_en(),
-					'WEEKDAY_MAX_CHARS'			=> $store->get_weekday_max_chars(),
+					'WEEKDAY_MAX_CHAR_COUNT'	=> $store->get_weekday_max_char_count(),
 					'DERIVE_USER_TIME_FORMAT'	=> $store->get_derive_user_time_format(),
 					'DEFAULT_TIME_FORMAT'		=> $store->get_default_time_format(),
 					'LOAD_STYLESHEET'			=> $store->get_load_stylesheet(),

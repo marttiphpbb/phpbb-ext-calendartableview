@@ -51,8 +51,8 @@ class menu_listener implements EventSubscriberInterface
 			return;
 		}
 
-		$num_days_offset_menu = $this->store->get_num_days_offset_menu();
-		$start = $this->user_today->get_date_with_day_offset(-$num_days_offset_menu);
+		$days_offset_menu = $this->store->get_days_offset_menu();
+		$start = $this->user_today->get_date_with_day_offset(-$days_offset_menu);
 
 		$link = $this->helper->route('marttiphpbb_calendartableview_page_controller', [
 			'year'	=> $start['year'],

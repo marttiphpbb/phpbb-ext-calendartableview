@@ -227,84 +227,84 @@ class store
 		return $this->get_boolean('topic_hilit');
 	}
 
-	public function set_num_tables(int $num_tables):void
+	public function set_table_count(int $table_count):void
 	{
-		$this->set_int('num_tables', $num_tables);
+		$this->set_int('table_count', $table_count);
 	}
 
-	public function get_num_tables():int
+	public function get_table_count():int
 	{
-		return $this->get_int('num_tables');
+		return $this->get_int('table_count');
 	}
 
-	public function set_num_days_one_table(int $num_days_one_table):void
+	public function set_table_day_count(int $table_day_count):void
 	{
-		$this->set_int('num_days_one_table', $num_days_one_table);
+		$this->set_int('table_day_count', $table_day_count);
 	}
 
-	public function get_num_days_one_table():int
+	public function get_table_day_count():int
 	{
-		return $this->get_int('num_days_one_table');
+		return $this->get_int('table_day_count');
 	}
 
-	public function set_num_days_offset_menu(int $num_days_offset_menu):void
+	public function set_days_offset_menu(int $days_offset_menu):void
 	{
-		$this->set_int('num_days_offset_menu', $num_days_offset_menu);
+		$this->set_int('days_offset_menu', $days_offset_menu);
 	}
 
-	public function get_num_days_offset_menu():int
+	public function get_days_offset_menu():int
 	{
-		return $this->get_int('num_days_offset_menu');
+		return $this->get_int('days_offset_menu');
 	}
 
-	public function set_num_days_offset_tag(int $num_days_offset_tag):void
+	public function set_days_offset_tag(int $days_offset_tag):void
 	{
-		$this->set_int('num_days_offset_tag', $num_days_offset_tag);
+		$this->set_int('days_offset_tag', $days_offset_tag);
 	}
 
-	public function get_num_days_offset_tag():int
+	public function get_days_offset_tag():int
 	{
-		return $this->get_int('num_days_offset_tag');
+		return $this->get_int('days_offset_tag');
 	}
 
-	public function set_num_days_offset_link(int $num_days_offset_link):void
+	public function set_days_offset_link(int $days_offset_link):void
 	{
-		$this->set_int('num_days_offset_link', $num_days_offset_link);
+		$this->set_int('days_offset_link', $days_offset_link);
 	}
 
-	public function get_num_days_offset_link():int
+	public function get_days_offset_link():int
 	{
-		return $this->get_int('num_days_offset_link');
+		return $this->get_int('days_offset_link');
 	}
 
-	public function set_min_rows(int $min_rows):void
+	public function set_min_row_count(int $min_row_count):void
 	{
-		$this->set_int('min_rows', $min_rows);
+		$this->set_int('min_row_count', $min_row_count);
 	}
 
-	public function get_min_rows():int
+	public function get_min_row_count():int
 	{
-		return $this->get_int('min_rows');
+		return $this->get_int('min_row_count');
 	}
 
-	public function set_max_rows(int $max_rows):void
+	public function set_max_row_count(int $max_row_count):void
 	{
-		$this->set_int('max_rows', $max_rows);
+		$this->set_int('max_row_count', $max_row_count);
 	}
 
-	public function get_max_rows():int
+	public function get_max_row_count():int
 	{
-		return $this->get_int('max_rows');
+		return $this->get_int('max_row_count');
 	}
 
-	public function set_weekday_max_chars(int $weekday_max_chars):void
+	public function set_weekday_max_char_count(int $weekday_max_char_count):void
 	{
-		$this->set_int('weekday_max_chars', $weekday_max_chars);
+		$this->set_int('weekday_max_char_count', $weekday_max_char_count);
 	}
 
-	public function get_weekday_max_chars():int
+	public function get_weekday_max_char_count():int
 	{
-		return $this->get_int('weekday_max_chars');
+		return $this->get_int('weekday_max_char_count');
 	}
 
 	public function set_load_stylesheet(bool $load_stylesheet):void

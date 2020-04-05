@@ -39,11 +39,11 @@ class link_listener implements EventSubscriberInterface
 			return;
 		}
 
-		$num_days_offset_link = $this->store->get_num_days_offset_link();
+		$days_offset_link = $this->store->get_days_offset_link();
 
-		if ($num_days_offset_link)
+		if ($days_offset_link)
 		{
-			$jd = $event['jd'] - $num_days_offset_link;
+			$jd = $event['jd'] - $days_offset_link;
 			$start = cal_from_jd($jd, CAL_GREGORIAN);
 
 			$params = [

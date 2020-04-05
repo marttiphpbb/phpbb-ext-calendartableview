@@ -1,7 +1,5 @@
 # phpBB Extension - marttiphpbb Calendar Table View
 
-## Initial Stage of Development! Do Not Install
-
 [Topic on phpbb.com](https://www.phpbb.com/community/viewtopic.php?f=456&t=)
 
 ## Description

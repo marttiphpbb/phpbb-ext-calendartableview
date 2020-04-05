@@ -34,13 +34,13 @@ class cnst
 	];
 
 	const DEFAULT_SETTINGS = [
-		'num_tables'				=> 4,
-		'num_days_one_table'		=> 14,
-		'num_days_offset_menu'		=> 0,
-		'num_days_offset_tag'		=> 7,
-		'num_days_offset_link'		=> 0,
-		'min_rows'					=> 5,
-		'max_rows'					=> 30,
+		'table_count'				=> 4,
+		'table_day_count'			=> 28,
+		'days_offset_menu'			=> 0,
+		'days_offset_tag'			=> 7,
+		'days_offset_link'			=> 0,
+		'min_row_count'				=> 5,
+		'max_row_count'				=> 30,
 		'show_today'				=> true,
 		'header_en'					=> true,
 		'header'				=> [
@@ -63,7 +63,7 @@ class cnst
 			'moonphase',
 			'month',
 		],
-		'weekday_max_chars'			=> 3,
+		'weekday_max_char_count'	=> 3,
 		'topic_hilit'				=> false,
 		'load_stylesheet'			=> true,
 		'extra_stylesheet'			=> '',
