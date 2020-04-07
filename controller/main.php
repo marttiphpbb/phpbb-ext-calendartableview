@@ -576,7 +576,9 @@ class main
 			}
 		}
 
-		if ($this->store->get_nav_en())
+		$nav_en = $this->store->get_nav_en();
+
+		if ($nav_en)
 		{
 			$nav_month_max_char_count = $this->store->get_nav_month_max_char_count();
 			$nav_month_count = $this->store->get_nav_month_count();
@@ -647,30 +649,33 @@ class main
 			$nav_month++;
 		}
 
-		$nav_start_link = reset($nav_link_ary);
-
-		for($n = 0; $n < $nav_offset; $n++)
+		if ($nav_en)
 		{
-			$this->template->assign_block_vars('nav_links', [
-				'LINK'	 => $nav_start_link,
-			]);
-		}
+			$nav_start_link = reset($nav_link_ary);
 
-		foreach($nav_link_ary as $nav_link)
-		{
-			$this->template->assign_block_vars('nav_links', [
-				'LINK'	 => $nav_link,
-			]);
-		}
+			for($n = 0; $n < $nav_offset; $n++)
+			{
+				$this->template->assign_block_vars('nav_links', [
+					'LINK'	 => $nav_start_link,
+				]);
+			}
 
-		$nav_end_link = end($nav_link_ary);
-		$nav_end_count = $nav_total - count($nav_link_ary) - $nav_offset;
+			foreach($nav_link_ary as $nav_link)
+			{
+				$this->template->assign_block_vars('nav_links', [
+					'LINK'	 => $nav_link,
+				]);
+			}
 
-		for($n = 0; $n < $nav_end_count; $n++)
-		{
-			$this->template->assign_block_vars('nav_links', [
-				'LINK'	 => $nav_end_link,
-			]);
+			$nav_end_link = end($nav_link_ary);
+			$nav_end_count = $nav_total - count($nav_link_ary) - $nav_offset;
+
+			for($n = 0; $n < $nav_end_count; $n++)
+			{
+				$this->template->assign_block_vars('nav_links', [
+					'LINK'	 => $nav_end_link,
+				]);
+			}
 		}
 
 		$this->template->assign_vars([
