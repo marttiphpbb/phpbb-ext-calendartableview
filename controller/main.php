@@ -97,10 +97,6 @@ class main
 			$footer_en = false;
 		}
 
-		error_log('header: ' . json_encode($header));
-		error_log('repeated_header: ' . json_encode($repeated_header));
-		error_log('footer: ' . json_encode($footer));
-
 		$weekday_max_char_count = $this->store->get_weekday_max_char_count();
 
 		$min_row_count = $this->store->get_min_row_count();
@@ -719,7 +715,7 @@ class main
 			{
 				$row_tpl['S_MONTH'] = true;
 
-				$this->template->assign_block_vars('tables.header_rows', $row_tpl);
+				$this->template->assign_block_vars($block_name, $row_tpl);
 				unset($row_tpl);
 
 				continue;
