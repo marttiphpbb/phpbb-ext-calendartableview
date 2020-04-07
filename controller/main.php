@@ -117,6 +117,12 @@ class main
 		$moon_phase_ary = moon_phase::find($start_jd, $end_jd);
 		$moon_phase = reset($moon_phase_ary);
 
+		/*
+		error_log('start_jd: ' . $start_jd);
+		error_log('moon_phase_ary: ' . json_encode($moon_phase_ary));
+		error_log('moon_phase: ' . json_encode($moon_phase));
+		*/
+
 		$events = [];
 
 		/**
@@ -574,9 +580,9 @@ class main
 		{
 			$nav_month_max_char_count = $this->store->get_nav_month_max_char_count();
 			$nav_month_count = $this->store->get_nav_month_count();
-			$nav_months_pre = round(($nav_month_count - ($day_count / 30)) / 2);
+			$nav_month_pre_count = floor(($nav_month_count - ($day_count / 30)) / 2);
 
-			$nav_month = $month - $nav_months_pre;
+			$nav_month = $month - $nav_month_pre_count;
 			$nav_year = $year;
 
 			while ($nav_month < 1)
@@ -584,11 +590,24 @@ class main
 				$nav_year--;
 				$nav_month += 12;
 			}
+
+			$nav_select_count = round($day_count / 7.5);
+			$nav_start_jd = cal_to_jd(CAL_GREGORIAN, $nav_month, 1, $nav_year);
+			$nav_select_start = floor(($start_jd - $nav_start_jd) / 7.5);
+
+			$nav_offset = floor($nav_select_count / 2);
+			$nav_total = $nav_month_count * 4;
+			$nav_end = $nav_total - $nav_select_count;
 		}
 		else
 		{
 			$nav_month_count = 0;
+			$nav_select_start = 0;
+			$nav_select_count = 0;
 		}
+
+		$nav_count = 0;
+		$nav_link_ary = [];
 
 		for ($n = 0; $n < $nav_month_count; $n++)
 		{
@@ -598,37 +617,22 @@ class main
 				$nav_year++;
 			}
 
-			$this->template->assign_block_vars('nav_links', [
-				'LINK'	 => $this->helper->route('marttiphpbb_calendartableview_page_controller', [
-					'year'	=> $nav_year,
-					'month'	=> $nav_month,
-					'day'	=> 1,
-				]),
-			]);
+			foreach(cnst::NAV_MONTHDAY_ARY as $nav_monthday)
+			{
+				if ($nav_count > $nav_end)
+				{
+					$nav_count++;
+					continue;
+				}
 
-			$this->template->assign_block_vars('nav_links', [
-				'LINK'	 => $this->helper->route('marttiphpbb_calendartableview_page_controller', [
+				$nav_link_ary[] = $this->helper->route('marttiphpbb_calendartableview_page_controller', [
 					'year'	=> $nav_year,
 					'month'	=> $nav_month,
-					'day'	=> 7,
-				]),
-			]);
+					'day'	=> $nav_monthday,
+				]);
 
-			$this->template->assign_block_vars('nav_links', [
-				'LINK'	 => $this->helper->route('marttiphpbb_calendartableview_page_controller', [
-					'year'	=> $nav_year,
-					'month'	=> $nav_month,
-					'day'	=> 15,
-				]),
-			]);
-
-			$this->template->assign_block_vars('nav_links', [
-				'LINK'	 => $this->helper->route('marttiphpbb_calendartableview_page_controller', [
-					'year'	=> $nav_year,
-					'month'	=> $nav_month,
-					'day'	=> 23,
-				]),
-			]);
+				$nav_count++;
+			}
 
 			$month_str = cnst::MONTH_NAME[$nav_month];
 			$month_name = $this->language->lang(['datetime', $month_str]);
@@ -643,8 +647,31 @@ class main
 			$nav_month++;
 		}
 
-		$nav_select_start = 50;
-		$nav_select_count = 16;
+		$nav_start_link = reset($nav_link_ary);
+
+		for($n = 0; $n < $nav_offset; $n++)
+		{
+			$this->template->assign_block_vars('nav_links', [
+				'LINK'	 => $nav_start_link,
+			]);
+		}
+
+		foreach($nav_link_ary as $nav_link)
+		{
+			$this->template->assign_block_vars('nav_links', [
+				'LINK'	 => $nav_link,
+			]);
+		}
+
+		$nav_end_link = end($nav_link_ary);
+		$nav_end_count = $nav_total - count($nav_link_ary) - $nav_offset;
+
+		for($n = 0; $n < $nav_end_count; $n++)
+		{
+			$this->template->assign_block_vars('nav_links', [
+				'LINK'	 => $nav_end_link,
+			]);
+		}
 
 		$this->template->assign_vars([
 			'TODAY_JD'			=> $today_jd,

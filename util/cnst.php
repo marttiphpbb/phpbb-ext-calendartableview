@@ -121,6 +121,8 @@ class cnst
 		'S_MOONPHASE_FIRST'	=> false,
 	];
 
+	const NAV_MONTHDAY_ARY = [1, 7, 15, 23];
+
 	const MONTH_NAME = [
 		1	=> 'January',
 		2	=> 'February',

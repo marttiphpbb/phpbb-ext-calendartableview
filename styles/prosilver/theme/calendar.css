@@ -10,12 +10,15 @@ div.calendartableview div.calendar-navigation table {
 	text-align: center;
 	font-weight: bold;
 	table-layout: fixed;
+	cursor: pointer;
 }
 div.calendartableview div.calendar-navigation table.calendar-navigation-overlay{
 	position: absolute;
 }
 table.calendar-navigation-overlay td {
 	border: 1px solid transparent;
+	width: 100%;
+	height: 100%;
 }
 table.calendar-navigation-overlay td a {
 	width: 100%;
@@ -35,7 +38,6 @@ table.calendar-navigation-overlay td.select-right {
 div.calendartableview div.tables table {
 	width: 100%;
 	table-layout: fixed;
-	border-collapse: separate;
 	border: 1px dotted rgb(148, 150, 177);
 	text-align: center;
 }
@@ -70,8 +72,7 @@ div.calendartableview th {
 	height: 1.7em;
 }
 div.calendartableview td.topic {
-	background-color: rgb(222, 230, 236);
-	border: 1px solid rgb(175, 182, 200);
+	background-color: rgb(208, 219, 228);
 }
 div.calendartableview tr:nth-child(odd) td.topic {
 	background-color: rgb(187, 202, 212);
@@ -90,7 +91,10 @@ div.calendartableview tr td.topic a {
 	white-space: nowrap;
 	overflow: hidden;
 }
-
 div.calendartableview col.today {
 	border: 1px solid #444;
+}
+div.calendartableview th,
+div.calendartableview td {
+	color: #536482;
 }
