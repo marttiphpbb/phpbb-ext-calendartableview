@@ -1,7 +1,7 @@
 <tr class="{%- block tr_class -%}{%- endblock -%}">
     {%- for m in t.months -%}
         {%- for d in m.days -%}
-            {%- if h.S_MOONPHASE and d.MOON_ICON and not (h.S_ISOWEEK_FIRST and d.WEEKDAY == 1) -%}
+            {%- if h.S_MOONPHASE and d.MOON_ICON and not (h.S_MOONPHASE_FIRST and h.S_ISOWEEK and d.WEEKDAY == 1) -%}
 
                 <{% block cell_tag %}th{% endblock %} class="moon">
                     <span class="fa-stack" title="{{- d.MOON_TITLE -}}">

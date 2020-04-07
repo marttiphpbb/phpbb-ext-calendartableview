@@ -97,6 +97,10 @@ class main
 			$footer_en = false;
 		}
 
+		error_log('header: ' . json_encode($header));
+		error_log('repeated_header: ' . json_encode($repeated_header));
+		error_log('footer: ' . json_encode($footer));
+
 		$weekday_max_char_count = $this->store->get_weekday_max_char_count();
 
 		$min_row_count = $this->store->get_min_row_count();
@@ -117,11 +121,10 @@ class main
 		$moon_phase_ary = moon_phase::find($start_jd, $end_jd);
 		$moon_phase = reset($moon_phase_ary);
 
-		/*
-		error_log('start_jd: ' . $start_jd);
-		error_log('moon_phase_ary: ' . json_encode($moon_phase_ary));
-		error_log('moon_phase: ' . json_encode($moon_phase));
-		*/
+		if ($moon_phase['jd'] < $start_jd)
+		{
+			$moon_phase = next($moon_phase_ary);
+		}
 
 		$events = [];
 
@@ -700,10 +703,8 @@ class main
 
 		foreach($header_ary as $header_id)
 		{
-			$header_name = cnst::HEADER_ROWS[$header_id]['name'];
-
 			if (isset($row_tpl)
-				&& !in_array($header_name, ['isoweek', 'moonphase']))
+				&& !in_array($header_id, ['isoweek', 'moonphase']))
 			{
 				$this->template->assign_block_vars($block_name, $row_tpl);
 				unset($row_tpl);
