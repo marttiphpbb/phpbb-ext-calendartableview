@@ -55,3 +55,7 @@ You can install this on the latest release of phpBB by following the steps below
 ### ACP: Page Rendering
 
 ![ACP Page Rendering](doc/acp_page.png)
+
+![ACP Page Rendering](doc/acp_header.png)
+
+![ACP Page Rendering](doc/acp_footer.png)
