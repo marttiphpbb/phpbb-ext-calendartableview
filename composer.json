@@ -4,7 +4,7 @@
 	"description": "Calendar Table View Extension for phpBB 3.3",
 	"homepage": "https://github.com/marttiphpbb/phpbb-ext-calendartableview",
 	"version": "0.1.0",
-	"time": "2019-02-17",
+	"time": "2020-04-07",
 	"keywords": ["phpbb", "extension", "calendar", "view", "table"],
 	"license": "GPL-2.0-only",
 	"authors": [{

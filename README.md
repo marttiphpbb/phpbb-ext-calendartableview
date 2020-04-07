@@ -1,6 +1,6 @@
 # phpBB Extension - marttiphpbb Calendar Table View
 
-[Topic on phpbb.com](https://www.phpbb.com/community/viewtopic.php?f=456&t=)
+[Topic on phpbb.com](https://www.phpbb.com/community/viewtopic.php?f=456&t=2547991)
 
 ## Description
 
