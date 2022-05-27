@@ -8,7 +8,7 @@ This phpBB extension provides a Calendar Table View page for the [Calendar exten
 
 ## Screenshot
 
-![Calendar page](doc/calendar.png)
+![Calendar page](doc/calendar_02.png)
 
 ## Requirements
 

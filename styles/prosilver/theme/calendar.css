@@ -25,7 +25,7 @@ table.calendar-navigation-overlay td a {
 	height: 100%;
 }
 table.calendar-navigation-overlay td.select {
-	background-color: rgba(0, 0, 0, .1);
+	background-color: rgba(0, 0, 128, .05);
 	border-top-color: black;
 	border-bottom-color: black;
 }
@@ -38,50 +38,52 @@ table.calendar-navigation-overlay td.select-right {
 div.calendartableview div.tables table {
 	width: 100%;
 	table-layout: fixed;
-	border: 1px dotted rgb(148, 150, 177);
+	/* border: 1px dotted rgb(148, 150, 177); */
 	text-align: center;
 }
 
 div.calendartableview table colgroup.month-even,
 div.calendartableview table tr.month .month-even {
-	background: rgb(218, 229, 238);
+	background: rgb(233, 240, 248);
 }
 
 div.calendartableview table colgroup.month-even col.sat,
 div.calendartableview table colgroup.month-even col.sun {
-	background: rgb(202, 220, 235);
+	background: rgb(219, 233, 243);
 }
 
 div.calendartableview table colgroup.month-odd,
 div.calendartableview table tr.month .month-odd {
-	background: rgb(177, 202, 223);
+	background: rgb(248, 251, 254);
 }
 
 div.calendartableview table colgroup.month-odd col.sat,
 div.calendartableview table colgroup.month-odd col.sun {
-	background: rgb(159, 199, 231);
+	background: rgb(231, 235, 240);
 }
 
 .isoweek span{
-	border: 1px solid rgb(85, 95, 128);
+	border: 2px solid #536482;
 	font-size: .7em;
-	background-color: antiquewhite;
+	background-color: #536482;
+	color: white;
 }
 div.calendartableview td,
 div.calendartableview th {
 	height: 1.7em;
 }
 div.calendartableview td.topic {
-	background-color: rgb(208, 219, 228);
+	background-color: rgb(255, 255, 255);
+	border: 1px dotted #536482;
 }
 div.calendartableview tr:nth-child(odd) td.topic {
-	background-color: rgb(187, 202, 212);
+	background-color: rgb(247, 247, 247);
 }
 div.calendartableview tr td.topic.hover {
-	background-color:#fff;
+	background-color:rgb(240, 241, 246);
 }
 div.calendartableview tr td.topic-hilit {
-	border: 1px solid rgb(23, 28, 75);
+	border: 2px solid rgb(25, 30, 79);
 }
 div.calendartableview tr td a {
 	width: 100%;
