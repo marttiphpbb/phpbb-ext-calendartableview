@@ -56,6 +56,7 @@ class main_module
 					$store->set_days_offset_menu($request->variable('days_offset_menu', 0));
 					$store->set_days_offset_tag($request->variable('days_offset_tag', 0));
 					$store->set_days_offset_link($request->variable('days_offset_link', 0));
+					$store->transaction_end();
 
 					trigger_error($language->lang(cnst::L_ACP . '_SETTINGS_SAVED') . adm_back_link($this->u_action));
 				}

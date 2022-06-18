@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Calendar Table View Extension for phpBB 3.3",
 	"homepage": "https://github.com/marttiphpbb/phpbb-ext-calendartableview",
-	"version": "0.3.0",
-	"time": "2022-05-30",
+	"version": "0.3.1",
+	"time": "2022-06-18",
 	"keywords": ["phpbb", "extension", "calendar", "view", "table"],
 	"license": "GPL-2.0-only",
 	"authors": [{
